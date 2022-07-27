@@ -119,6 +119,7 @@ public class LoginAccountPageController {
                 System.out.println(post);
                 System.out.println("_____________________________");
                 post.addview(LoggedInAccount.getInstance().getLoggedIn());
+                PostsList.getItems().add(imageView2);
                 PostsList.getItems().add(post);
 
             }
