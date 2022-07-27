@@ -904,18 +904,18 @@ public class ConsoleView {
     }
 
     private void createPost() {
-        if (account.isBusinessAccount()) {
-            System.out.println("Enter content(is ad): ");
-            String content1 = "ad : ";
-            String content = sc.nextLine();
-            String FinalContent = content1 + content;
-            account.createPost(FinalContent);
-        } else {
-            System.out.println("Enter content(is normal): ");
-            String content = sc.nextLine();
-            account.createPost(content);
-        }
-        System.out.println("Post created!");
+//        if (account.isBusinessAccount()) {
+//            System.out.println("Enter content(is ad): ");
+//            String content1 = "ad : ";
+//            String content = sc.nextLine();
+//            String FinalContent = content1 + content;
+//            account.createPost(FinalContent);
+//        } else {
+//            System.out.println("Enter content(is normal): ");
+//            String content = sc.nextLine();
+//            account.createPost(content);
+//        }
+//        System.out.println("Post created!");
     }
 
     private void login() {

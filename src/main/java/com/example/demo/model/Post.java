@@ -1,5 +1,9 @@
 package com.example.demo.model;
 
+import javafx.scene.image.Image;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,9 +24,15 @@ public class Post {
     private Date date;
     private Date dateview;
     private Date datelike;
+    private Image image;
+    private FileInputStream fis;
+    private File file;
 
-    public Post(String content, Account owner) {
+    public Post(String content, Account owner,File file) {
         this.content = content;
+        this.fis=fis;
+        this.file=file;
+        this.image=image;
         this.owner = owner;
         likes = new ArrayList<>();
         comments = new ArrayList<>();
@@ -96,7 +106,7 @@ public class Post {
         for (Like like:likes) {
             likeuser.add(like.getAccount().getUsername());
         }
-        return owner.getUsername() + " | " + id + "\n" + content
+        return owner.getUsername() + " | " + id + "\n" + content+ file
                 + "\nLikes: " + likes.size()+"\nUsers who liked this post : "+likeuser
                 + "\nComments: " + comments.size()
                 +"\nDate created : "+date;
@@ -127,6 +137,11 @@ public class Post {
         Post.posts = posts;
     }
 
+    public FileInputStream getFis() {
+        return fis;
+    }
 
-
+    public File getFile() {
+        return file;
+    }
 }

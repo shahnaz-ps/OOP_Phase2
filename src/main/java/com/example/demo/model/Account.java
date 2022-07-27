@@ -1,5 +1,9 @@
 package com.example.demo.model;
 
+import javafx.scene.image.Image;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -53,8 +57,8 @@ public class Account {
         return accounts.containsKey(username);
     }
 
-    public void createPost(String content) {
-        Post post = new Post(content, this);
+    public void createPost(String content, File file) {
+        Post post = new Post(content, this,file);
 
         posts.add(post);
     }
@@ -115,6 +119,8 @@ public class Account {
     public static void setAccounts(HashMap<String, Account> accounts) {
         Account.accounts = accounts;
     }
+
+
 
     public void addview(Account account) {
         if(!views.contains(account)) {
