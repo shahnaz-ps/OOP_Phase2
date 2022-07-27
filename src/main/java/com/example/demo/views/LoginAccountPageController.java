@@ -142,4 +142,6 @@ public class LoginAccountPageController {
         LoginAccountPageController.setAccount2(account);
         MenuChanger.changeMenu("watchProfilePane");
     }
+
+
 }
