@@ -94,7 +94,16 @@ public class WatchProfileController {
                             likeCommentbtn.setOnAction((ActionEvent3)->{
                                 clearTextandImg();
                                 Comment comment = Comment.getCommentById(post.getComments().get(finalJ).getId());
-                                likecomment(comment);
+                                boolean hasLiked=false;
+                                for(int k=0;k<comment.getLikes().size();k++) {
+                                    if (comment.getLikes().get(k).getAccount().equals(LoggedInAccount.getInstance().getLoggedIn())) {
+                                        new PopupMessage(Alert.AlertType.ERROR, "you have already liked this comment!");
+                                        hasLiked=true;
+                                    }
+                                }
+                                if(!hasLiked) {
+                                    likecomment(comment);
+                                }
                             });
                             AccountComentList.getItems().add("_____________________________");
                         }
@@ -147,15 +156,8 @@ public class WatchProfileController {
 
     private void likecomment(Comment comment) {
         boolean success;
-        //if(!Comment.getLikeUser().contains(LoggedInAccount.getInstance().getLoggedIn().getUsername())){
-           // System.out.println("im in");
-            new PopupMessage(Alert.AlertType.ERROR, "you  liked this comment!");
-            success = comment.like(LoggedInAccount.getInstance().getLoggedIn());
-        //}
-        //else{
-
-             //new PopupMessage(Alert.AlertType.ERROR, "you have already liked this comment!");
-       // }
+        new PopupMessage(Alert.AlertType.ERROR, "you  liked this comment!");
+        success = comment.like(LoggedInAccount.getInstance().getLoggedIn());
     }
 
     public void clearTextandImg(){
