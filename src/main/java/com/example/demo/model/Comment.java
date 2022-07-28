@@ -7,6 +7,8 @@ import java.util.HashMap;
 public class Comment {
     private static int idCounter = 1;
     private static HashMap<Integer, Comment> comments = new HashMap<>();
+    private ArrayList<Comment> repliedComments= new ArrayList<>();
+    private ArrayList<String> AccrepliedComments= new ArrayList<>();
     private Account account;
     private Date date;
     private String content;
@@ -54,13 +56,24 @@ public class Comment {
         return false;
     }
 
+    public void writeReplyComment(String text, Account account) {
+        Comment comment = new Comment(text,account);
+        repliedComments.add(comment);
+        AccrepliedComments.add(account.getUsername());
+    }
+
     @Override
     public String toString() {
         ArrayList<String>  likeuser = new ArrayList<>();
         for (Like like:likes) {
             likeuser.add(like.getAccount().getUsername());
         }
+        ArrayList<String>  repcomment = new ArrayList<>();
+        for(int i=0;i<repliedComments.size();i++){
+            repcomment.add(AccrepliedComments.get(i)+" replied : "+repliedComments.get(i).content);
+        }
         return "comment ID : "+" | "+id +"\n"+account.getUsername() + ": " + content
+                + "\nreplied comment : "+repcomment
                 +"\nnumber of likes : "+likes.size()+"\nusers who liked this comment: "+likeuser
                 +"\nDate : "+date;
     }

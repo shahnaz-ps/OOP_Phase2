@@ -59,7 +59,9 @@ public class ConsoleView {
             likeOrDislikeComment(true);
         } else if (command.equals("DISLIKE COMMENT")) {
             likeOrDislikeComment(false);
-        } else if (command.equals("SHOW PRIVATE CHAT")) {
+        } else if (command.equals("REPLY COMMENT")) {
+            replyComment();
+        }else if (command.equals("SHOW PRIVATE CHAT")) {
             showPrivateChat();
         } else if (command.equals("SHOW STATE")) {
             showState();
@@ -698,6 +700,29 @@ public class ConsoleView {
             for (Comment comment : post.getComments()) {
                 System.out.println(comment + "\n_____________________________");
             }
+        }
+
+    }
+
+    private void replyComment() {
+        System.out.print("Enter comment id: ");
+        int commentId;
+        try {
+            commentId = Integer.parseInt(sc.nextLine());
+        } catch (Exception e) {
+            System.out.println("Comment id is a number!");
+            return ;
+        }
+        Comment comment = Comment.getCommentById(commentId);
+        if (comment == null) {
+            System.out.println("Cannot find comment id!");
+            return;
+        }
+        else{
+            System.out.println("Enter comment");
+            String inp = sc.nextLine();
+            comment.writeReplyComment(inp, account);
+            System.out.println("Replied comment wrote!");
         }
 
     }

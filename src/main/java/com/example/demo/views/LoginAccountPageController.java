@@ -124,8 +124,11 @@ public class LoginAccountPageController {
                                 if (!AccountComentList.getItems().contains(post.getComments().get(j))) {
                                     AccountComentList.getItems().add(post.getComments().get(j));
                                     Button likeCommentbtn = new Button();
+                                    Button replyCommentbtn = new Button();
                                     likeCommentbtn.setText("like comment");
+                                    replyCommentbtn.setText("reply on this comment!");
                                     AccountComentList.getItems().add(likeCommentbtn);
+                                    AccountComentList.getItems().add(replyCommentbtn);
                                     int finalJ = j;
                                     likeCommentbtn.setOnAction((ActionEvent3) -> {
                                         clearTextandImg();
@@ -142,6 +145,24 @@ public class LoginAccountPageController {
                                             likecomment(comment);
                                         }
                                     });
+
+                                    replyCommentbtn.setOnAction((ActionEvent3) ->{
+                                        TextField replytextfield = new TextField();
+                                        replytextfield.setPromptText("reply on this comment");
+                                        AccountComentList.getItems().add(replytextfield);
+                                        Button submitbtn = new Button();
+                                        submitbtn.setText("submit");
+                                        AccountComentList.getItems().add(submitbtn);
+                                        submitbtn.setOnAction((ActionEvent4) -> {
+                                            Comment comment = Comment.getCommentById(post.getComments().get(finalJ).getId());
+                                            comment.writeReplyComment(replytextfield.getText(), LoggedInAccount.getInstance().getLoggedIn());
+                                            System.out.println("Replied comment wrote!");
+                                            new PopupMessage(Alert.AlertType.ERROR, "you replied to this comment!");
+                                            replytextfield.setText("");
+
+                                        });
+                                    });
+
                                     AccountComentList.getItems().add("_____________________________");
                                 }
                             }
