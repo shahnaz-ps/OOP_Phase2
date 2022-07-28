@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LoginAccountPageController {
     public TextField idTextbox;
@@ -75,9 +74,12 @@ public class LoginAccountPageController {
             if (!PostsList.getItems().contains(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i))) {
                 Button btnNumber = new Button();
                 Button Showlikebtn = new Button();
+                Button Showcommentbtn= new Button();
                 Showlikebtn.setText("Show Likes");
                 btnNumber.setText("Like");
+                Showcommentbtn.setText("show comment(write a comment)");
                 int finalI = i;
+
                 btnNumber.setOnAction((ActionEvent)->{
                     likepost(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
                     clearTextandImg();
@@ -98,6 +100,44 @@ public class LoginAccountPageController {
                         }
                     }
                 });
+
+                Showcommentbtn.setOnAction((ActionEvent)->{
+                    clearTextandImg();
+                    Post post = Post.getPostByFile(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
+                    TextField textField = new TextField();
+                    textField.setPromptText("write down your comment");
+                    Button commentbtn = new Button();
+                    commentbtn.setText("comment");
+                    commentbtn.setOnAction((ActionEvent2)->{
+                        commentpost(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile() , textField.getText());
+                        clearTextandImg();
+                    });
+
+                    if(post.getComments().size()==0){
+                        AccountComentList.getItems().add("no comments for this post :(");
+                        for (int k=0;k<2;k++){
+                            AccountComentList.getItems().add("");
+                        }
+                    }
+                    else{
+                        AccountComentList.getItems().add("comments : "+post.getComments().size());
+                        for (int j=0;j<post.getComments().size();j++){
+
+                            if (! AccountComentList.getItems().contains(post.getComments().get(j))) {
+                                AccountComentList.getItems().add(post.getComments().get(j));
+                                AccountComentList.getItems().add("_____________________________");
+                            }
+                        }
+                        for (int k=0;k<2;k++){
+                            AccountComentList.getItems().add("");
+                        }
+                    }
+
+                    AccountComentList.getItems().add(textField);
+                    AccountComentList.getItems().add(commentbtn);
+
+                });
+
                 clearTextandImg();
 
                 vboxForButtons.getChildren().add(btnNumber);
@@ -107,6 +147,7 @@ public class LoginAccountPageController {
                 PostsList.getItems().add(imageView2);
                 PostsList.getItems().add(btnNumber);
                 PostsList.getItems().add(Showlikebtn);
+                PostsList.getItems().add(Showcommentbtn);
                 PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
                 PostsList.getItems().add("_____________________________");
 
@@ -115,7 +156,6 @@ public class LoginAccountPageController {
         clearTextandImg();
 
     }
-
 
     public void ChooseFile(ActionEvent actionEvent) throws IOException {
         fileChooser = new FileChooser();
@@ -141,7 +181,6 @@ public class LoginAccountPageController {
 
     }
 
-
     public void post(ActionEvent actionEvent) throws FileNotFoundException {
         if (LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()) {
             String content1 = "ad : ";
@@ -157,15 +196,16 @@ public class LoginAccountPageController {
             if (!PostsList.getItems().contains(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i))) {
                 Button btnNumber = new Button();
                 Button Showlikebtn = new Button();
+                Button Showcommentbtn= new Button();
                 btnNumber.setText("Like");
                 Showlikebtn.setText("Show Likes");
+                Showcommentbtn.setText("show comment(write a comment)");
                 int finalI = i;
                 btnNumber.setOnAction((ActionEvent)->{
                     likepost(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
                     Post post = Post.getPostByFile(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
                     clearTextandImg();
                 });
-
 
                 Showlikebtn.setOnAction((ActionEvent)->{
                     clearTextandImg();
@@ -182,6 +222,43 @@ public class LoginAccountPageController {
                         }
                     }
                 });
+
+                Showcommentbtn.setOnAction((ActionEvent)->{
+                    clearTextandImg();
+                    Post post = Post.getPostByFile(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
+                    TextField textField = new TextField();
+                    textField.setPromptText("write down your comment");
+                    Button commentbtn = new Button();
+                    commentbtn.setText("comment");
+                    commentbtn.setOnAction((ActionEvent2)->{
+                        commentpost(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile() , textField.getText());
+                        clearTextandImg();
+                    });
+
+                    if(post.getComments().size()==0){
+                        AccountComentList.getItems().add("no comments for this post :(");
+                        for (int k=0;k<2;k++){
+                            AccountComentList.getItems().add("");
+                        }
+                    }
+                    else{
+                        AccountComentList.getItems().add("comments : "+post.getComments().size());
+                        for (int j=0;j<post.getComments().size();j++){
+                            if (! AccountComentList.getItems().contains(post.getComments().get(j))) {
+                                AccountComentList.getItems().add(post.getComments().get(j));
+                                AccountComentList.getItems().add("_____________________________");
+                            }
+                        }
+                        for (int k=0;k<2;k++){
+                            AccountComentList.getItems().add("");
+                        }
+                    }
+
+                    AccountComentList.getItems().add(textField);
+                    AccountComentList.getItems().add(commentbtn);
+
+                });
+
                 clearTextandImg();
                 vboxForButtons.getChildren().add(btnNumber);
                 image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
@@ -191,6 +268,7 @@ public class LoginAccountPageController {
                 PostsList.getItems().add(imageView2);
                 PostsList.getItems().add(btnNumber);
                 PostsList.getItems().add(Showlikebtn);
+                PostsList.getItems().add(Showcommentbtn);
                 PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
                 PostsList.getItems().add("_____________________________");
 
@@ -199,8 +277,16 @@ public class LoginAccountPageController {
         clearTextandImg();
     }
 
-    private void likepost(File finalFile) {
-        Post post = Post.getPostByFile(finalFile);
+    private void commentpost(File file, String text) {
+        Post post = Post.getPostByFile(file);
+        post.writeComment(text,LoggedInAccount.getInstance().getLoggedIn());
+        new PopupMessage(Alert.AlertType.ERROR, "comment is written!");
+       // System.out.println("Comment wrote!");
+
+    }
+
+    private void likepost(File file) {
+        Post post = Post.getPostByFile(file);
         boolean success=true;
         success = post.like(LoggedInAccount.getInstance().getLoggedIn());
         if(post.getLike().contains(LoggedInAccount.getInstance().getLoggedIn())){
@@ -209,7 +295,8 @@ public class LoginAccountPageController {
 
         }
         post.addlikestate(LoggedInAccount.getInstance().getLoggedIn());
-        //System.out.println(post);
+        new PopupMessage(Alert.AlertType.ERROR, "you liked this post!");
+
     }
 
     public void clearTextandImg(){
@@ -217,6 +304,7 @@ public class LoginAccountPageController {
         FilePath.setText("");
         imageView.setImage(null);
         AccountLikePost.getItems().clear();
+        AccountComentList.getItems().clear();
     }
 
     public void logout(ActionEvent actionEvent) {

@@ -25,6 +25,7 @@ public class WatchProfileController {
     public VBox vboxForButtons = new VBox();
     public Image image;
     public ListView AccountLikePost;
+    public ListView AccountComentList;
 
 
     public void initialize() {
@@ -33,8 +34,10 @@ public class WatchProfileController {
         followingsNum.setText(String.valueOf(LoginAccountPageController.getAccount2().getNumberOfFollowings()));
 
         for(int i=0;i<Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().size();i++){
-                Button btnNumber = new Button();
+            Button btnNumber = new Button();
             Button Showlikebtn = new Button();
+            Button Showcommentbtn= new Button();
+            Showcommentbtn.setText("show comment(write a comment)");
             Showlikebtn.setText("Show Likes");
                 btnNumber.setText("Like");
                 int finalI = i;
@@ -59,6 +62,43 @@ public class WatchProfileController {
                     }
                 }
             });
+
+            Showcommentbtn.setOnAction((ActionEvent)->{
+                clearTextandImg();
+                Post post = Post.getPostByFile(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(finalI1).getFile());
+                TextField textField = new TextField();
+                textField.setPromptText("write down your comment");
+                Button commentbtn = new Button();
+                commentbtn.setText("comment");
+                commentbtn.setOnAction((ActionEvent2)->{
+                    commentpost(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(finalI1).getFile() , textField.getText());
+                    clearTextandImg();
+                });
+
+                if(post.getComments().size()==0){
+                    AccountComentList.getItems().add("no comments for this post :(");
+                    for (int k=0;k<2;k++){
+                        AccountComentList.getItems().add("");
+                    }
+                }
+                else{
+                    AccountComentList.getItems().add("comments : "+post.getComments().size());
+                    for (int j=0;j<post.getComments().size();j++){
+                        if (! AccountComentList.getItems().contains(post.getLike().get(j).getUsername())) {
+                            AccountComentList.getItems().add(post.getComments().get(j));
+                            AccountComentList.getItems().add("_____________________________");
+                        }
+                    }
+                    for (int k=0;k<2;k++){
+                        AccountComentList.getItems().add("");
+                    }
+                }
+
+                AccountComentList.getItems().add(textField);
+                AccountComentList.getItems().add(commentbtn);
+
+            });
+
             clearTextandImg();
 
                 vboxForButtons.getChildren().add(btnNumber);
@@ -68,10 +108,19 @@ public class WatchProfileController {
                 PostsList.getItems().add(imageView2);
                 PostsList.getItems().add(btnNumber);
                 PostsList.getItems().add(Showlikebtn);
+                PostsList.getItems().add(Showcommentbtn);
                 PostsList.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i));
                 PostsList.getItems().add("_____________________________");
         }
         clearTextandImg();
+    }
+
+    private void commentpost(File file, String text) {
+        Post post = Post.getPostByFile(file);
+        post.writeComment(text,LoggedInAccount.getInstance().getLoggedIn());
+        new PopupMessage(Alert.AlertType.ERROR, "comment is written!");
+        System.out.println("Comment wrote!");
+
     }
 
     private void likepost(File file) {
@@ -82,13 +131,14 @@ public class WatchProfileController {
             new PopupMessage(Alert.AlertType.WARNING, "you have already liked this post!");
         }
         post.addlikestate(LoggedInAccount.getInstance().getLoggedIn());
-        System.out.println(post);
+        new PopupMessage(Alert.AlertType.ERROR, "you liked this post!");
+        //System.out.println(post);
     }
 
     public void clearTextandImg(){
         AccountLikePost.getItems().clear();
+        AccountComentList.getItems().clear();
     }
-
 
     public void Follow(ActionEvent actionEvent) {
             if (Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getFollowers().contains(LoggedInAccount.getInstance().getLoggedIn())) {
@@ -99,7 +149,6 @@ public class WatchProfileController {
                 new  PopupMessage(Alert.AlertType.INFORMATION, "you followed "  + Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getUsername());
             }
     }
-
 
     public void BacktoYourAccount(ActionEvent actionEvent) {
         MenuChanger.changeMenu("LoginAccountPage");
