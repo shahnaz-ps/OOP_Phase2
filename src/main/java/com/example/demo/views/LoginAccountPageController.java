@@ -1,6 +1,7 @@
 package com.example.demo.views;
 
 import com.example.demo.model.Account;
+import com.example.demo.model.Comment;
 import com.example.demo.model.LoggedInAccount;
 import com.example.demo.model.Post;
 import javafx.event.ActionEvent;
@@ -122,9 +123,17 @@ public class LoginAccountPageController {
                     else{
                         AccountComentList.getItems().add("comments : "+post.getComments().size());
                         for (int j=0;j<post.getComments().size();j++){
-
                             if (! AccountComentList.getItems().contains(post.getComments().get(j))) {
                                 AccountComentList.getItems().add(post.getComments().get(j));
+                                Button likeCommentbtn= new Button();
+                                likeCommentbtn.setText("like comment");
+                                AccountComentList.getItems().add(likeCommentbtn);
+                                int finalJ = j;
+                                likeCommentbtn.setOnAction((ActionEvent3)->{
+                                    clearTextandImg();
+                                    Comment comment = Comment.getCommentById(post.getComments().get(finalJ).getId());
+                                    likecomment(comment);
+                                });
                                 AccountComentList.getItems().add("_____________________________");
                             }
                         }
@@ -246,6 +255,16 @@ public class LoginAccountPageController {
                         for (int j=0;j<post.getComments().size();j++){
                             if (! AccountComentList.getItems().contains(post.getComments().get(j))) {
                                 AccountComentList.getItems().add(post.getComments().get(j));
+                                Button likeCommentbtn= new Button();
+                                likeCommentbtn.setText("like comment");
+                                AccountComentList.getItems().add(likeCommentbtn);
+                                int finalJ = j;
+                                likeCommentbtn.setOnAction((ActionEvent3)->{
+                                    clearTextandImg();
+                                    System.out.println(post.getComments().get(finalJ).getId());
+                                    Comment comment = Comment.getCommentById(post.getComments().get(finalJ).getId());
+                                    likecomment(comment);
+                                });
                                 AccountComentList.getItems().add("_____________________________");
                             }
                         }
@@ -275,6 +294,19 @@ public class LoginAccountPageController {
             }
         }
         clearTextandImg();
+    }
+
+    private void likecomment(Comment comment) {
+        boolean success=true;
+       // if(!Comment.getLikeUser().contains(LoggedInAccount.getInstance().getLoggedIn().getUsername())){
+           // System.out.println("im in");
+            new PopupMessage(Alert.AlertType.ERROR, "you  liked this comment!");
+            success = comment.like(LoggedInAccount.getInstance().getLoggedIn());
+       // }
+        //else{
+
+           // new PopupMessage(Alert.AlertType.ERROR, "you have already liked this comment!");
+        //}
     }
 
     private void commentpost(File file, String text) {

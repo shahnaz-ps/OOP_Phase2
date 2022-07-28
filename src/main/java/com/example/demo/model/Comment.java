@@ -23,6 +23,10 @@ public class Comment {
         comments.put(id, this);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public ArrayList<Like> getLikes() {
         return likes;
     }
