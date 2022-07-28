@@ -362,4 +362,7 @@ public class LoginAccountPageController {
         MenuChanger.changeMenu("watchProfilePane");
     }
 
+    public void createPostsinAnotherPage(ActionEvent actionEvent) {
+        MenuChanger.changeMenu("CreatePost");
+    }
 }
