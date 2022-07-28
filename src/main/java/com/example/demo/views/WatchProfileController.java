@@ -34,7 +34,7 @@ public class WatchProfileController {
         followersNum.setText(String.valueOf(LoginAccountPageController.getAccount2().getNumberOfFollowers()));
         followingsNum.setText(String.valueOf(LoginAccountPageController.getAccount2().getNumberOfFollowings()));
 
-        for(int i=0;i<Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().size();i++){
+        for(int i=Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().size()-1;i>=0;i--){
             Button btnNumber = new Button();
             Button Showlikebtn = new Button();
             Button Showcommentbtn= new Button();
