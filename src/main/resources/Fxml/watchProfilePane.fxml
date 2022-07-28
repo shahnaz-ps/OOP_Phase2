@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="879.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.WatchProfileController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="614.0" prefWidth="1190.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.WatchProfileController">
    <children>
       <Label layoutX="54.0" layoutY="41.0" text="username :" />
       <TextField fx:id="idTextbox" editable="false" layoutX="126.0" layoutY="37.0" prefHeight="26.0" prefWidth="114.0" />
@@ -15,10 +15,12 @@
       <TextField fx:id="followersNum" editable="false" layoutX="126.0" layoutY="66.0" prefHeight="26.0" prefWidth="45.0" />
       <TextField fx:id="followingsNum" editable="false" layoutX="126.0" layoutY="98.0" prefHeight="26.0" prefWidth="45.0" />
       <Label layoutX="53.0" layoutY="102.0" text="followings :" />
-      <ListView fx:id="PostsList" layoutX="670.0" layoutY="53.0" prefHeight="306.0" prefWidth="162.0" />
-      <Label layoutX="736.0" layoutY="26.0" text="posts: " />
+      <ListView fx:id="PostsList" layoutX="512.0" layoutY="53.0" prefHeight="306.0" prefWidth="320.0" />
+      <Label layoutX="650.0" layoutY="29.0" text="posts: " />
       <ImageView fx:id="imageView2" fitHeight="88.0" fitWidth="132.0" layoutX="686.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="364.0" layoutY="40.0" mnemonicParsing="false" onAction="#Follow" prefHeight="50.0" prefWidth="84.0" text="Follow" />
       <Button layoutX="99.0" layoutY="460.0" mnemonicParsing="false" onAction="#BacktoYourAccount" text="back to your account" />
+      <ListView fx:id="AccountLikePost" layoutX="893.0" layoutY="43.0" prefHeight="307.0" prefWidth="200.0" />
+      <Label layoutX="901.0" layoutY="19.0" text="accounts who liked this posts: " />
    </children>
 </Pane>

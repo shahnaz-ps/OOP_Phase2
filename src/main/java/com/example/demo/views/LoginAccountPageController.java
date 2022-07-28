@@ -4,11 +4,14 @@ import com.example.demo.model.Account;
 import com.example.demo.model.LoggedInAccount;
 import com.example.demo.model.Post;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
@@ -17,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LoginAccountPageController {
     public TextField idTextbox;
@@ -34,6 +38,12 @@ public class LoginAccountPageController {
     public ListView PostsList;
     public VBox postsVbox;
     public ListView ShowAccounts;
+    public TextField postContent;
+    public GridPane buttonGrid = new GridPane();
+    public VBox vboxForButtons = new VBox();
+    public VBox vboxForShowLikeButtons = new VBox();
+    public ListView AccountLikePost;
+    public ListView AccountComentList;
 
     public static File getFinalFile() {
         return finalFile;
@@ -60,6 +70,50 @@ public class LoginAccountPageController {
                 ShowAccounts.getItems().add(set.getValue().getUsername());
             }
         }
+
+        for(int i=0;i<LoggedInAccount.getInstance().getLoggedIn().getPosts().size();i++){
+            if (!PostsList.getItems().contains(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i))) {
+                Button btnNumber = new Button();
+                Button Showlikebtn = new Button();
+                Showlikebtn.setText("Show Likes");
+                btnNumber.setText("Like");
+                int finalI = i;
+                btnNumber.setOnAction((ActionEvent)->{
+                    likepost(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
+                    clearTextandImg();
+                });
+
+                Showlikebtn.setOnAction((ActionEvent)->{
+                    clearTextandImg();
+                    Post post = Post.getPostByFile(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
+                    if(post.getLike().size()==0){
+                        AccountLikePost.getItems().add("no likes for this post :(");
+                    }
+                    else {
+                        AccountLikePost.getItems().add("likes : "+post.getLike().size());
+                        for (int j = 0; j < post.getLike().size(); j++) {
+                            if (!AccountLikePost.getItems().contains(post.getLike().get(j).getUsername())) {
+                                AccountLikePost.getItems().add(post.getLike().get(j).getUsername());
+                            }
+                        }
+                    }
+                });
+                clearTextandImg();
+
+                vboxForButtons.getChildren().add(btnNumber);
+                image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
+                LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
+                PostsList.getItems().add(imageView2);
+                PostsList.getItems().add(btnNumber);
+                PostsList.getItems().add(Showlikebtn);
+                PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                PostsList.getItems().add("_____________________________");
+
+            }
+        }
+        clearTextandImg();
+
     }
 
 
@@ -90,48 +144,80 @@ public class LoginAccountPageController {
 
     public void post(ActionEvent actionEvent) throws FileNotFoundException {
         if (LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()) {
-            //Post.fis = new FileInputStream(file);
-            //FileInputStream fis =new FileInputStream(file);
-            //image = new Image(file.toURI().toString(),100,150,true,true);
             String content1 = "ad : ";
-            String FinalContent = content1 + "hi";
+            String FinalContent = content1 + postContent.getText();
             LoggedInAccount.getInstance().getLoggedIn().createPost(FinalContent,finalFile);
         } else {
-            //FileInputStream fis =new FileInputStream(file);
-            // image = new Image(file.toURI().toString(),100,150,true,true);
-            String content = "hi ";
+            String content = "content : "+postContent.getText();
             LoggedInAccount.getInstance().getLoggedIn().createPost(content,finalFile);
         }
         System.out.println("Post created!");
 
+        for(int i=0;i<LoggedInAccount.getInstance().getLoggedIn().getPosts().size();i++){
+            if (!PostsList.getItems().contains(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i))) {
+                Button btnNumber = new Button();
+                Button Showlikebtn = new Button();
+                btnNumber.setText("Like");
+                Showlikebtn.setText("Show Likes");
+                int finalI = i;
+                btnNumber.setOnAction((ActionEvent)->{
+                    likepost(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
+                    Post post = Post.getPostByFile(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
+                    clearTextandImg();
+                });
 
-        for (Post post : LoggedInAccount.getInstance().getLoggedIn().getPosts()) {
-            if (!PostsList.getItems().contains(post)) {
-                image = new Image(finalFile.toURI().toString(), 100, 150, true, true);
-                imageView2 = new ImageView();
-                imageView2.setImage(image);
-                imageView2.setFitWidth(100);
-                imageView2.setFitHeight(150);
-                imageView2.setPreserveRatio(true);
-                imageView2.setSmooth(true);
-                imageView2.setCache(true);
 
-                System.out.println(post);
-                System.out.println("_____________________________");
-                post.addview(LoggedInAccount.getInstance().getLoggedIn());
+                Showlikebtn.setOnAction((ActionEvent)->{
+                    clearTextandImg();
+                    Post post = Post.getPostByFile(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
+                    if(post.getLike().size()==0){
+                        AccountLikePost.getItems().add("no likes for this post :(");
+                    }
+                    else {
+                        AccountLikePost.getItems().add("likes : "+post.getLike().size());
+                        for (int j = 0; j < post.getLike().size(); j++) {
+                           if (! AccountLikePost.getItems().contains(post.getLike().get(j).getUsername())) {
+                                AccountLikePost.getItems().add(post.getLike().get(j).getUsername());
+                                }
+                        }
+                    }
+                });
+                clearTextandImg();
+                vboxForButtons.getChildren().add(btnNumber);
+                image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
+
+                LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
                 PostsList.getItems().add(imageView2);
-                PostsList.getItems().add(post);
+                PostsList.getItems().add(btnNumber);
+                PostsList.getItems().add(Showlikebtn);
+                PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                PostsList.getItems().add("_____________________________");
 
             }
         }
         clearTextandImg();
     }
 
-    public void clearTextandImg(){
-        FilePath.setText("");
-        imageView.setPreserveRatio(false);
+    private void likepost(File finalFile) {
+        Post post = Post.getPostByFile(finalFile);
+        boolean success=true;
+        success = post.like(LoggedInAccount.getInstance().getLoggedIn());
+        if(post.getLike().contains(LoggedInAccount.getInstance().getLoggedIn())){
+            System.out.println("ehem");
+            new PopupMessage(Alert.AlertType.ERROR, "you have already liked this post!");
+
+        }
+        post.addlikestate(LoggedInAccount.getInstance().getLoggedIn());
+        //System.out.println(post);
     }
 
+    public void clearTextandImg(){
+        postContent.setText("");
+        FilePath.setText("");
+        imageView.setImage(null);
+        AccountLikePost.getItems().clear();
+    }
 
     public void logout(ActionEvent actionEvent) {
         MenuChanger.changeMenu("LoginMenu");
@@ -143,12 +229,5 @@ public class LoginAccountPageController {
         LoginAccountPageController.setAccount2(account);
         MenuChanger.changeMenu("watchProfilePane");
     }
-
-
-
-
-
-
-
 
 }

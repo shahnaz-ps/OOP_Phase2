@@ -12,10 +12,12 @@ import java.util.HashSet;
 public class Post {
     private static int idCounter = 1;
     private static HashMap<Integer, Post> posts = new HashMap<>();
+    private static HashMap<File, Post> postsFile = new HashMap<>();
     private  ArrayList<Account> views = new ArrayList<>();
     private  ArrayList<Date> dateviewed = new ArrayList<>();
     private  ArrayList<Account> like = new ArrayList<>();
     private  ArrayList<Date> dateliked = new ArrayList<>();
+    private  ArrayList<String>  likeuser = new ArrayList<>();
     private int id;
     private ArrayList<Comment> comments;
     private ArrayList<Like> likes;
@@ -39,7 +41,16 @@ public class Post {
         id = idCounter;
         idCounter++;
         posts.put(id, this);
+        postsFile.put(file,this);
         date = new Date();
+    }
+
+    public static Post getPostByFile(File file) {
+        return postsFile.get(file);
+    }
+
+    public static Post getPostById(int postId) {
+        return posts.get(postId);
     }
 
 
@@ -72,13 +83,14 @@ public class Post {
         return id;
     }
 
+    public File getFile() {
+        return file;
+    }
+
     public ArrayList<Like> getLikes() {
         return likes;
     }
 
-    public static Post getPostById(int postId) {
-        return posts.get(postId);
-    }
 
     public boolean like(Account account) {
         for (Like like : likes) {
@@ -88,6 +100,10 @@ public class Post {
         }
         likes.add(new Like(account));
         return true;
+    }
+
+    public ArrayList<Account> getLike() {
+        return like;
     }
 
     public boolean dislike(Account account) {
@@ -100,16 +116,26 @@ public class Post {
         return false;
     }
 
-    @Override
-    public String toString() {
-        ArrayList<String>  likeuser = new ArrayList<>();
+    public ArrayList<String> getLikeUser(){
         for (Like like:likes) {
             likeuser.add(like.getAccount().getUsername());
         }
-        return owner.getUsername() + " | " + id + "\n" + content+ file
-                + "\nLikes: " + likes.size()+"\nUsers who liked this post : "+likeuser
-                + "\nComments: " + comments.size()
+        return likeuser;
+    }
+
+
+    @Override
+    public String toString() {
+//        return owner.getUsername() + " | " + id + "\n" + content+ file
+//                + "\nLikes: " + likes.size()+"\nUsers who liked this post : "+likeuser
+//                + "\nComments: " + comments.size()
+//                +"\nDate created : "+date;
+
+        return  content
+                //+ "\nLikes: " + likes.size()
+                //+ "\nComments: " + comments.size()
                 +"\nDate created : "+date;
+
     }
 
     public void writeComment(String text, Account account) {
@@ -141,7 +167,7 @@ public class Post {
         return fis;
     }
 
-    public File getFile() {
-        return file;
-    }
+
+
+
 }
