@@ -70,8 +70,10 @@ public class LoginAccountPageController {
                 ShowAccounts.getItems().add(set.getValue().getUsername());
             }
         }
+        int size=LoggedInAccount.getInstance().getLoggedIn().getPosts().size();
 
-        for (int i = LoggedInAccount.getInstance().getLoggedIn().getPosts().size()-1; i >=0; i--) {
+        if(size<=2){
+            for (int i = LoggedInAccount.getInstance().getLoggedIn().getPosts().size() - 1; i >= 0; i--) {
                 if (!PostsList.getItems().contains(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i))) {
                     Button btnNumber = new Button();
                     Button Showlikebtn = new Button();
@@ -146,7 +148,7 @@ public class LoginAccountPageController {
                                         }
                                     });
 
-                                    replyCommentbtn.setOnAction((ActionEvent3) ->{
+                                    replyCommentbtn.setOnAction((ActionEvent3) -> {
                                         TextField replytextfield = new TextField();
                                         replytextfield.setPromptText("reply on this comment");
                                         AccountComentList.getItems().add(replytextfield);
@@ -198,6 +200,136 @@ public class LoginAccountPageController {
 
                 }
             }
+        }
+        else {
+            for (int i = size-1; i >=size-2; i--) {
+                if (!PostsList.getItems().contains(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i))) {
+                    Button btnNumber = new Button();
+                    Button Showlikebtn = new Button();
+                    Button Showcommentbtn = new Button();
+                    Showlikebtn.setText("Show Likes");
+                    btnNumber.setText("Like");
+                    Showcommentbtn.setText("show comment(write a comment)");
+                    int finalI = i;
+
+                    btnNumber.setOnAction((ActionEvent) -> {
+                        likepost(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
+                        clearTextandImg();
+                    });
+
+                    Showlikebtn.setOnAction((ActionEvent) -> {
+                        clearTextandImg();
+                        Post post = Post.getPostByFile(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
+                        if (post.getLike().size() == 0) {
+                            AccountLikePost.getItems().add("no likes for this post :(");
+                        } else {
+                            AccountLikePost.getItems().add("likes : " + post.getLike().size());
+                            for (int j = 0; j < post.getLike().size(); j++) {
+                                if (!AccountLikePost.getItems().contains(post.getLike().get(j).getUsername())) {
+                                    AccountLikePost.getItems().add(post.getLike().get(j).getUsername());
+                                }
+                            }
+                        }
+                    });
+
+                    Showcommentbtn.setOnAction((ActionEvent) -> {
+                        clearTextandImg();
+                        Post post = Post.getPostByFile(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
+                        TextField textField = new TextField();
+                        textField.setPromptText("write down your comment");
+                        Button commentbtn = new Button();
+                        commentbtn.setText("comment");
+                        commentbtn.setOnAction((ActionEvent2) -> {
+                            commentpost(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile(), textField.getText());
+                            clearTextandImg();
+                        });
+
+                        if (post.getComments().size() == 0) {
+                            AccountComentList.getItems().add("no comments for this post :(");
+                            for (int k = 0; k < 2; k++) {
+                                AccountComentList.getItems().add("");
+                            }
+                        } else {
+                            AccountComentList.getItems().add("comments : " + post.getComments().size());
+                            for (int j = 0; j < post.getComments().size(); j++) {
+                                if (!AccountComentList.getItems().contains(post.getComments().get(j))) {
+                                    AccountComentList.getItems().add(post.getComments().get(j));
+                                    Button likeCommentbtn = new Button();
+                                    Button replyCommentbtn = new Button();
+                                    likeCommentbtn.setText("like comment");
+                                    replyCommentbtn.setText("reply on this comment!");
+                                    AccountComentList.getItems().add(likeCommentbtn);
+                                    AccountComentList.getItems().add(replyCommentbtn);
+                                    int finalJ = j;
+                                    likeCommentbtn.setOnAction((ActionEvent3) -> {
+                                        clearTextandImg();
+                                        Comment comment = Comment.getCommentById(post.getComments().get(finalJ).getId());
+                                        boolean hasLiked = false;
+                                        for (int k = 0; k < comment.getLikes().size(); k++) {
+                                            if (comment.getLikes().get(k).getAccount().equals(LoggedInAccount.getInstance().getLoggedIn())) {
+                                                System.out.println("hasliked");
+                                                new PopupMessage(Alert.AlertType.ERROR, "you have already liked this comment!");
+                                                hasLiked = true;
+                                            }
+                                        }
+                                        if (!hasLiked) {
+                                            likecomment(comment);
+                                        }
+                                    });
+
+                                    replyCommentbtn.setOnAction((ActionEvent3) -> {
+                                        TextField replytextfield = new TextField();
+                                        replytextfield.setPromptText("reply on this comment");
+                                        AccountComentList.getItems().add(replytextfield);
+                                        Button submitbtn = new Button();
+                                        submitbtn.setText("submit");
+                                        AccountComentList.getItems().add(submitbtn);
+                                        submitbtn.setOnAction((ActionEvent4) -> {
+                                            Comment comment = Comment.getCommentById(post.getComments().get(finalJ).getId());
+                                            comment.writeReplyComment(replytextfield.getText(), LoggedInAccount.getInstance().getLoggedIn());
+                                            System.out.println("Replied comment wrote!");
+                                            new PopupMessage(Alert.AlertType.ERROR, "you replied to this comment!");
+                                            replytextfield.setText("");
+
+                                        });
+                                    });
+
+                                    AccountComentList.getItems().add("_____________________________");
+                                }
+                            }
+                            for (int k = 0; k < 2; k++) {
+                                AccountComentList.getItems().add("");
+                            }
+                        }
+
+                        AccountComentList.getItems().add(textField);
+                        AccountComentList.getItems().add(commentbtn);
+
+                    });
+
+                    clearTextandImg();
+
+                    vboxForButtons.getChildren().add(btnNumber);
+                    image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                    imageView2 = new ImageView();
+                    imageView2.setImage(image);
+                    imageView2.setFitWidth(100);
+                    imageView2.setFitHeight(150);
+                    imageView2.setPreserveRatio(true);
+                    imageView2.setSmooth(true);
+                    imageView2.setCache(true);
+                    LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                    PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
+                    PostsList.getItems().add(imageView2);
+                    PostsList.getItems().add(btnNumber);
+                    PostsList.getItems().add(Showlikebtn);
+                    PostsList.getItems().add(Showcommentbtn);
+                    PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                    PostsList.getItems().add("_____________________________");
+
+                }
+            }
+        }
             clearTextandImg();
 
     }
@@ -391,4 +523,137 @@ public class LoginAccountPageController {
     public void createPostsinAnotherPage(ActionEvent actionEvent) {
         MenuChanger.changeMenu("CreatePost");
     }
+
+    public void showAllPosts(ActionEvent actionEvent) {
+        int size=LoggedInAccount.getInstance().getLoggedIn().getPosts().size();
+        for (int i = size-1; i >=0; i--) {
+            if (!PostsList.getItems().contains(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i))) {
+                Button btnNumber = new Button();
+                Button Showlikebtn = new Button();
+                Button Showcommentbtn = new Button();
+                Showlikebtn.setText("Show Likes");
+                btnNumber.setText("Like");
+                Showcommentbtn.setText("show comment(write a comment)");
+                int finalI = i;
+
+                btnNumber.setOnAction((ActionEvent) -> {
+                    likepost(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
+                    clearTextandImg();
+                });
+
+                Showlikebtn.setOnAction((ActionEvent) -> {
+                    clearTextandImg();
+                    Post post = Post.getPostByFile(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
+                    if (post.getLike().size() == 0) {
+                        AccountLikePost.getItems().add("no likes for this post :(");
+                    } else {
+                        AccountLikePost.getItems().add("likes : " + post.getLike().size());
+                        for (int j = 0; j < post.getLike().size(); j++) {
+                            if (!AccountLikePost.getItems().contains(post.getLike().get(j).getUsername())) {
+                                AccountLikePost.getItems().add(post.getLike().get(j).getUsername());
+                            }
+                        }
+                    }
+                });
+
+                Showcommentbtn.setOnAction((ActionEvent) -> {
+                    clearTextandImg();
+                    Post post = Post.getPostByFile(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile());
+                    TextField textField = new TextField();
+                    textField.setPromptText("write down your comment");
+                    Button commentbtn = new Button();
+                    commentbtn.setText("comment");
+                    commentbtn.setOnAction((ActionEvent2) -> {
+                        commentpost(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI).getFile(), textField.getText());
+                        clearTextandImg();
+                    });
+
+                    if (post.getComments().size() == 0) {
+                        AccountComentList.getItems().add("no comments for this post :(");
+                        for (int k = 0; k < 2; k++) {
+                            AccountComentList.getItems().add("");
+                        }
+                    } else {
+                        AccountComentList.getItems().add("comments : " + post.getComments().size());
+                        for (int j = 0; j < post.getComments().size(); j++) {
+                            if (!AccountComentList.getItems().contains(post.getComments().get(j))) {
+                                AccountComentList.getItems().add(post.getComments().get(j));
+                                Button likeCommentbtn = new Button();
+                                Button replyCommentbtn = new Button();
+                                likeCommentbtn.setText("like comment");
+                                replyCommentbtn.setText("reply on this comment!");
+                                AccountComentList.getItems().add(likeCommentbtn);
+                                AccountComentList.getItems().add(replyCommentbtn);
+                                int finalJ = j;
+                                likeCommentbtn.setOnAction((ActionEvent3) -> {
+                                    clearTextandImg();
+                                    Comment comment = Comment.getCommentById(post.getComments().get(finalJ).getId());
+                                    boolean hasLiked = false;
+                                    for (int k = 0; k < comment.getLikes().size(); k++) {
+                                        if (comment.getLikes().get(k).getAccount().equals(LoggedInAccount.getInstance().getLoggedIn())) {
+                                            System.out.println("hasliked");
+                                            new PopupMessage(Alert.AlertType.ERROR, "you have already liked this comment!");
+                                            hasLiked = true;
+                                        }
+                                    }
+                                    if (!hasLiked) {
+                                        likecomment(comment);
+                                    }
+                                });
+
+                                replyCommentbtn.setOnAction((ActionEvent3) -> {
+                                    TextField replytextfield = new TextField();
+                                    replytextfield.setPromptText("reply on this comment");
+                                    AccountComentList.getItems().add(replytextfield);
+                                    Button submitbtn = new Button();
+                                    submitbtn.setText("submit");
+                                    AccountComentList.getItems().add(submitbtn);
+                                    submitbtn.setOnAction((ActionEvent4) -> {
+                                        Comment comment = Comment.getCommentById(post.getComments().get(finalJ).getId());
+                                        comment.writeReplyComment(replytextfield.getText(), LoggedInAccount.getInstance().getLoggedIn());
+                                        System.out.println("Replied comment wrote!");
+                                        new PopupMessage(Alert.AlertType.ERROR, "you replied to this comment!");
+                                        replytextfield.setText("");
+
+                                    });
+                                });
+
+                                AccountComentList.getItems().add("_____________________________");
+                            }
+                        }
+                        for (int k = 0; k < 2; k++) {
+                            AccountComentList.getItems().add("");
+                        }
+                    }
+
+                    AccountComentList.getItems().add(textField);
+                    AccountComentList.getItems().add(commentbtn);
+
+                });
+
+                clearTextandImg();
+
+                vboxForButtons.getChildren().add(btnNumber);
+                image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                imageView2 = new ImageView();
+                imageView2.setImage(image);
+                imageView2.setFitWidth(100);
+                imageView2.setFitHeight(150);
+                imageView2.setPreserveRatio(true);
+                imageView2.setSmooth(true);
+                imageView2.setCache(true);
+                LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
+                PostsList.getItems().add(imageView2);
+                PostsList.getItems().add(btnNumber);
+                PostsList.getItems().add(Showlikebtn);
+                PostsList.getItems().add(Showcommentbtn);
+                PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                PostsList.getItems().add("_____________________________");
+
+            }
+        }
+
+    }
+
 }

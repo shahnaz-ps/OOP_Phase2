@@ -16,7 +16,7 @@
       <TextField fx:id="followingsNum" editable="false" layoutX="126.0" layoutY="98.0" prefHeight="26.0" prefWidth="45.0" />
       <Label layoutX="53.0" layoutY="102.0" text="followings :" />
       <ListView fx:id="PostsList" layoutX="512.0" layoutY="53.0" prefHeight="423.0" prefWidth="320.0" />
-      <Label layoutX="650.0" layoutY="29.0" text="posts: " />
+      <Label layoutX="650.0" layoutY="29.0" text="recent posts:" />
       <ImageView fx:id="imageView2" fitHeight="88.0" fitWidth="132.0" layoutX="686.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="68.0" layoutY="148.0" mnemonicParsing="false" onAction="#Follow" prefHeight="50.0" prefWidth="84.0" text="Follow" />
       <Button layoutX="63.0" layoutY="529.0" mnemonicParsing="false" onAction="#BacktoYourAccount" text="back to your account" />
@@ -24,5 +24,6 @@
       <Label layoutX="901.0" layoutY="19.0" text="accounts who liked this posts: " />
       <ListView fx:id="AccountComentList" layoutX="1140.0" layoutY="44.0" prefHeight="434.0" prefWidth="223.0" />
       <Label layoutX="1194.0" layoutY="22.0" text="comments: " />
+      <Button layoutX="623.0" layoutY="497.0" mnemonicParsing="false" onAction="#showAllPosts" text="show all posts" />
    </children>
 </Pane>
