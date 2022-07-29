@@ -2,6 +2,8 @@ package com.example.demo.views;
 
 import com.example.demo.model.Account;
 import com.example.demo.model.LoggedInAccount;
+import com.example.demo.model.LoggedInPost;
+import com.example.demo.model.Post;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -9,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.File;
 import java.util.Iterator;
 
 public class MainPageforAccountController {
@@ -106,8 +109,19 @@ public class MainPageforAccountController {
     public void FollowinPostPressed(MouseEvent mouseEvent) {
     }
 
-    public void YuorPostPressed(MouseEvent mouseEvent) {
-    }
+//    public void YourPostPressed(MouseEvent mouseEvent) {
+//        System.out.println("selected");
+//        if(showYourRecentPosts.getSelectionModel().getSelectedItem().equals()) {
+//            System.out.println("imageview2");
+//            File file= new File(imageView2.getImage().getUrl());
+//            Post post = Post.getPostByFile(file);
+//            System.out.println(post);
+//            LoggedInPost.getInstance().setLoggedIn(post);
+//            //MenuChanger.changeMenu("PostInfo");
+//        }
+//
+//
+//    }
 
 
 
