@@ -656,6 +656,8 @@ public class LoginAccountPageController {
 
     }
 
-
+    public void gotoMainPage(ActionEvent actionEvent) {
+        MenuChanger.changeMenu("MainPaneforLoginAccount");
+    }
 
 }

@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.CreatePostController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="661.0" prefWidth="954.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.CreatePostController">
    <children>
       <Label layoutX="389.0" layoutY="42.0" text="Post : " />
       <Button layoutX="376.0" layoutY="66.0" mnemonicParsing="false" onAction="#ChooseFile" text="Browse" />
@@ -16,6 +16,7 @@
       <TextField fx:id="postContent" layoutX="309.0" layoutY="306.0" prefHeight="33.0" prefWidth="235.0" promptText="add content" />
       <Label layoutX="54.0" layoutY="41.0" text="username :" />
       <TextField fx:id="idTextbox" editable="false" layoutX="126.0" layoutY="37.0" prefHeight="26.0" prefWidth="114.0" />
-      <Button layoutX="67.0" layoutY="421.0" mnemonicParsing="false" onAction="#BacktoYourAccount" text="back to your account" />
+      <Button layoutX="67.0" layoutY="320.0" mnemonicParsing="false" onAction="#BacktoYourAccount" text="back to your account" />
+      <Button layoutX="76.0" layoutY="494.0" mnemonicParsing="false" onAction="#gotoMainPage" text="Go to main page of your account" />
    </children>
 </Pane>

@@ -25,5 +25,6 @@
       <ListView fx:id="AccountComentList" layoutX="1140.0" layoutY="44.0" prefHeight="434.0" prefWidth="223.0" />
       <Label layoutX="1194.0" layoutY="22.0" text="comments: " />
       <Button layoutX="623.0" layoutY="497.0" mnemonicParsing="false" onAction="#showAllPosts" text="show all posts" />
+      <Button layoutX="66.0" layoutY="484.0" mnemonicParsing="false" onAction="#gotoMainPage" text="Go to main page of your account" />
    </children>
 </Pane>

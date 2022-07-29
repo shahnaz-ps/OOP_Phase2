@@ -33,8 +33,8 @@ public class WatchProfileController {
         idTextbox.setText(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getUsername());
         followersNum.setText(String.valueOf(LoginAccountPageController.getAccount2().getNumberOfFollowers()));
         followingsNum.setText(String.valueOf(LoginAccountPageController.getAccount2().getNumberOfFollowings()));
-        int size=Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().size();
 
+        int size=Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().size();
         if(size<=2){
             for (int i = size - 1; i >= 0; i--) {
                 Button btnNumber = new Button();
@@ -459,4 +459,7 @@ public class WatchProfileController {
         }
     }
 
+    public void gotoMainPage(ActionEvent actionEvent) {
+        MenuChanger.changeMenu("MainPaneforLoginAccount");
+    }
 }

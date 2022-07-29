@@ -74,4 +74,7 @@ public class CreatePostController {
         MenuChanger.changeMenu("LoginAccountPage");
     }
 
+    public void gotoMainPage(ActionEvent actionEvent) {
+        MenuChanger.changeMenu("MainPaneforLoginAccount");
+    }
 }
