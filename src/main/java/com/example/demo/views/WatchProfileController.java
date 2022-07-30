@@ -116,18 +116,24 @@ public class WatchProfileController {
                                     }
                                 });
                                 replyCommentbtn.setOnAction((ActionEvent3) -> {
-                                    TextField replytextfield = new TextField();
-                                    replytextfield.setPromptText("reply on this comment");
-                                    AccountComentList.getItems().add(replytextfield);
+
+                                    //TextField replytextfield = new TextField();
+                                    //replytextfield.setPromptText("reply on this comment");
+                                    textField.setPromptText("reply on this comment");
+                                    //AccountComentList.getItems().add(replytextfield);
                                     Button submitbtn = new Button();
                                     submitbtn.setText("submit");
+                                    AccountComentList.getItems().remove(commentbtn);//////
                                     AccountComentList.getItems().add(submitbtn);
                                     submitbtn.setOnAction((ActionEvent4) -> {
                                         Comment comment = Comment.getCommentById(post.getComments().get(finalJ).getId());
-                                        comment.writeReplyComment(replytextfield.getText(), LoggedInAccount.getInstance().getLoggedIn());
+                                        //comment.writeReplyComment(replytextfield.getText(), LoggedInAccount.getInstance().getLoggedIn());
+                                        comment.writeReplyComment(textField.getText(), LoggedInAccount.getInstance().getLoggedIn());
                                         System.out.println("Replied comment wrote!");
                                         new PopupMessage(Alert.AlertType.ERROR, "you replied to this comment!");
-                                        replytextfield.setText("");
+                                        // replytextfield.setText("");
+                                        textField.setText("");
+                                        clearTextandImg();
 
                                     });
                                 });
@@ -307,10 +313,13 @@ public class WatchProfileController {
         boolean success=true;
         success = post.like(LoggedInAccount.getInstance().getLoggedIn());
         if(post.getLike().contains(LoggedInAccount.getInstance().getLoggedIn())){
-            new PopupMessage(Alert.AlertType.WARNING, "you have already liked this post!");
+            System.out.println("you have liked");
+            new PopupMessage(Alert.AlertType.ERROR, "you have already liked this post!");
         }
-        post.addlikestate(LoggedInAccount.getInstance().getLoggedIn());
-        new PopupMessage(Alert.AlertType.ERROR, "you liked this post!");
+        else {
+            post.addlikestate(LoggedInAccount.getInstance().getLoggedIn());
+            new PopupMessage(Alert.AlertType.ERROR, "you liked this post!");
+        }
         //System.out.println(post);
     }
 
