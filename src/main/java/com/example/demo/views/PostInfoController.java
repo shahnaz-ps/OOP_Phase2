@@ -7,6 +7,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
 public class PostInfoController {
     public ListView PostsList;
@@ -15,9 +17,15 @@ public class PostInfoController {
     public ListView AccountComentList;
     public TextField idTextbox;
     public Image image;
+    public Circle ProCircle;
 
     public void initialize() {
         idTextbox.setText(LoggedInAccount.getInstance().getLoggedIn().getUsername());
+        if(LoggedInAccount.getInstance().getLoggedIn().getAccountsFile().get(LoggedInAccount.getInstance().getLoggedIn())!=null){
+            image = new Image(LoggedInAccount.getInstance().getLoggedIn().getAccountsFile().get(LoggedInAccount.getInstance().getLoggedIn()).toURI().toString(), 100, 150, true, true);
+            ProCircle.setFill(new ImagePattern(image));
+        }
+
         image = new Image(LoggedInPost.getInstance().getLoggedIn().getFile().toURI().toString(), 100, 150, true, true);
         imageView2 = new ImageView();
         imageView2.setImage(image);

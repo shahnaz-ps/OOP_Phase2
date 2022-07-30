@@ -6,6 +6,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -21,9 +23,14 @@ public class CreatePostController {
     public Image image;
     public FileChooser fileChooser;
     public File file;
+    public Circle ProCircle;
 
     public void initialize() {
         idTextbox.setText(LoggedInAccount.getInstance().getLoggedIn().getUsername());
+        if(LoggedInAccount.getInstance().getLoggedIn().getAccountsFile().get(LoggedInAccount.getInstance().getLoggedIn())!=null){
+            image = new Image(LoggedInAccount.getInstance().getLoggedIn().getAccountsFile().get(LoggedInAccount.getInstance().getLoggedIn()).toURI().toString(), 100, 150, true, true);
+            ProCircle.setFill(new ImagePattern(image));
+        }
     }
 
     public void ChooseFile(ActionEvent actionEvent) {

@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="906.0" prefWidth="1283.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.PostInfoController">
@@ -21,13 +22,14 @@
       <Label layoutX="563.0" layoutY="218.0" text="accounts who liked this posts: " />
       <ListView fx:id="AccountComentList" layoutX="749.0" layoutY="247.0" prefHeight="455.0" prefWidth="304.0" />
       <Label layoutX="856.0" layoutY="207.0" prefHeight="35.0" prefWidth="77.0" text="comments: " />
-      <Label layoutX="64.0" layoutY="51.0" text="username :" />
-      <TextField fx:id="idTextbox" editable="false" layoutX="136.0" layoutY="47.0" prefHeight="26.0" prefWidth="114.0" />
+      <Label layoutX="64.0" layoutY="136.0" text="username :" />
+      <TextField fx:id="idTextbox" editable="false" layoutX="136.0" layoutY="132.0" prefHeight="26.0" prefWidth="114.0" />
       <Label layoutX="526.0" layoutY="45.0" text="Post page">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
       <Button layoutX="492.0" layoutY="803.0" mnemonicParsing="false" onAction="#gotoMainPage" text="Go to main page of your account" />
+      <Circle fx:id="ProCircle" fill="#1f93ff00" layoutX="106.0" layoutY="62.0" radius="35.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </Pane>
