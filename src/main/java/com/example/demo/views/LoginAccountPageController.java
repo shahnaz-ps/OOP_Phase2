@@ -191,15 +191,33 @@ public class LoginAccountPageController {
                     clearTextandImg();
 
                     vboxForButtons.getChildren().add(btnNumber);
-                    image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
-                    imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
+                    if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                        image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                        imageView2 = new ImageView();
+                        imageView2.setImage(image);
+                        imageView2.setFitWidth(100);
+                        imageView2.setFitHeight(150);
+                        imageView2.setPreserveRatio(true);
+                        imageView2.setSmooth(true);
+                        imageView2.setCache(true);
+                    }
                     LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                     PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
-                    PostsList.getItems().add(imageView2);
-                    PostsList.getItems().add(btnNumber);
-                    PostsList.getItems().add(Showlikebtn);
-                    PostsList.getItems().add(Showcommentbtn);
-                    PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                    if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                        PostsList.getItems().add(imageView2);
+                        PostsList.getItems().add(btnNumber);
+                        PostsList.getItems().add(Showlikebtn);
+                        PostsList.getItems().add(Showcommentbtn);
+                        PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+
+                    }
+                    else {
+                        PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                        PostsList.getItems().add(btnNumber);
+                        PostsList.getItems().add(Showlikebtn);
+                        PostsList.getItems().add(Showcommentbtn);
+
+                    }
                     PostsList.getItems().add("_____________________________");
 
                 }
@@ -314,21 +332,33 @@ public class LoginAccountPageController {
                     clearTextandImg();
 
                     vboxForButtons.getChildren().add(btnNumber);
-                    image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
-                    imageView2 = new ImageView();
-                    imageView2.setImage(image);
-                    imageView2.setFitWidth(100);
-                    imageView2.setFitHeight(150);
-                    imageView2.setPreserveRatio(true);
-                    imageView2.setSmooth(true);
-                    imageView2.setCache(true);
+                    if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                        image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                        imageView2 = new ImageView();
+                        imageView2.setImage(image);
+                        imageView2.setFitWidth(100);
+                        imageView2.setFitHeight(150);
+                        imageView2.setPreserveRatio(true);
+                        imageView2.setSmooth(true);
+                        imageView2.setCache(true);
+                    }
                     LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                     PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
-                    PostsList.getItems().add(imageView2);
-                    PostsList.getItems().add(btnNumber);
-                    PostsList.getItems().add(Showlikebtn);
-                    PostsList.getItems().add(Showcommentbtn);
-                    PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                    if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                        PostsList.getItems().add(imageView2);
+                        PostsList.getItems().add(btnNumber);
+                        PostsList.getItems().add(Showlikebtn);
+                        PostsList.getItems().add(Showcommentbtn);
+                        PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+
+                    }
+                    else {
+                        PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                        PostsList.getItems().add(btnNumber);
+                        PostsList.getItems().add(Showlikebtn);
+                        PostsList.getItems().add(Showcommentbtn);
+
+                    }
                     PostsList.getItems().add("_____________________________");
 
                 }
@@ -640,21 +670,35 @@ public class LoginAccountPageController {
                 clearTextandImg();
 
                 vboxForButtons.getChildren().add(btnNumber);
-                image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
-                imageView2 = new ImageView();
-                imageView2.setImage(image);
-                imageView2.setFitWidth(100);
-                imageView2.setFitHeight(150);
-                imageView2.setPreserveRatio(true);
-                imageView2.setSmooth(true);
-                imageView2.setCache(true);
+                if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                    image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                    imageView2 = new ImageView();
+                    imageView2.setImage(image);
+                    imageView2.setFitWidth(100);
+                    imageView2.setFitHeight(150);
+                    imageView2.setPreserveRatio(true);
+                    imageView2.setSmooth(true);
+                    imageView2.setCache(true);
+                }
                 LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                 PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
-                PostsList.getItems().add(imageView2);
-                PostsList.getItems().add(btnNumber);
-                PostsList.getItems().add(Showlikebtn);
-                PostsList.getItems().add(Showcommentbtn);
-                PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                    PostsList.getItems().add(imageView2);
+                }
+                if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                    PostsList.getItems().add(btnNumber);
+                    PostsList.getItems().add(Showlikebtn);
+                    PostsList.getItems().add(Showcommentbtn);
+                    PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+
+                }
+                else {
+                    PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                    PostsList.getItems().add(btnNumber);
+                    PostsList.getItems().add(Showlikebtn);
+                    PostsList.getItems().add(Showcommentbtn);
+
+                }
                 PostsList.getItems().add("_____________________________");
 
             }

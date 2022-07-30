@@ -29,6 +29,7 @@ public class Post {
     private Image image;
     private FileInputStream fis;
     private File file;
+    boolean onlyContent=false;
 
     public Post(String content, Account owner,File file) {
         this.content = content;
@@ -43,6 +44,14 @@ public class Post {
         posts.put(id, this);
         postsFile.put(file,this);
         date = new Date();
+    }
+
+    public void setOnlyContent(boolean onlyContent) {
+        this.onlyContent = onlyContent;
+    }
+
+    public boolean isOnlyContent() {
+        return onlyContent;
     }
 
     public Account getOwner() {

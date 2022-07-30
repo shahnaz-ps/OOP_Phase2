@@ -56,50 +56,44 @@ public class MainPageforAccountController {
                 btnNumber.setText("go to post info");
                 Showcommentbtn.setText("show comment(write a comment)");
 
-                image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
-                imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
-//                imageView2.setOnMouseClicked((mouseEvent) -> {
-//                    System.out.println("hi");
-//                    gotoPostinfoPage(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI));
-//                });
+                if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                    image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                    imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
+                }
+
                 LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
-                showYourRecentPosts.getItems().add(imageView2);
+                if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                    showYourRecentPosts.getItems().add(imageView2);
+                }
 
-//                showYourRecentPosts.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-//                    @Override
-//                    public void handle(MouseEvent event) {
-//                        System.out.println(finalI);
-//                        System.out.println("pressed");
-//                        gotoPostinfoPage(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI));
-//                        System.out.println(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI));
-//                        event.consume();
-//                    }
-//                });
-
-//                btnNumber.setOnAction((ActionEvent) -> {
-//                    System.out.println(finalI);
-//                    gotoPostinfoPage(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI));                    clearTextandImg();
-//                });
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
                 showYourRecentPosts.getItems().add("_____________________________");
             }
         }else{
             for (int i = size - 1; i >= size-2; i--) {
                 clearTextandImg();
-                image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
-                imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
+                if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                    image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                    imageView2 = new ImageView();
+                    imageView2.setImage(image);
+                    imageView2.setFitWidth(100);
+                    imageView2.setFitHeight(150);
+                    imageView2.setPreserveRatio(true);
+                    imageView2.setSmooth(true);
+                    imageView2.setCache(true);
+                }
                 LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
-                showYourRecentPosts.getItems().add(imageView2);
+                if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                    showYourRecentPosts.getItems().add(imageView2);
+                }
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
                 showYourRecentPosts.getItems().add("_____________________________");
             }
         }
 
     }
-
-
 
     public void createPostsinAnotherPage(ActionEvent actionEvent) {
         MenuChanger.changeMenu("CreatePost");
@@ -124,34 +118,42 @@ public class MainPageforAccountController {
         if (size <= 2) {
             clearTextandImg();
             for (int i = size - 1; i >= 0; i--) {
-                image = new Image(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
-                imageView2 = new ImageView();
-                imageView2.setImage(image);
-                imageView2.setFitWidth(100);
-                imageView2.setFitHeight(150);
-                imageView2.setPreserveRatio(true);
-                imageView2.setSmooth(true);
-                imageView2.setCache(true);
+                if(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile()!=null) {
+                    image = new Image(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                    imageView2 = new ImageView();
+                    imageView2.setImage(image);
+                    imageView2.setFitWidth(100);
+                    imageView2.setFitHeight(150);
+                    imageView2.setPreserveRatio(true);
+                    imageView2.setSmooth(true);
+                    imageView2.setCache(true);
+                }
                 Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                 FollowingsRecentPost.getItems().add(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getUsername());
-                FollowingsRecentPost.getItems().add(imageView2);
+                if(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile()!=null) {
+                    FollowingsRecentPost.getItems().add(imageView2);
+                }
                 FollowingsRecentPost.getItems().add(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i));
                 FollowingsRecentPost.getItems().add("_____________________________");
             }
         } else {
             clearTextandImg();
             for (int i = size - 1; i >= size - 2; i--) {
-                image = new Image(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
-                imageView2 = new ImageView();
-                imageView2.setImage(image);
-                imageView2.setFitWidth(100);
-                imageView2.setFitHeight(150);
-                imageView2.setPreserveRatio(true);
-                imageView2.setSmooth(true);
-                imageView2.setCache(true);
+                if(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile()!=null) {
+                    image = new Image(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                    imageView2 = new ImageView();
+                    imageView2.setImage(image);
+                    imageView2.setFitWidth(100);
+                    imageView2.setFitHeight(150);
+                    imageView2.setPreserveRatio(true);
+                    imageView2.setSmooth(true);
+                    imageView2.setCache(true);
+                }
                 Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                 FollowingsRecentPost.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getUsername());
-                FollowingsRecentPost.getItems().add(imageView2);
+                if(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile()!=null) {
+                    FollowingsRecentPost.getItems().add(imageView2);
+                }
                 FollowingsRecentPost.getItems().add(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i));
                 FollowingsRecentPost.getItems().add("_____________________________");
             }
@@ -211,22 +213,42 @@ public class MainPageforAccountController {
         if(size<=2) {
             for (int i = size - 1; i >= 0; i--) {
                 int finalI = i;
-                image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
-                imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
+                if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                    image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                    imageView2 = new ImageView();
+                    imageView2.setImage(image);
+                    imageView2.setFitWidth(100);
+                    imageView2.setFitHeight(150);
+                    imageView2.setPreserveRatio(true);
+                    imageView2.setSmooth(true);
+                    imageView2.setCache(true);
+                }
                 LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
-                showYourRecentPosts.getItems().add(imageView2);
+                if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                    showYourRecentPosts.getItems().add(imageView2);
+                }
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
                 showYourRecentPosts.getItems().add("_____________________________");
             }
         }else{
             for (int i = size - 1; i >= 0; i--) {
                 clearTextandImg();
-                image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
-                imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
+                if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                    image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                    imageView2 = new ImageView();
+                    imageView2.setImage(image);
+                    imageView2.setFitWidth(100);
+                    imageView2.setFitHeight(150);
+                    imageView2.setPreserveRatio(true);
+                    imageView2.setSmooth(true);
+                    imageView2.setCache(true);
+                }
                 LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
-                showYourRecentPosts.getItems().add(imageView2);
+                if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
+                    showYourRecentPosts.getItems().add(imageView2);
+                }
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
                 showYourRecentPosts.getItems().add("_____________________________");
             }
@@ -241,25 +263,46 @@ public class MainPageforAccountController {
         if(size<=2){
             clearTextandImg();
             for (int i = size - 1; i >= 0; i--) {
-                image = new Image(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
-                imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
+                if(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile()!=null) {
+                    image = new Image(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                    imageView2 = new ImageView();
+                    imageView2.setImage(image);
+                    imageView2.setFitWidth(100);
+                    imageView2.setFitHeight(150);
+                    imageView2.setPreserveRatio(true);
+                    imageView2.setSmooth(true);
+                    imageView2.setCache(true);
+                }
                 Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                 FollowingsRecentPost.getItems().add(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getUsername());
-                FollowingsRecentPost.getItems().add(imageView2);
+                if(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile()!=null) {
+                    FollowingsRecentPost.getItems().add(imageView2);
+                }
                 FollowingsRecentPost.getItems().add(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i));
                 FollowingsRecentPost.getItems().add("_____________________________");
             }
         } else{
             clearTextandImg();
             for (int i = size - 1; i >= 0; i--) {
-                image = new Image(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
-                imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
+                if(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile()!=null) {
+                    image = new Image(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                    imageView2 = new ImageView();
+                    imageView2.setImage(image);
+                    imageView2.setFitWidth(100);
+                    imageView2.setFitHeight(150);
+                    imageView2.setPreserveRatio(true);
+                    imageView2.setSmooth(true);
+                    imageView2.setCache(true);
+                }
                 Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                 FollowingsRecentPost.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getUsername());
-                FollowingsRecentPost.getItems().add(imageView2);
+                if(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile()!=null) {
+                    FollowingsRecentPost.getItems().add(imageView2);
+                }
                 FollowingsRecentPost.getItems().add(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i));
                 FollowingsRecentPost.getItems().add("_____________________________");
             }
         }
     }
+
 }

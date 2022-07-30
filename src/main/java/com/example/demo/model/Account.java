@@ -76,7 +76,9 @@ public class Account {
 
     public void createPost(String content, File file) {
         Post post = new Post(content, this,file);
-
+        if(file==null){
+            post.setOnlyContent(true);
+        }
         posts.add(post);
     }
 

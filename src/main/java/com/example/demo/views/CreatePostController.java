@@ -66,6 +66,7 @@ public class CreatePostController {
         }
         System.out.println("Post created!");
         new PopupMessage(Alert.AlertType.ERROR, "post created!");
+        LoginAccountPageController.setFinalFile(null);
 
         clearTextandImg();
     }
