@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="1064.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.MainPageforAccountController">
@@ -18,6 +19,7 @@
                   <Font size="32.0" />
                </font>
             </Label>
+            <Circle fx:id="ProCircle" fill="#1f93ff00" radius="35.0" stroke="BLACK" strokeType="INSIDE" />
             <Label text="username :" />
             <TextField fx:id="idTextbox" editable="false" prefHeight="26.0" prefWidth="114.0" />
             <Label text="followers :" />
@@ -26,7 +28,7 @@
             <TextField fx:id="followingsNum" editable="false" prefHeight="26.0" prefWidth="45.0" />
             <Button mnemonicParsing="false" onAction="#createPostsinAnotherPage" prefHeight="26.0" prefWidth="194.0" text="create post in another page !" />
             <Button mnemonicParsing="false" onAction="#gotoLoginPage" prefHeight="26.0" prefWidth="209.0" text="Go to your own page!" />
-            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="26.0" prefWidth="219.0" text="Profile" />
+            <Button focusTraversable="false" mnemonicParsing="false" onAction="#ProPane" prefHeight="26.0" prefWidth="219.0" text="Profile" />
             <Button mnemonicParsing="false" onAction="#logout" prefHeight="24.0" prefWidth="191.0" text="logout" />
          </children>
       </VBox>
@@ -35,17 +37,17 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <HBox layoutX="264.0" layoutY="113.0" prefHeight="321.0" prefWidth="359.0">
+      <HBox layoutX="264.0" layoutY="113.0" prefHeight="390.0" prefWidth="357.0">
          <children>
             <ListView fx:id="FollowingsList" onMousePressed="#followingListPressed" prefHeight="319.0" prefWidth="100.0" />
-            <ListView fx:id="FollowingsRecentPost" onMousePressed="#FollowinPostPressed" prefHeight="321.0" prefWidth="201.0" />
+            <ListView fx:id="FollowingsRecentPost" onMousePressed="#FollowinPostPressed" prefHeight="390.0" prefWidth="266.0" />
          </children>
       </HBox>
       <Label layoutX="280.0" layoutY="85.0" text="fillowings :" />
       <Label layoutX="378.0" layoutY="86.0" text="recent posts of your followings" />
-      <HBox layoutX="627.0" layoutY="110.0" prefHeight="345.0" prefWidth="200.0">
+      <HBox layoutX="627.0" layoutY="110.0" prefHeight="404.0" prefWidth="308.0">
          <children>
-            <ListView fx:id="showYourRecentPosts" onMousePressed="#YourPostPressed" prefHeight="365.0" prefWidth="200.0" />
+            <ListView fx:id="showYourRecentPosts" onMousePressed="#YourPostPressed" prefHeight="348.0" prefWidth="360.0" />
          </children>
       </HBox>
       <Label layoutX="689.0" layoutY="89.0" text="your recent posts" />

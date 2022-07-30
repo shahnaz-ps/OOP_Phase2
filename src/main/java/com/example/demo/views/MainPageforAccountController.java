@@ -5,11 +5,14 @@ import com.example.demo.model.LoggedInAccount;
 import com.example.demo.model.LoggedInPost;
 import com.example.demo.model.Post;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
 import java.io.File;
 import java.util.Iterator;
@@ -23,11 +26,16 @@ public class MainPageforAccountController {
     public ListView showYourRecentPosts;
     public Image image;
     public ImageView imageView2;
+    public Circle ProCircle;
 
     public void initialize() {
         idTextbox.setText(LoggedInAccount.getInstance().getLoggedIn().getUsername());
         followersNum.setText(String.valueOf(LoggedInAccount.getInstance().getLoggedIn().getNumberOfFollowers()));
         followingsNum.setText(String.valueOf(LoggedInAccount.getInstance().getLoggedIn().getNumberOfFollowings()));
+        if(LoggedInAccount.getInstance().getLoggedIn().getAccountsFile().get(LoggedInAccount.getInstance().getLoggedIn())!=null){
+            image = new Image(LoggedInAccount.getInstance().getLoggedIn().getAccountsFile().get(LoggedInAccount.getInstance().getLoggedIn()).toURI().toString(), 100, 150, true, true);
+            ProCircle.setFill(new ImagePattern(image));
+        }
         Iterator<Account> it = LoggedInAccount.getInstance().getLoggedIn().getFollowings().iterator();
         while (it.hasNext()) {
             FollowingsList.getItems().add(it.next().getUsername());
@@ -36,12 +44,30 @@ public class MainPageforAccountController {
         int size=LoggedInAccount.getInstance().getLoggedIn().getPosts().size();
         if(size<=2) {
             for (int i = size - 1; i >= 0; i--) {
+                Button btnNumber = new Button();
+                Button Showlikebtn = new Button();
+                Button Showcommentbtn = new Button();
+                Showlikebtn.setText("Show Likes");
+                btnNumber.setText("go to post info");
+                Showcommentbtn.setText("show comment(write a comment)");
 
                 image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
                 imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
                 LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
                 showYourRecentPosts.getItems().add(imageView2);
+                //System.out.println(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                int finalI = i;
+                showYourRecentPosts.setOnMousePressed((mouseEvent) -> {
+                    gotoPostinfoPage(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI));
+                });
+
+                btnNumber.setOnAction((ActionEvent) -> {
+                    gotoPostinfoPage(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI));                    clearTextandImg();
+                });
+                showYourRecentPosts.getItems().add(btnNumber);
+                showYourRecentPosts.getItems().add(Showlikebtn);
+                showYourRecentPosts.getItems().add(Showcommentbtn);
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
                 showYourRecentPosts.getItems().add("_____________________________");
             }
@@ -59,6 +85,8 @@ public class MainPageforAccountController {
         }
 
     }
+
+
 
     public void createPostsinAnotherPage(ActionEvent actionEvent) {
         MenuChanger.changeMenu("CreatePost");
@@ -109,7 +137,7 @@ public class MainPageforAccountController {
     public void FollowinPostPressed(MouseEvent mouseEvent) {
     }
 
-//    public void YourPostPressed(MouseEvent mouseEvent) {
+    public void YourPostPressed(MouseEvent mouseEvent) {
 //        System.out.println("selected");
 //        if(showYourRecentPosts.getSelectionModel().getSelectedItem().equals()) {
 //            System.out.println("imageview2");
@@ -119,10 +147,17 @@ public class MainPageforAccountController {
 //            LoggedInPost.getInstance().setLoggedIn(post);
 //            //MenuChanger.changeMenu("PostInfo");
 //        }
-//
-//
-//    }
 
 
+    }
 
+    private void gotoPostinfoPage(Post post) {
+        System.out.println(post);
+        LoggedInPost.getInstance().setLoggedIn(post);
+          MenuChanger.changeMenu("PostInfo");
+    }
+
+    public void ProPane(ActionEvent actionEvent) {
+        MenuChanger.changeMenu("Profile");
+    }
 }

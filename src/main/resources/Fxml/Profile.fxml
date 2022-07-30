@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="965.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.ProfilePaneController">
+   <children>
+      <Label layoutX="334.0" layoutY="18.0" prefHeight="28.0" prefWidth="68.0" text="Profile">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="70.0" layoutY="169.0" text="username :" />
+      <TextField fx:id="idTextbox" editable="false" layoutX="142.0" layoutY="165.0" prefHeight="26.0" prefWidth="114.0" />
+      <Label layoutX="72.0" layoutY="199.0" text="followers :" />
+      <TextField fx:id="followersNum" editable="false" layoutX="142.0" layoutY="194.0" prefHeight="26.0" prefWidth="45.0" />
+      <TextField fx:id="followingsNum" editable="false" layoutX="142.0" layoutY="226.0" prefHeight="26.0" prefWidth="45.0" />
+      <Label layoutX="69.0" layoutY="230.0" text="followings :" />
+      <Label layoutX="395.0" layoutY="112.0" text="Choose your profile picture">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Button layoutX="493.0" layoutY="162.0" mnemonicParsing="false" onAction="#ChooseFile" prefHeight="26.0" prefWidth="58.0" text="Browse" />
+      <TextField fx:id="FilePath" layoutX="455.0" layoutY="191.0" prefHeight="33.0" prefWidth="135.0" promptText="path of selected file" />
+      <Button layoutX="487.0" layoutY="336.0" mnemonicParsing="false" onAction="#SubmitProPic" prefHeight="37.0" prefWidth="93.0" text="submit" />
+      <ImageView fx:id="imageView" fitHeight="84.0" fitWidth="132.0" layoutX="463.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imageView3" fitHeight="113.0" fitWidth="176.0" layoutX="74.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" />
+      <Circle fx:id="ProCircle" fill="#1f93ff00" layoutX="116.0" layoutY="90.0" radius="53.0" stroke="BLACK" strokeType="INSIDE" />
+      <Button layoutX="69.0" layoutY="321.0" mnemonicParsing="false" onAction="#gotoMainPage" text="Go to main page of your account" />
+   </children>
+</Pane>

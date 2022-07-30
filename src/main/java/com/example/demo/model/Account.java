@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.thoughtworks.xstream.converters.reflection.FieldKey;
 import javafx.scene.image.Image;
 
 import java.io.File;
@@ -16,21 +17,37 @@ public class Account {
     private HashSet<Account> followings;
     private ArrayList<Post> posts;
     protected static HashMap<String, Account> accounts = new HashMap<>();
+    private static HashMap<Account, File> accountsFile = new HashMap<>();
     private ArrayList<Account> blockedUsers = new ArrayList<>();
     private ArrayList<Account> views = new ArrayList<>();
     private  ArrayList<Date> dateviewed = new ArrayList<>();
     private Date dateview;
+    private File file;
 
-    protected Account(String username, String password) {
+    protected Account(String username, String password,File file) {
         this.username = username.toLowerCase();
         this.password = password;
+        this.file=file;
         followers = new HashSet<>();
         followings = new HashSet<>();
         posts = new ArrayList<>();
+        accountsFile.put(this,file);
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public static HashMap<Account, File> getAccountsFile() {
+        return accountsFile;
     }
 
     public static Account createAccount(String username, String password) {
-        Account account = new Account(username, password);
+        Account account = new Account(username, password,null);
         accounts.put(username, account);
         return account;
     }
