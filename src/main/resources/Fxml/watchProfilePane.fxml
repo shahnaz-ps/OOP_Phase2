@@ -16,7 +16,7 @@
       <TextField fx:id="followersNum" editable="false" layoutX="119.0" layoutY="134.0" prefHeight="26.0" prefWidth="45.0" />
       <TextField fx:id="followingsNum" editable="false" layoutX="119.0" layoutY="166.0" prefHeight="26.0" prefWidth="45.0" />
       <Label layoutX="46.0" layoutY="170.0" text="followings :" />
-      <ListView fx:id="PostsList" layoutX="512.0" layoutY="53.0" prefHeight="423.0" prefWidth="320.0" />
+      <ListView fx:id="PostsList" layoutX="512.0" layoutY="53.0" onMousePressed="#PostListPressed" prefHeight="423.0" prefWidth="320.0" />
       <Label layoutX="650.0" layoutY="29.0" text="recent posts:" />
       <ImageView fx:id="imageView2" fitHeight="88.0" fitWidth="132.0" layoutX="686.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="61.0" layoutY="216.0" mnemonicParsing="false" onAction="#Follow" prefHeight="50.0" prefWidth="84.0" text="Follow" />

@@ -1,9 +1,6 @@
 package com.example.demo.views;
 
-import com.example.demo.model.Account;
-import com.example.demo.model.Comment;
-import com.example.demo.model.LoggedInAccount;
-import com.example.demo.model.Post;
+import com.example.demo.model.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -11,11 +8,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class WatchProfileController {
 
@@ -469,4 +469,21 @@ public class WatchProfileController {
     public void gotoMainPage(ActionEvent actionEvent) {
         MenuChanger.changeMenu("MainPaneforLoginAccount");
     }
+
+    public void PostListPressed(MouseEvent mouseEvent) throws MalformedURLException {
+        if(PostsList.getSelectionModel().getSelectedItem().getClass().equals(ImageView.class)){
+            ImageView imageView3= (ImageView) PostsList.getSelectionModel().getSelectedItem();
+            URL url = new URL(imageView3.getImage().getUrl());
+            File f = new File(url.getFile());
+            System.out.println(f);
+            Post post = Post.getPostByFile(f);
+            gotoPostinfoPage(post);
+        }
+    }
+
+    private void gotoPostinfoPage(Post post) {
+        LoggedInPost.getInstance().setLoggedIn(post);
+        MenuChanger.changeMenu("PostInfo");
+    }
+
 }

@@ -19,6 +19,8 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 
 public class LoginAccountPageController {
@@ -330,11 +332,6 @@ public class LoginAccountPageController {
         }
             clearTextandImg();
 
-    }
-
-    private void gotoPostinfoPage(Post post) {
-        LoggedInPost.getInstance().setLoggedIn(post);
-        MenuChanger.changeMenu("PostInfo");
     }
 
     public void ChooseFile(ActionEvent actionEvent) throws IOException {
@@ -661,6 +658,22 @@ public class LoginAccountPageController {
 
     public void gotoMainPage(ActionEvent actionEvent) {
         MenuChanger.changeMenu("MainPaneforLoginAccount");
+    }
+
+    public void PostListPressed(MouseEvent mouseEvent) throws MalformedURLException {
+        if(PostsList.getSelectionModel().getSelectedItem().getClass().equals(ImageView.class)){
+            ImageView imageView3= (ImageView) PostsList.getSelectionModel().getSelectedItem();
+            URL url = new URL(imageView3.getImage().getUrl());
+            File f = new File(url.getFile());
+            System.out.println(f);
+            Post post = Post.getPostByFile(f);
+            gotoPostinfoPage(post);
+        }
+    }
+
+    private void gotoPostinfoPage(Post post) {
+        LoggedInPost.getInstance().setLoggedIn(post);
+        MenuChanger.changeMenu("PostInfo");
     }
 
 }
