@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
 import java.io.File;
 
@@ -27,12 +29,17 @@ public class WatchProfileController {
     public Image image;
     public ListView AccountLikePost;
     public ListView AccountComentList;
+    public Circle ProCircle;
 
 
     public void initialize() {
         idTextbox.setText(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getUsername());
         followersNum.setText(String.valueOf(LoginAccountPageController.getAccount2().getNumberOfFollowers()));
         followingsNum.setText(String.valueOf(LoginAccountPageController.getAccount2().getNumberOfFollowings()));
+        if(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getAccountsFile().get(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()))!=null){
+            image = new Image(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getAccountsFile().get(Account.getAccount(LoginAccountPageController.getAccount2().getUsername())).toURI().toString(), 100, 150, true, true);
+            ProCircle.setFill(new ImagePattern(image));
+        }
 
         int size=Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().size();
         if(size<=2){

@@ -6,19 +6,20 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="1474.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.WatchProfileController">
    <children>
-      <Label layoutX="54.0" layoutY="41.0" text="username :" />
-      <TextField fx:id="idTextbox" editable="false" layoutX="126.0" layoutY="37.0" prefHeight="26.0" prefWidth="114.0" />
-      <Label layoutX="56.0" layoutY="71.0" text="followers :" />
-      <TextField fx:id="followersNum" editable="false" layoutX="126.0" layoutY="66.0" prefHeight="26.0" prefWidth="45.0" />
-      <TextField fx:id="followingsNum" editable="false" layoutX="126.0" layoutY="98.0" prefHeight="26.0" prefWidth="45.0" />
-      <Label layoutX="53.0" layoutY="102.0" text="followings :" />
+      <Label layoutX="47.0" layoutY="109.0" text="username :" />
+      <TextField fx:id="idTextbox" editable="false" layoutX="119.0" layoutY="105.0" prefHeight="26.0" prefWidth="114.0" />
+      <Label layoutX="49.0" layoutY="139.0" text="followers :" />
+      <TextField fx:id="followersNum" editable="false" layoutX="119.0" layoutY="134.0" prefHeight="26.0" prefWidth="45.0" />
+      <TextField fx:id="followingsNum" editable="false" layoutX="119.0" layoutY="166.0" prefHeight="26.0" prefWidth="45.0" />
+      <Label layoutX="46.0" layoutY="170.0" text="followings :" />
       <ListView fx:id="PostsList" layoutX="512.0" layoutY="53.0" prefHeight="423.0" prefWidth="320.0" />
       <Label layoutX="650.0" layoutY="29.0" text="recent posts:" />
       <ImageView fx:id="imageView2" fitHeight="88.0" fitWidth="132.0" layoutX="686.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="68.0" layoutY="148.0" mnemonicParsing="false" onAction="#Follow" prefHeight="50.0" prefWidth="84.0" text="Follow" />
+      <Button layoutX="61.0" layoutY="216.0" mnemonicParsing="false" onAction="#Follow" prefHeight="50.0" prefWidth="84.0" text="Follow" />
       <Button layoutX="63.0" layoutY="529.0" mnemonicParsing="false" onAction="#BacktoYourAccount" text="back to your account" />
       <ListView fx:id="AccountLikePost" layoutX="893.0" layoutY="43.0" prefHeight="434.0" prefWidth="200.0" />
       <Label layoutX="901.0" layoutY="19.0" text="accounts who liked this posts: " />
@@ -26,5 +27,6 @@
       <Label layoutX="1194.0" layoutY="22.0" text="comments: " />
       <Button layoutX="623.0" layoutY="497.0" mnemonicParsing="false" onAction="#showAllPosts" text="show all posts" />
       <Button layoutX="66.0" layoutY="484.0" mnemonicParsing="false" onAction="#gotoMainPage" text="Go to main page of your account" />
+      <Circle fx:id="ProCircle" fill="#1f93ff00" layoutX="96.0" layoutY="52.0" radius="35.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </Pane>

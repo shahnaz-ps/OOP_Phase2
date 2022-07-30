@@ -14,6 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 
 //import java.awt.*;
@@ -44,6 +46,7 @@ public class LoginAccountPageController {
     public VBox vboxForShowLikeButtons = new VBox();
     public ListView AccountLikePost;
     public ListView AccountComentList;
+    public Circle ProCircle;
 
     public static File getFinalFile() {
         return finalFile;
@@ -65,6 +68,10 @@ public class LoginAccountPageController {
         idTextbox.setText(LoggedInAccount.getInstance().getLoggedIn().getUsername());
         followersNum.setText(String.valueOf(LoggedInAccount.getInstance().getLoggedIn().getNumberOfFollowers()));
         followingsNum.setText(String.valueOf(LoggedInAccount.getInstance().getLoggedIn().getNumberOfFollowings()));
+        if(LoggedInAccount.getInstance().getLoggedIn().getAccountsFile().get(LoggedInAccount.getInstance().getLoggedIn())!=null){
+            image = new Image(LoggedInAccount.getInstance().getLoggedIn().getAccountsFile().get(LoggedInAccount.getInstance().getLoggedIn()).toURI().toString(), 100, 150, true, true);
+            ProCircle.setFill(new ImagePattern(image));
+        }
         for (Map.Entry<String, Account> set : Account.getAccounts().entrySet()) {
             if(!set.getValue().equals(LoggedInAccount.getInstance().getLoggedIn())) {
                 ShowAccounts.getItems().add(set.getValue().getUsername());

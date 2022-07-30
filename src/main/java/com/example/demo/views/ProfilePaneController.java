@@ -40,6 +40,10 @@ public class ProfilePaneController {
         idTextbox.setText(LoggedInAccount.getInstance().getLoggedIn().getUsername());
         followersNum.setText(String.valueOf(LoggedInAccount.getInstance().getLoggedIn().getNumberOfFollowers()));
         followingsNum.setText(String.valueOf(LoggedInAccount.getInstance().getLoggedIn().getNumberOfFollowings()));
+        if(LoggedInAccount.getInstance().getLoggedIn().getAccountsFile().get(LoggedInAccount.getInstance().getLoggedIn())!=null){
+            image = new Image(LoggedInAccount.getInstance().getLoggedIn().getAccountsFile().get(LoggedInAccount.getInstance().getLoggedIn()).toURI().toString(), 100, 150, true, true);
+            ProCircle.setFill(new ImagePattern(image));
+        }
     }
 
 
