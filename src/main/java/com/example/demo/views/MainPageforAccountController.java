@@ -175,6 +175,11 @@ public class MainPageforAccountController {
             Post post = Post.getPostByFile(f);
             gotoPostinfoPage(post);
         }
+        if(FollowingsRecentPost.getSelectionModel().getSelectedItem().getClass().equals(Post.class)){
+            Post post = (Post) FollowingsRecentPost.getSelectionModel().getSelectedItem();
+            gotoPostinfoPage(post);
+            System.out.println(post);
+        }
 
     }
 
@@ -189,17 +194,18 @@ public class MainPageforAccountController {
     }
 
     public void YourPostPressed(MouseEvent mouseEvent) throws MalformedURLException {
-//        System.out.println(showYourRecentPosts.getSelectionModel().getSelectedItem());
         if(showYourRecentPosts.getSelectionModel().getSelectedItem().getClass().equals(ImageView.class)){
-            //System.out.println(showYourRecentPosts.getSelectionModel().getSelectedItem());
             ImageView imageView3= (ImageView) showYourRecentPosts.getSelectionModel().getSelectedItem();
-//            System.out.println(imageView3);
             URL url = new URL(imageView3.getImage().getUrl());
             File f = new File(url.getFile());
             System.out.println(f);
             Post post = Post.getPostByFile(f);
-//            System.out.println(post);
             gotoPostinfoPage(post);
+        }
+        if(showYourRecentPosts.getSelectionModel().getSelectedItem().getClass().equals(Post.class)){
+            Post post = (Post) showYourRecentPosts.getSelectionModel().getSelectedItem();
+            gotoPostinfoPage(post);
+            System.out.println(post);
         }
 
     }

@@ -719,6 +719,12 @@ public class LoginAccountPageController {
             Post post = Post.getPostByFile(f);
             gotoPostinfoPage(post);
         }
+        if(PostsList.getSelectionModel().getSelectedItem().getClass().equals(Post.class)){
+            Post post = (Post) PostsList.getSelectionModel().getSelectedItem();
+            gotoPostinfoPage(post);
+            System.out.println(post);
+        }
+
     }
 
     private void gotoPostinfoPage(Post post) {

@@ -24,7 +24,7 @@ public class PostInfoController {
 
     public void initialize() {
         idTextbox.setText(LoggedInPost.getInstance().getLoggedIn().getOwner().getUsername());
-        if(LoggedInPost.getInstance().getLoggedIn().getOwner().getAccountsFile().get(LoggedInPost.getInstance().getLoggedIn().getOwner())!=null){
+        if (LoggedInPost.getInstance().getLoggedIn().getOwner().getAccountsFile().get(LoggedInPost.getInstance().getLoggedIn().getOwner()) != null) {
             image = new Image(LoggedInPost.getInstance().getLoggedIn().getOwner().getAccountsFile().get(LoggedInPost.getInstance().getLoggedIn().getOwner()).toURI().toString(), 100, 150, true, true);
             ProCircle.setFill(new ImagePattern(image));
         }
@@ -115,7 +115,7 @@ public class PostInfoController {
                                 comment.writeReplyComment(textField.getText(), LoggedInAccount.getInstance().getLoggedIn());
                                 System.out.println("Replied comment wrote!");
                                 new PopupMessage(Alert.AlertType.ERROR, "you replied to this comment!");
-                               // replytextfield.setText("");
+                                // replytextfield.setText("");
                                 textField.setText("");
                                 clearTextandImg();
                             });
@@ -134,15 +134,30 @@ public class PostInfoController {
 
         });
 
-        image = new Image(LoggedInPost.getInstance().getLoggedIn().getFile().toURI().toString(), 100, 150, true, true);
-        imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
+        if (LoggedInPost.getInstance().getLoggedIn().getFile() != null){
+            image = new Image(LoggedInPost.getInstance().getLoggedIn().getFile().toURI().toString(), 100, 150, true, true);
+        imageView2 = new ImageView();
+        imageView2.setImage(image);
+        imageView2.setFitWidth(100);
+        imageView2.setFitHeight(150);
+        imageView2.setPreserveRatio(true);
+        imageView2.setSmooth(true);
+        imageView2.setCache(true);
+         }
         LoggedInPost.getInstance().getLoggedIn().addview(LoggedInAccount.getInstance().getLoggedIn());
-        PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
-        PostsList.getItems().add(imageView2);
-        PostsList.getItems().add(btnNumber);
-        PostsList.getItems().add(Showlikebtn);
-        PostsList.getItems().add(Showcommentbtn);
-        PostsList.getItems().add(LoggedInPost.getInstance().getLoggedIn());
+        PostsList.getItems().add(LoggedInPost.getInstance().getLoggedIn().getOwner().getUsername());
+        if (LoggedInPost.getInstance().getLoggedIn().getFile() != null) {
+            PostsList.getItems().add(imageView2);
+            PostsList.getItems().add(btnNumber);
+            PostsList.getItems().add(Showlikebtn);
+            PostsList.getItems().add(Showcommentbtn);
+        }
+        else {
+            PostsList.getItems().add(LoggedInPost.getInstance().getLoggedIn());
+            PostsList.getItems().add(btnNumber);
+            PostsList.getItems().add(Showlikebtn);
+            PostsList.getItems().add(Showcommentbtn);
+        }
         PostsList.getItems().add("_____________________________");
     }
 
