@@ -1,5 +1,6 @@
 package com.example.demo.views;
 
+import com.example.demo.model.Account;
 import com.example.demo.model.LoggedInAccount;
 import com.example.demo.model.LoggedInPost;
 import javafx.event.ActionEvent;
@@ -20,9 +21,9 @@ public class PostInfoController {
     public Circle ProCircle;
 
     public void initialize() {
-        idTextbox.setText(LoggedInAccount.getInstance().getLoggedIn().getUsername());
-        if(LoggedInAccount.getInstance().getLoggedIn().getAccountsFile().get(LoggedInAccount.getInstance().getLoggedIn())!=null){
-            image = new Image(LoggedInAccount.getInstance().getLoggedIn().getAccountsFile().get(LoggedInAccount.getInstance().getLoggedIn()).toURI().toString(), 100, 150, true, true);
+        idTextbox.setText(LoggedInPost.getInstance().getLoggedIn().getOwner().getUsername());
+        if(LoggedInPost.getInstance().getLoggedIn().getOwner().getAccountsFile().get(LoggedInPost.getInstance().getLoggedIn().getOwner())!=null){
+            image = new Image(LoggedInPost.getInstance().getLoggedIn().getOwner().getAccountsFile().get(LoggedInPost.getInstance().getLoggedIn().getOwner()).toURI().toString(), 100, 150, true, true);
             ProCircle.setFill(new ImagePattern(image));
         }
 

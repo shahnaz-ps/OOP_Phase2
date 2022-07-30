@@ -5,6 +5,7 @@ import com.example.demo.model.LoggedInAccount;
 import com.example.demo.model.LoggedInPost;
 import com.example.demo.model.Post;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -15,6 +16,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Iterator;
 
 public class MainPageforAccountController {
@@ -44,6 +48,7 @@ public class MainPageforAccountController {
         int size=LoggedInAccount.getInstance().getLoggedIn().getPosts().size();
         if(size<=2) {
             for (int i = size - 1; i >= 0; i--) {
+                int finalI = i;
                 Button btnNumber = new Button();
                 Button Showlikebtn = new Button();
                 Button Showcommentbtn = new Button();
@@ -53,21 +58,29 @@ public class MainPageforAccountController {
 
                 image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
                 imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
+//                imageView2.setOnMouseClicked((mouseEvent) -> {
+//                    System.out.println("hi");
+//                    gotoPostinfoPage(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI));
+//                });
                 LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
                 showYourRecentPosts.getItems().add(imageView2);
-                //System.out.println(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
-                int finalI = i;
-                showYourRecentPosts.setOnMousePressed((mouseEvent) -> {
-                    gotoPostinfoPage(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI));
-                });
 
-                btnNumber.setOnAction((ActionEvent) -> {
-                    gotoPostinfoPage(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI));                    clearTextandImg();
-                });
-                showYourRecentPosts.getItems().add(btnNumber);
-                showYourRecentPosts.getItems().add(Showlikebtn);
-                showYourRecentPosts.getItems().add(Showcommentbtn);
+//                showYourRecentPosts.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+//                    @Override
+//                    public void handle(MouseEvent event) {
+//                        System.out.println(finalI);
+//                        System.out.println("pressed");
+//                        gotoPostinfoPage(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI));
+//                        System.out.println(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI));
+//                        event.consume();
+//                    }
+//                });
+
+//                btnNumber.setOnAction((ActionEvent) -> {
+//                    System.out.println(finalI);
+//                    gotoPostinfoPage(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(finalI));                    clearTextandImg();
+//                });
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
                 showYourRecentPosts.getItems().add("_____________________________");
             }
@@ -102,8 +115,129 @@ public class MainPageforAccountController {
 
     public void followingListPressed(MouseEvent mouseEvent) {
         Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString());
-        int size=Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().size();
+        int size = Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().size();
         System.out.println(size);
+        if (size == 0) {
+            FollowingsRecentPost.getItems().add("no posts yet :(");
+        }
+        else{
+        if (size <= 2) {
+            clearTextandImg();
+            for (int i = size - 1; i >= 0; i--) {
+                image = new Image(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                imageView2 = new ImageView();
+                imageView2.setImage(image);
+                imageView2.setFitWidth(100);
+                imageView2.setFitHeight(150);
+                imageView2.setPreserveRatio(true);
+                imageView2.setSmooth(true);
+                imageView2.setCache(true);
+                Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                FollowingsRecentPost.getItems().add(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getUsername());
+                FollowingsRecentPost.getItems().add(imageView2);
+                FollowingsRecentPost.getItems().add(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i));
+                FollowingsRecentPost.getItems().add("_____________________________");
+            }
+        } else {
+            clearTextandImg();
+            for (int i = size - 1; i >= size - 2; i--) {
+                image = new Image(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                imageView2 = new ImageView();
+                imageView2.setImage(image);
+                imageView2.setFitWidth(100);
+                imageView2.setFitHeight(150);
+                imageView2.setPreserveRatio(true);
+                imageView2.setSmooth(true);
+                imageView2.setCache(true);
+                Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                FollowingsRecentPost.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getUsername());
+                FollowingsRecentPost.getItems().add(imageView2);
+                FollowingsRecentPost.getItems().add(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i));
+                FollowingsRecentPost.getItems().add("_____________________________");
+            }
+        }
+    }
+
+    }
+
+    private void clearTextandImg() {
+        FollowingsRecentPost.getItems().clear();
+    }
+
+    public void FollowinPostPressed(MouseEvent mouseEvent) throws MalformedURLException {
+        if(FollowingsRecentPost.getSelectionModel().getSelectedItem().getClass().equals(ImageView.class)){
+            ImageView imageView3= (ImageView) FollowingsRecentPost.getSelectionModel().getSelectedItem();
+            URL url = new URL(imageView3.getImage().getUrl());
+            File f = new File(url.getFile());
+            System.out.println(f);
+            Post post = Post.getPostByFile(f);
+            gotoPostinfoPage(post);
+        }
+
+    }
+
+    private void gotoPostinfoPage(Post post) {
+        System.out.println("im in");
+        LoggedInPost.getInstance().setLoggedIn(post);
+          MenuChanger.changeMenu("PostInfo");
+    }
+
+    public void ProPane(ActionEvent actionEvent) {
+        MenuChanger.changeMenu("Profile");
+    }
+
+    public void YourPostPressed(MouseEvent mouseEvent) throws MalformedURLException {
+//        System.out.println(showYourRecentPosts.getSelectionModel().getSelectedItem());
+        if(showYourRecentPosts.getSelectionModel().getSelectedItem().getClass().equals(ImageView.class)){
+            //System.out.println(showYourRecentPosts.getSelectionModel().getSelectedItem());
+            ImageView imageView3= (ImageView) showYourRecentPosts.getSelectionModel().getSelectedItem();
+//            System.out.println(imageView3);
+            URL url = new URL(imageView3.getImage().getUrl());
+            File f = new File(url.getFile());
+            System.out.println(f);
+            Post post = Post.getPostByFile(f);
+//            System.out.println(post);
+            gotoPostinfoPage(post);
+        }
+
+    }
+
+    public void showAllYourPosts(ActionEvent actionEvent) {
+        showYourRecentPosts.getItems().clear();
+        int size=LoggedInAccount.getInstance().getLoggedIn().getPosts().size();
+        if(size==0){
+            showYourRecentPosts.getItems().add("no posts yet:(");
+        }
+        if(size<=2) {
+            for (int i = size - 1; i >= 0; i--) {
+                int finalI = i;
+                image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
+                LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
+                showYourRecentPosts.getItems().add(imageView2);
+                showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                showYourRecentPosts.getItems().add("_____________________________");
+            }
+        }else{
+            for (int i = size - 1; i >= 0; i--) {
+                clearTextandImg();
+                image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
+                imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
+                LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
+                showYourRecentPosts.getItems().add(imageView2);
+                showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                showYourRecentPosts.getItems().add("_____________________________");
+            }
+        }
+
+    }
+
+    public void showAllFollowingPost(ActionEvent actionEvent) {
+        Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString());
+        FollowingsRecentPost.getItems().clear();
+        int size=Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().size();
         if(size<=2){
             clearTextandImg();
             for (int i = size - 1; i >= 0; i--) {
@@ -117,7 +251,7 @@ public class MainPageforAccountController {
             }
         } else{
             clearTextandImg();
-            for (int i = size - 1; i >= size-2; i--) {
+            for (int i = size - 1; i >= 0; i--) {
                 image = new Image(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
                 imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
                 Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
@@ -127,37 +261,5 @@ public class MainPageforAccountController {
                 FollowingsRecentPost.getItems().add("_____________________________");
             }
         }
-
-    }
-
-    private void clearTextandImg() {
-        FollowingsRecentPost.getItems().clear();
-    }
-
-    public void FollowinPostPressed(MouseEvent mouseEvent) {
-    }
-
-    public void YourPostPressed(MouseEvent mouseEvent) {
-//        System.out.println("selected");
-//        if(showYourRecentPosts.getSelectionModel().getSelectedItem().equals()) {
-//            System.out.println("imageview2");
-//            File file= new File(imageView2.getImage().getUrl());
-//            Post post = Post.getPostByFile(file);
-//            System.out.println(post);
-//            LoggedInPost.getInstance().setLoggedIn(post);
-//            //MenuChanger.changeMenu("PostInfo");
-//        }
-
-
-    }
-
-    private void gotoPostinfoPage(Post post) {
-        System.out.println(post);
-        LoggedInPost.getInstance().setLoggedIn(post);
-          MenuChanger.changeMenu("PostInfo");
-    }
-
-    public void ProPane(ActionEvent actionEvent) {
-        MenuChanger.changeMenu("Profile");
     }
 }

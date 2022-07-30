@@ -43,7 +43,7 @@
             <ListView fx:id="FollowingsRecentPost" onMousePressed="#FollowinPostPressed" prefHeight="390.0" prefWidth="266.0" />
          </children>
       </HBox>
-      <Label layoutX="280.0" layoutY="85.0" text="fillowings :" />
+      <Label layoutX="280.0" layoutY="85.0" text="followings:" />
       <Label layoutX="378.0" layoutY="86.0" text="recent posts of your followings" />
       <HBox layoutX="627.0" layoutY="110.0" prefHeight="404.0" prefWidth="308.0">
          <children>
@@ -51,5 +51,7 @@
          </children>
       </HBox>
       <Label layoutX="689.0" layoutY="89.0" text="your recent posts" />
+      <Button layoutX="738.0" layoutY="534.0" mnemonicParsing="false" onAction="#showAllYourPosts" text="show all posts" />
+      <Button layoutX="434.0" layoutY="534.0" mnemonicParsing="false" onAction="#showAllFollowingPost" text="show all posts" />
    </children>
 </Pane>

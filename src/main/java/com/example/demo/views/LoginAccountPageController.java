@@ -1,9 +1,6 @@
 package com.example.demo.views;
 
-import com.example.demo.model.Account;
-import com.example.demo.model.Comment;
-import com.example.demo.model.LoggedInAccount;
-import com.example.demo.model.Post;
+import com.example.demo.model.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -189,13 +186,7 @@ public class LoginAccountPageController {
 
                     vboxForButtons.getChildren().add(btnNumber);
                     image = new Image(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile().toURI().toString(), 100, 150, true, true);
-                    imageView2 = new ImageView();
-                    imageView2.setImage(image);
-                    imageView2.setFitWidth(100);
-                    imageView2.setFitHeight(150);
-                    imageView2.setPreserveRatio(true);
-                    imageView2.setSmooth(true);
-                    imageView2.setCache(true);
+                    imageView2 = new ImageView();imageView2.setImage(image);imageView2.setFitWidth(100);imageView2.setFitHeight(150);imageView2.setPreserveRatio(true);imageView2.setSmooth(true);imageView2.setCache(true);
                     LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                     PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
                     PostsList.getItems().add(imageView2);
@@ -339,6 +330,11 @@ public class LoginAccountPageController {
         }
             clearTextandImg();
 
+    }
+
+    private void gotoPostinfoPage(Post post) {
+        LoggedInPost.getInstance().setLoggedIn(post);
+        MenuChanger.changeMenu("PostInfo");
     }
 
     public void ChooseFile(ActionEvent actionEvent) throws IOException {

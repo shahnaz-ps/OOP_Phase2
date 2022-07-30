@@ -45,6 +45,10 @@ public class Post {
         date = new Date();
     }
 
+    public Account getOwner() {
+        return owner;
+    }
+
     public static Post getPostByFile(File file) {
         return postsFile.get(file);
     }
