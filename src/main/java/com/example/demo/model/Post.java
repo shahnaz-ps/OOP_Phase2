@@ -92,6 +92,18 @@ public class Post {
         }
     }
 
+    public ArrayList<Account> getViews() {
+        return views;
+    }
+
+    public ArrayList<Date> getDateliked() {
+        return dateliked;
+    }
+
+    public ArrayList<Date> getDateviewed() {
+        return dateviewed;
+    }
+
     public int getId() {
         return id;
     }

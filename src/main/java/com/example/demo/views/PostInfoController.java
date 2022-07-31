@@ -145,18 +145,42 @@ public class PostInfoController {
         imageView2.setCache(true);
          }
         LoggedInPost.getInstance().getLoggedIn().addview(LoggedInAccount.getInstance().getLoggedIn());
+        Post post =LoggedInPost.getInstance().getLoggedIn();
         PostsList.getItems().add(LoggedInPost.getInstance().getLoggedIn().getOwner().getUsername());
         if (LoggedInPost.getInstance().getLoggedIn().getFile() != null) {
             PostsList.getItems().add(imageView2);
             PostsList.getItems().add(btnNumber);
             PostsList.getItems().add(Showlikebtn);
             PostsList.getItems().add(Showcommentbtn);
+            PostsList.getItems().add(LoggedInPost.getInstance().getLoggedIn());
+            if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                PostsList.getItems().add("views: "+post.getViews().size());
+                for(int k=0;k<post.getViews().size();k++){
+                    PostsList.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                }
+                PostsList.getItems().add("likes : "+post.getLike().size());
+                for (int k=0;k<post.getLike().size();k++){
+                    PostsList.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                }
+
+            }
         }
         else {
             PostsList.getItems().add(LoggedInPost.getInstance().getLoggedIn());
             PostsList.getItems().add(btnNumber);
             PostsList.getItems().add(Showlikebtn);
             PostsList.getItems().add(Showcommentbtn);
+            if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                PostsList.getItems().add("views: "+post.getViews().size());
+                for(int k=0;k<post.getViews().size();k++){
+                    PostsList.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                }
+                PostsList.getItems().add("likes : "+post.getLike().size());
+                for (int k=0;k<post.getLike().size();k++){
+                    PostsList.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                }
+
+            }
         }
         PostsList.getItems().add("_____________________________");
     }

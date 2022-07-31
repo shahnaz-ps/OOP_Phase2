@@ -11,8 +11,8 @@ public class BusinessAccount extends Account{
     }
 
 
-    public static BusinessAccount createAccount(String username, String password,File file) {
-        BusinessAccount account = new BusinessAccount(username, password, file);
+    public static BusinessAccount createAccount(String username, String password) {
+        BusinessAccount account = new BusinessAccount(username, password,null);
         accounts.put(username, account);
         return account;
     }

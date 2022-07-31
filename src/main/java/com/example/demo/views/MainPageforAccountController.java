@@ -84,11 +84,23 @@ public class MainPageforAccountController {
                     imageView2.setCache(true);
                 }
                 LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                Post post =LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i);
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
                 if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
                     showYourRecentPosts.getItems().add(imageView2);
                 }
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                    showYourRecentPosts.getItems().add("views: "+post.getViews().size());
+                    for(int k=0;k<post.getViews().size();k++){
+                        showYourRecentPosts.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                    }
+                    showYourRecentPosts.getItems().add("likes : "+post.getLike().size());
+                    for (int k=0;k<post.getLike().size();k++){
+                        showYourRecentPosts.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                    }
+
+                }
                 showYourRecentPosts.getItems().add("_____________________________");
             }
         }
@@ -129,11 +141,23 @@ public class MainPageforAccountController {
                     imageView2.setCache(true);
                 }
                 Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                Post post =Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i);
                 FollowingsRecentPost.getItems().add(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getUsername());
                 if(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile()!=null) {
                     FollowingsRecentPost.getItems().add(imageView2);
                 }
                 FollowingsRecentPost.getItems().add(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i));
+                if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                    FollowingsRecentPost.getItems().add("views: "+post.getViews().size());
+                    for(int k=0;k<post.getViews().size();k++){
+                        FollowingsRecentPost.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                    }
+                    FollowingsRecentPost.getItems().add("likes : "+post.getLike().size());
+                    for (int k=0;k<post.getLike().size();k++){
+                        FollowingsRecentPost.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                    }
+
+                }
                 FollowingsRecentPost.getItems().add("_____________________________");
             }
         } else {
@@ -150,11 +174,23 @@ public class MainPageforAccountController {
                     imageView2.setCache(true);
                 }
                 Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                Post post =Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i);
                 FollowingsRecentPost.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getUsername());
                 if(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile()!=null) {
                     FollowingsRecentPost.getItems().add(imageView2);
                 }
                 FollowingsRecentPost.getItems().add(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i));
+                if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                    FollowingsRecentPost.getItems().add("views: "+post.getViews().size());
+                    for(int k=0;k<post.getViews().size();k++){
+                        FollowingsRecentPost.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                    }
+                    FollowingsRecentPost.getItems().add("likes : "+post.getLike().size());
+                    for (int k=0;k<post.getLike().size();k++){
+                        FollowingsRecentPost.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                    }
+
+                }
                 FollowingsRecentPost.getItems().add("_____________________________");
             }
         }
@@ -230,11 +266,23 @@ public class MainPageforAccountController {
                     imageView2.setCache(true);
                 }
                 LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                Post post =LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i);
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
                 if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
                     showYourRecentPosts.getItems().add(imageView2);
                 }
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                    showYourRecentPosts.getItems().add("views: "+post.getViews().size());
+                    for(int k=0;k<post.getViews().size();k++){
+                        showYourRecentPosts.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                    }
+                    showYourRecentPosts.getItems().add("likes : "+post.getLike().size());
+                    for (int k=0;k<post.getLike().size();k++){
+                        showYourRecentPosts.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                    }
+
+                }
                 showYourRecentPosts.getItems().add("_____________________________");
             }
         }else{
@@ -251,11 +299,23 @@ public class MainPageforAccountController {
                     imageView2.setCache(true);
                 }
                 LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                Post post =LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i);
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getUsername());
                 if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
                     showYourRecentPosts.getItems().add(imageView2);
                 }
                 showYourRecentPosts.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));
+                if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                    showYourRecentPosts.getItems().add("views: "+post.getViews().size());
+                    for(int k=0;k<post.getViews().size();k++){
+                        showYourRecentPosts.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                    }
+                    showYourRecentPosts.getItems().add("likes : "+post.getLike().size());
+                    for (int k=0;k<post.getLike().size();k++){
+                        showYourRecentPosts.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                    }
+
+                }
                 showYourRecentPosts.getItems().add("_____________________________");
             }
         }
@@ -301,11 +361,23 @@ public class MainPageforAccountController {
                     imageView2.setCache(true);
                 }
                 Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                Post post =Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i);
                 FollowingsRecentPost.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getUsername());
                 if(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i).getFile()!=null) {
                     FollowingsRecentPost.getItems().add(imageView2);
                 }
                 FollowingsRecentPost.getItems().add(Account.getAccount(FollowingsList.getSelectionModel().getSelectedItem().toString()).getPosts().get(i));
+                if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                    FollowingsRecentPost.getItems().add("views: "+post.getViews().size());
+                    for(int k=0;k<post.getViews().size();k++){
+                        FollowingsRecentPost.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                    }
+                    FollowingsRecentPost.getItems().add("likes : "+post.getLike().size());
+                    for (int k=0;k<post.getLike().size();k++){
+                        FollowingsRecentPost.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                    }
+
+                }
                 FollowingsRecentPost.getItems().add("_____________________________");
             }
         }
