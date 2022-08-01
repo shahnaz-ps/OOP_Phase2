@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.net.MalformedURLException;
@@ -412,8 +413,14 @@ public class ChatPage {
     }
 
     private void forwardMessage(Message message) {
-        forwardedMessage = message;
-        // todo *********
+//        forwardedMessage = message;
+//        repliedMessage = null;
+//        try {
+//            sendMessageMode.setImage(new Image(String.valueOf(
+//                    new URL(ConsoleApplication.class.getResource("/Image/Menu/close.png").toString()))));
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void addButtonToReply(Pane pane, Message message) throws MalformedURLException {
@@ -431,8 +438,14 @@ public class ChatPage {
     }
 
     private void replyMessage(Message message) {
+        forwardedMessage = null;
         repliedMessage = message;
-        // todo *********
+        try {
+            sendMessageMode.setImage(new Image(String.valueOf(
+                    new URL(ConsoleApplication.class.getResource("/Image/Menu/close.png").toString()))));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addButtonToDelete(Pane pane, Message message) throws MalformedURLException {
@@ -525,9 +538,21 @@ public class ChatPage {
         text.setPrefHeight(60);
         text.setPrefWidth(230);
         text.setLayoutX(40);
-        text.setLayoutY(15);
+        text.setLayoutY(25);
         text.setFont(Font.font(18));
         pane.getChildren().add(text);
+    }
+
+    private void addReplied(Pane pane, Message message) {
+        Label label = new Label("replied to : " + message.getRepliedMessage().getContent());
+        label.setPrefHeight(30);
+        label.setPrefWidth(180);
+        label.setLayoutX(40);
+        label.setLayoutY(18);
+        label.setFont(Font.font(15));
+        label.setTextFill(Color.PURPLE);
+        label.setStyle("-fx-font-family: \"High Tower Text\"");
+        pane.getChildren().add(label);
     }
 
     private void addUserUsername(Pane pane, Account account) {
