@@ -120,6 +120,14 @@
         </VBox>
         <HBox prefHeight="61.0" prefWidth="650.0">
             <children>
+                <ImageView fx:id="sendMessageMode" fitHeight="32.0" fitWidth="38.0" onMouseClicked="#send" pickOnBounds="true" preserveRatio="true">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <image>
+                        <Image url="@../Image/Menu/seen.png" />
+                    </image>
+                </ImageView>
                 <TextField fx:id="textToSend" onKeyReleased="#enter" prefHeight="50.0" prefWidth="578.0">
                     <HBox.margin>
                         <Insets bottom="2.0" left="25.0" top="2.0" />

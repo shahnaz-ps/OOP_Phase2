@@ -84,6 +84,8 @@ public class ChatPage {
     private TextField textToSend;
     @FXML
     private ListView listOfChats;
+    @FXML
+    private ImageView sendMessageMode;
 
 
     private Message repliedMessage = null;
@@ -337,10 +339,22 @@ public class ChatPage {
             new PopupMessage(Alert.AlertType.ERROR, "long message");
         else {
             Message message = new Message(LoggedInAccount.getInstance().getLoggedIn(), textToSend.getText());
+            //            if (forwardedMessage != null) {
+//                message.setForwardedUsername(forwardedMessage.getAccount().getUsername());
+//                message.setForwardedMessage(forwardedMessage);
+//            }
+            if (repliedMessage != null) {
+                message.setRepliedUUID(repliedMessage.getUuid()); // does nothing
+                message.setRepliedMessage(repliedMessage);
+            }
             if (chatMode == 1)
                 this.privateChat.getMessages().add(message);
             else if (chatMode == 2)
                 this.groupChat.getMessages().add(message);
+            repliedMessage = null;
+            forwardedMessage = null;
+            sendMessageMode.setImage(new Image(String.valueOf(
+                    new URL(ConsoleApplication.class.getResource("/Image/Menu/seen.png").toString()))));
             sendNewMessage(message);
             textToSend.clear();
         }
@@ -358,6 +372,11 @@ public class ChatPage {
         addText(pane, message.getContent());
         addUserUsername(pane, message.getAccount());
         addClock(pane, String.valueOf(message.getDate().getTime()));
+        //        if (message.getForwardedUsername() != null) {
+//            addForwarded(pane, message);
+//        } else
+        if (message.getRepliedMessage() != null)
+            addReplied(pane, message);
         if (message.getAccount() == LoggedInAccount.getInstance().getLoggedIn()) {
             addButtonToDelete(pane, message);
             addButtonToEdit(pane, message);
@@ -366,6 +385,17 @@ public class ChatPage {
         }
         return pane;
     }
+    //    private void addForwarded(Pane pane, Message message) {
+//        Label label = new Label("forwarded from : " + message.getForwardedUsername());
+//        label.setPrefHeight(30);
+//        label.setPrefWidth(180);
+//        label.setLayoutX(40);
+//        label.setLayoutY(18);
+//        label.setFont(Font.font(15));
+//        label.setTextFill(Color.PURPLE);
+//        label.setStyle("-fx-font-family: \"High Tower Text\"");
+//        pane.getChildren().add(label);
+//    }
 
     private void addButtonToForward(Pane pane, Message message) throws MalformedURLException {
         ImageView imageView = new ImageView(new Image(String.valueOf(
