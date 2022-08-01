@@ -193,7 +193,27 @@ public class ChatPage {
         addLabelToSuggestionPane(pane, account.getUsername(), true);
         allMessages.getChildren().add(pane);
         HBox hBox = (HBox) pane.getChildren().get(0);
-        if (account != LoggedInAccount.getInstance().getLoggedIn()) {
+        if (account == LoggedInAccount.getInstance().getLoggedIn()) {
+            hBox.getChildren().remove(2);
+            hBox.getChildren().remove(1);
+            return;
+        } else if (LoggedInAccount.getInstance().getLoggedIn() != this.groupChat.getOwner()) {
+            hBox.getChildren().remove(2);
+            hBox.getChildren().remove(1);
+            hBox.getChildren().get(0).setCursor(Cursor.HAND);
+            hBox.getChildren().get(0).setOnMouseClicked(mouseEvent -> {
+                try {
+                    this.privateChat = ChatController.getInstance().getAccountPrivateChat(account);
+                    chatMode = 1;
+                    setSelectedRightBoxButtonStyle(changeToPrivateChatButton);
+                    setNotSelectedRightBoxButtonStyle(changeToRoomChatButton);
+                    goToAPrivateChat();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            });
+            return;
+        } else {
             hBox.getChildren().get(0).setCursor(Cursor.HAND);
             hBox.getChildren().get(0).setOnMouseClicked(mouseEvent -> {
                 try {
@@ -217,10 +237,8 @@ public class ChatPage {
             hBox.getChildren().get(2).setOnMouseClicked(mouseEvent -> {
                 this.groupChat.removeUser(account);
             });
-
         }
     }
-
 
     private void setDataOfChatHBoxPrivateChat(Account account) throws MalformedURLException {
         labelOfDataChat.setText(privateChat.getOtherUser(LoggedInAccount.getInstance().getLoggedIn()).getUsername());
@@ -399,7 +417,7 @@ public class ChatPage {
         }
         return pane;
     }
-//    private void addForwarded(Pane pane, Message message) {
+    //    private void addForwarded(Pane pane, Message message) {
 //        Label label = new Label("forwarded from : " + message.getForwardedUsername());
 //        label.setPrefHeight(30);
 //        label.setPrefWidth(180);
@@ -410,7 +428,6 @@ public class ChatPage {
 //        label.setStyle("-fx-font-family: \"High Tower Text\"");
 //        pane.getChildren().add(label);
 //    }
-
 
     private void addButtonToForward(Pane pane, Message message) throws MalformedURLException {
         ImageView imageView = new ImageView(new Image(String.valueOf(

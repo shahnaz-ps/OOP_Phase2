@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="997f2ada-640f-4052-8f7e-c6f50548dc84" name="Changes" comment="chat 5">
+    <list default="true" id="997f2ada-640f-4052-8f7e-c6f50548dc84" name="Changes" comment="ban &amp; remove">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/views/ChatPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/views/ChatPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +86,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1659332943073</updated>
-      <workItem from="1659332944338" duration="24860000" />
+      <workItem from="1659332944338" duration="25580000" />
     </task>
     <task id="LOCAL-00001" summary="chat started">
       <created>1659333828035</created>
@@ -122,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659360029654</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="ban &amp; remove">
+      <created>1659382294096</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1659382294096</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,6 +153,7 @@
     <MESSAGE value="chat 3" />
     <MESSAGE value="chat 4" />
     <MESSAGE value="chat 5" />
-    <option name="LAST_COMMIT_MESSAGE" value="chat 5" />
+    <MESSAGE value="ban &amp; remove" />
+    <option name="LAST_COMMIT_MESSAGE" value="ban &amp; remove" />
   </component>
 </project>
