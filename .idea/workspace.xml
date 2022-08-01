@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="997f2ada-640f-4052-8f7e-c6f50548dc84" name="Changes" comment="chat 3">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/views/ChatPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/views/ChatPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Fxml/ChatMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Fxml/ChatMenu.fxml" afterDir="false" />
+    <list default="true" id="997f2ada-640f-4052-8f7e-c6f50548dc84" name="Changes" comment="chat 5">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +85,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1659332943073</updated>
-      <workItem from="1659332944338" duration="23617000" />
+      <workItem from="1659332944338" duration="24860000" />
     </task>
     <task id="LOCAL-00001" summary="chat started">
       <created>1659333828035</created>
@@ -109,7 +108,21 @@
       <option name="project" value="LOCAL" />
       <updated>1659359515501</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="chat 4">
+      <created>1659359905536</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1659359905536</updated>
+    </task>
+    <task id="LOCAL-00005" summary="chat 5">
+      <created>1659360029654</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1659360029654</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,6 +143,8 @@
     <MESSAGE value="chat started" />
     <MESSAGE value="chat 2" />
     <MESSAGE value="chat 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="chat 3" />
+    <MESSAGE value="chat 4" />
+    <MESSAGE value="chat 5" />
+    <option name="LAST_COMMIT_MESSAGE" value="chat 5" />
   </component>
 </project>

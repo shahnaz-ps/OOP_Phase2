@@ -148,7 +148,6 @@ public class ChatPage {
         showMessagesOfRoomChat();
     }
 
-
     private void showMessagesOfRoomChat() throws MalformedURLException {
         for (int i = 0; i < groupChat.getMessages().size(); i++) {
             Message message = groupChat.getMessages().get(i);
@@ -193,9 +192,10 @@ public class ChatPage {
                 "-fx-background-radius: 30 30 30 30;");
         addLabelToSuggestionPane(pane, account.getUsername(), true);
         allMessages.getChildren().add(pane);
+        HBox hBox = (HBox) pane.getChildren().get(0);
         if (account != LoggedInAccount.getInstance().getLoggedIn()) {
-            pane.setCursor(Cursor.HAND);
-            pane.setOnMouseClicked(mouseEvent -> {
+            hBox.getChildren().get(0).setCursor(Cursor.HAND);
+            hBox.getChildren().get(0).setOnMouseClicked(mouseEvent -> {
                 try {
                     this.privateChat = ChatController.getInstance().getAccountPrivateChat(account);
                     chatMode = 1;
@@ -206,8 +206,21 @@ public class ChatPage {
                     e.printStackTrace();
                 }
             });
+
+            hBox.getChildren().get(1).setCursor(Cursor.HAND);
+            hBox.getChildren().get(1).setOnMouseClicked(mouseEvent -> {
+                this.groupChat.banUser(account);
+            });
+
+
+            hBox.getChildren().get(2).setCursor(Cursor.HAND);
+            hBox.getChildren().get(2).setOnMouseClicked(mouseEvent -> {
+                this.groupChat.removeUser(account);
+            });
+
         }
     }
+
 
     private void setDataOfChatHBoxPrivateChat(Account account) throws MalformedURLException {
         labelOfDataChat.setText(privateChat.getOtherUser(LoggedInAccount.getInstance().getLoggedIn()).getUsername());
@@ -386,7 +399,7 @@ public class ChatPage {
         }
         return pane;
     }
-    //    private void addForwarded(Pane pane, Message message) {
+//    private void addForwarded(Pane pane, Message message) {
 //        Label label = new Label("forwarded from : " + message.getForwardedUsername());
 //        label.setPrefHeight(30);
 //        label.setPrefWidth(180);
@@ -397,6 +410,7 @@ public class ChatPage {
 //        label.setStyle("-fx-font-family: \"High Tower Text\"");
 //        pane.getChildren().add(label);
 //    }
+
 
     private void addButtonToForward(Pane pane, Message message) throws MalformedURLException {
         ImageView imageView = new ImageView(new Image(String.valueOf(
@@ -641,9 +655,10 @@ public class ChatPage {
                 "-fx-border-radius: 30 30 30 30;" +
                 "-fx-background-radius: 30 30 30 30;");
         addLabelToSuggestionPane(pane, suggestionGroup.getName(), false);
-        pane.setCursor(Cursor.HAND);
+        HBox hBox = (HBox) pane.getChildren().get(0);
+        hBox.getChildren().get(0).setCursor(Cursor.HAND);
         suggestionVBox.getChildren().add(pane);
-        pane.setOnMouseClicked(mouseEvent -> {
+        hBox.getChildren().get(0).setOnMouseClicked(mouseEvent -> {
             try {
                 this.groupChat = suggestionGroup;
                 goToARoomChat();
@@ -660,9 +675,10 @@ public class ChatPage {
                 "-fx-border-radius: 30 30 30 30;" +
                 "-fx-background-radius: 30 30 30 30;");
         addLabelToSuggestionPane(pane, account.getUsername(), false);
-        pane.setCursor(Cursor.HAND);
+        HBox hBox = (HBox) pane.getChildren().get(0);
+        hBox.getChildren().get(0).setCursor(Cursor.HAND);
         suggestionVBox.getChildren().add(pane);
-        pane.setOnMouseClicked(mouseEvent -> {
+        hBox.getChildren().get(0).setOnMouseClicked(mouseEvent -> {
             try {
                 this.privateChat = ChatController.getInstance().getAccountPrivateChat(account);
                 goToAPrivateChat();
@@ -681,23 +697,31 @@ public class ChatPage {
             hBox.setSpacing(10);
             Label label = new Label(username);
             label.setPrefHeight(20);
-//        label.setLayoutX(70);
-//        label.setLayoutY(10);
             label.setStyle("-fx-font-family: \"High Tower Text\";" +
                     "       -fx-font-size: 18");
 
             Image image = null;
             try {
                 image = new Image(String.valueOf(
-                        new URL(ConsoleApplication.class.getResource("/Image/Menu/blackCross.png").toString())));
+                        new URL(ConsoleApplication.class.getResource("/Image/Menu/menuIcon.png").toString())));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            ImageView imageView = new ImageView(image);
-            imageView.setFitHeight(16);
-            imageView.setFitWidth(16);
+            ImageView ban = new ImageView(image);
+            ban.setFitHeight(16);
+            ban.setFitWidth(16);
 
-            hBox.getChildren().addAll(label, imageView);
+            ImageView remove = null;
+            try {
+                remove = new ImageView(new Image(String.valueOf(
+                        new URL(ConsoleApplication.class.getResource("/Image/Menu/blackCross.png").toString()))));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            remove.setFitHeight(16);
+            remove.setFitWidth(16);
+
+            hBox.getChildren().addAll(label, ban, remove);
             pane.getChildren().add(hBox);
         } else {
             HBox hBox = new HBox();
@@ -707,22 +731,8 @@ public class ChatPage {
             hBox.setSpacing(10);
             Label label = new Label(username);
             label.setPrefHeight(20);
-//            label.setLayoutX(70);
-//            label.setLayoutY(10);
             label.setStyle("-fx-font-family: \"High Tower Text\";" +
                     "       -fx-font-size: 18");
-
-//            Image image = null;
-//            try {
-//                image = new Image(String.valueOf(
-//                        new URL(ConsoleApplication.class.getResource("/Image/Menu/blackCross.png").toString())));
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            }
-//            ImageView imageView = new ImageView(image);
-//            imageView.setFitHeight(16);
-//            imageView.setFitWidth(16);
-
             hBox.getChildren().addAll(label);
             pane.getChildren().add(hBox);
         }
