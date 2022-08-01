@@ -27,6 +27,7 @@
             <Button mnemonicParsing="false" onAction="#createPostsinAnotherPage" prefHeight="26.0" prefWidth="194.0" text="create post in another page !" />
             <Button mnemonicParsing="false" onAction="#gotoLoginPage" prefHeight="26.0" prefWidth="209.0" text="Go to your own page!" />
             <Button focusTraversable="false" mnemonicParsing="false" prefHeight="26.0" prefWidth="219.0" text="Profile" />
+            <Button mnemonicParsing="false" onAction="#gotoChatRoom" prefHeight="26.0" prefWidth="203.0" text="Chat Room" />
             <Button mnemonicParsing="false" onAction="#logout" prefHeight="24.0" prefWidth="191.0" text="logout" />
          </children>
       </VBox>

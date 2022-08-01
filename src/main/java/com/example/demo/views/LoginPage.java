@@ -94,7 +94,7 @@ public class LoginPage {
         String password = passwordFieldLogin.getText();
         Account account = Account.checkLogin(username, password);
         if (account == null) {
-            new PopupMessage(Alert.AlertType.ERROR, "Wrong username or password or username!" + "\n" + "Try again!");
+            new PopupMessage(Alert.AlertType.ERROR, "Wrong username or password !" + "\n" + "Try again!");
             usernameFieldLogin.clear();
             passwordFieldLogin.clear();
             return;

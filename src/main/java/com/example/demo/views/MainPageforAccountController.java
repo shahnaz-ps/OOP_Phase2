@@ -109,6 +109,10 @@ public class MainPageforAccountController {
     public void FollowinPostPressed(MouseEvent mouseEvent) {
     }
 
+    public void gotoChatRoom(ActionEvent actionEvent) {
+        MenuChanger.changeMenu("ChatMenu");
+    }
+
 //    public void YourPostPressed(MouseEvent mouseEvent) {
 //        System.out.println("selected");
 //        if(showYourRecentPosts.getSelectionModel().getSelectedItem().equals()) {

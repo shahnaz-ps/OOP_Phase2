@@ -1,6 +1,7 @@
 package com.example.demo.views;
 
 import com.example.demo.model.Account;
+import com.example.demo.model.GroupChat;
 import com.example.demo.model.LoggedInAccount;
 import com.example.demo.model.PrivateChat;
 
@@ -42,10 +43,18 @@ public class ChatController {
             if (privateChat.getOtherUser(LoggedInAccount.getInstance().getLoggedIn()) == account)
                 return privateChat;
         PrivateChat privateChat = new PrivateChat(LoggedInAccount.getInstance().getLoggedIn(), account);
-        account.getPrivateChats().add(privateChat);
-        LoggedInAccount.getInstance().getLoggedIn().getPrivateChats().add(privateChat);
+        PrivateChat.getPrivateChats().add(privateChat);
         return privateChat;
     }
+
+    public ArrayList<GroupChat> showGroupsStartsWithString(String username) {
+        ArrayList<GroupChat> res = new ArrayList<>();
+        for (GroupChat userGroup : GroupChat.getUserGroups(LoggedInAccount.getInstance().getLoggedIn())) {
+            if (userGroup.getName().startsWith(username)) res.add(userGroup);
+        }
+        return res;
+    }
+
 
     public static void setGlobalChatNull() {
         ChatController.setNull();

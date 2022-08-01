@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane prefHeight="400.0" prefWidth="600.0" styleClass="secondPane" stylesheets="@../CSS/Menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.CreateGroupController">
+   <children>
+      <VBox prefHeight="555.0" prefWidth="476.0">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="45.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+               <Image url="@../Image/Menu/back.png" />
+      <!--         <cursor>-->
+      <!--            <Cursor fx:constant="HAND" />-->
+      <!--         </cursor>-->
+            </ImageView>
+            <TextField fx:id="groupName" promptText="name of group" />
+            <ListView fx:id="listOfFollowers" onMousePressed="#addThisAccountToMembers" prefHeight="364.0" prefWidth="476.0" />
+            <VBox prefHeight="24.0" prefWidth="476.0" />
+            <ListView fx:id="listOfMembers" prefHeight="142.0" prefWidth="476.0" />
+            <Button mnemonicParsing="false" onAction="#createGroup" text="create" />
+         </children>
+      </VBox>
+   </children>
+</Pane>
