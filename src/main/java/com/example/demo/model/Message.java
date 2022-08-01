@@ -10,6 +10,8 @@ public class Message {
     private UUID uuid;
     private UUID repliedUUID = null;
     private String forwardedUsername = null;
+    private Message repliedMessage;
+    private Message forwardedMessage;
     private boolean edited = false;
 
     public Message(Account account, String content) {
@@ -103,5 +105,25 @@ public class Message {
 
     public Date getDate() {
         return date;
+    }
+
+    public Message getRepliedMessage() {
+        return repliedMessage;
+    }
+
+    public void setRepliedMessage(Message repliedMessage) {
+        this.repliedMessage = repliedMessage;
+    }
+
+    public Message getForwardedMessage() {
+        return forwardedMessage;
+    }
+
+    public void setForwardedMessage(Message forwardedMessage) {
+        this.forwardedMessage = forwardedMessage;
+    }
+
+    public void setForwardedUsername(String forwardedUsername) {
+        this.forwardedUsername = forwardedUsername;
     }
 }

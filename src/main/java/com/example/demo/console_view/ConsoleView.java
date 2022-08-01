@@ -61,37 +61,37 @@ public class ConsoleView {
             likeOrDislikeComment(false);
         } else if (command.equals("REPLY COMMENT")) {
             replyComment();
-        }else if (command.equals("SHOW PRIVATE CHAT")) {
+        }else if (command.equals("SHOW PRIVATE CHAT")) { // ok
             showPrivateChat();
         } else if (command.equals("SHOW STATE")) {
             showState();
-        } else if (command.equals("SEND MESSAGE")) {
+        } else if (command.equals("SEND MESSAGE")) { // ok
             sendMessage();
-        } else if (command.equals("CREATE GROUP")) {
+        } else if (command.equals("CREATE GROUP")) { // ok
             createGroup();
-        } else if (command.equals("GET GROUPS ID")) {
+        } else if (command.equals("GET GROUPS ID")) { // ...
             getGroupsId();
-        } else if (command.equals("ADD USER")) {
+        } else if (command.equals("ADD USER")) { // ...
             addUser();
-        } else if (command.equals("SHOW GROUP CHAT")) {
+        } else if (command.equals("SHOW GROUP CHAT")) { // ok
             showGroupChat();
-        } else if (command.equals("SHOW MEMBERS")) {
+        } else if (command.equals("SHOW MEMBERS")) { // ok
             showMembers();
         } else if (command.equals("FORWARD MESSAGE")) {
             forwardMessage();
-        } else if (command.equals("EDIT MESSAGE")) {
+        } else if (command.equals("EDIT MESSAGE")) { // ok
             editMessage();
-        } else if (command.equals("DELETE MESSAGE")) {
+        } else if (command.equals("DELETE MESSAGE")) { // ok
             deleteMessage();
-        } else if (command.equals("REMOVE USER")) {
+        } else if (command.equals("REMOVE USER")) { // ...
             removeUser();
-        } else if (command.equals("BAN USER")) {
+        } else if (command.equals("BAN USER")) { // ...
             banUser();
-        } else if (command.equals("BLOCK USER")) {
+        } else if (command.equals("BLOCK USER")) { // ...
             blockUser();
-        } else if (command.equals("CHANGE GROUP NAME")) {
+        } else if (command.equals("CHANGE GROUP NAME")) { // ...
             renameGroup();
-        } else if (command.equals("CHANGE GROUP ID")) {
+        } else if (command.equals("CHANGE GROUP ID")) { // ...
             changeGroupId();
         }
     }

@@ -188,7 +188,7 @@ public class ChatPage {
         pane.setStyle("-fx-background-color: #dfc10c;" +
                 "-fx-border-radius: 30 30 30 30;" +
                 "-fx-background-radius: 30 30 30 30;");
-        addLabelToSuggestionPane(pane, account.getUsername());
+        addLabelToSuggestionPane(pane, account.getUsername(), true);
         allMessages.getChildren().add(pane);
         if (account != LoggedInAccount.getInstance().getLoggedIn()) {
             pane.setCursor(Cursor.HAND);
@@ -350,7 +350,6 @@ public class ChatPage {
         Pane pane = getMessageBox(message);
         allMessages.getChildren().add(pane);
     }
-
 
 
     private Pane getMessageBox(Message message) throws MalformedURLException {
@@ -586,7 +585,7 @@ public class ChatPage {
         pane.setStyle("-fx-background-color: #dfc10c;" +
                 "-fx-border-radius: 30 30 30 30;" +
                 "-fx-background-radius: 30 30 30 30;");
-        addLabelToSuggestionPane(pane, suggestionGroup.getName());
+        addLabelToSuggestionPane(pane, suggestionGroup.getName(), false);
         pane.setCursor(Cursor.HAND);
         suggestionVBox.getChildren().add(pane);
         pane.setOnMouseClicked(mouseEvent -> {
@@ -605,7 +604,7 @@ public class ChatPage {
         pane.setStyle("-fx-background-color: #dfc10c;" +
                 "-fx-border-radius: 30 30 30 30;" +
                 "-fx-background-radius: 30 30 30 30;");
-        addLabelToSuggestionPane(pane, account.getUsername());
+        addLabelToSuggestionPane(pane, account.getUsername(), false);
         pane.setCursor(Cursor.HAND);
         suggestionVBox.getChildren().add(pane);
         pane.setOnMouseClicked(mouseEvent -> {
@@ -618,14 +617,60 @@ public class ChatPage {
         });
     }
 
-    private void addLabelToSuggestionPane(Pane pane, String username) {
-        Label label = new Label(username);
-        label.setPrefHeight(20);
-        label.setLayoutX(70);
-        label.setLayoutY(10);
-        label.setStyle("-fx-font-family: \"High Tower Text\";" +
-                "       -fx-font-size: 18");
-        pane.getChildren().add(label);
+    private void addLabelToSuggestionPane(Pane pane, String username, boolean isGroupMember) {
+        if (isGroupMember) {
+            HBox hBox = new HBox();
+            hBox.setPrefHeight(20);
+            hBox.setLayoutX(70);
+            hBox.setLayoutY(10);
+            hBox.setSpacing(10);
+            Label label = new Label(username);
+            label.setPrefHeight(20);
+//        label.setLayoutX(70);
+//        label.setLayoutY(10);
+            label.setStyle("-fx-font-family: \"High Tower Text\";" +
+                    "       -fx-font-size: 18");
+
+            Image image = null;
+            try {
+                image = new Image(String.valueOf(
+                        new URL(ConsoleApplication.class.getResource("/Image/Menu/blackCross.png").toString())));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(16);
+            imageView.setFitWidth(16);
+
+            hBox.getChildren().addAll(label, imageView);
+            pane.getChildren().add(hBox);
+        } else {
+            HBox hBox = new HBox();
+            hBox.setPrefHeight(20);
+            hBox.setLayoutX(70);
+            hBox.setLayoutY(10);
+            hBox.setSpacing(10);
+            Label label = new Label(username);
+            label.setPrefHeight(20);
+//            label.setLayoutX(70);
+//            label.setLayoutY(10);
+            label.setStyle("-fx-font-family: \"High Tower Text\";" +
+                    "       -fx-font-size: 18");
+
+//            Image image = null;
+//            try {
+//                image = new Image(String.valueOf(
+//                        new URL(ConsoleApplication.class.getResource("/Image/Menu/blackCross.png").toString())));
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            }
+//            ImageView imageView = new ImageView(image);
+//            imageView.setFitHeight(16);
+//            imageView.setFitWidth(16);
+
+            hBox.getChildren().addAll(label);
+            pane.getChildren().add(hBox);
+        }
     }
 
     public void openRightVBox(MouseEvent mouseEvent) {
@@ -642,4 +687,24 @@ public class ChatPage {
         MenuChanger.changeMenu("CreateGroup");
     }
 
+    public void gotoChat(MouseEvent mouseEvent) {
+        String name = listOfChats.getSelectionModel().getSelectedItem().toString();
+        if (GroupChat.isExist(name)) {
+            this.groupChat = GroupChat.getGroupChatByName(name);
+            try {
+                goToARoomChat();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            this.privateChat = PrivateChat.getPrivateChat(LoggedInAccount.getInstance().getLoggedIn(), Account.getAccount(name));
+            chatMode = 1;
+            try {
+                goToAPrivateChat();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 }
