@@ -100,7 +100,9 @@ public class LoginPage {
             return;
         }
         LoggedInAccount.getInstance().setLoggedIn(account);
-        MenuChanger.changeMenu("MainPaneforLoginAccount");
+
+        // todo ?!
+        MenuChanger.changeMenu("ChatMenu");
     }
 
     public void exit(MouseEvent mouseEvent) {

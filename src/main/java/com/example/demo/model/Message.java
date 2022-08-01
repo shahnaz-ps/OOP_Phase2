@@ -100,4 +100,8 @@ public class Message {
             }
         }
     }
+
+    public Date getDate() {
+        return date;
+    }
 }

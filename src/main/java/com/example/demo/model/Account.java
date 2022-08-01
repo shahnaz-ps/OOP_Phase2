@@ -4,10 +4,7 @@ import javafx.scene.image.Image;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Account {
     private String username;
@@ -18,7 +15,7 @@ public class Account {
     protected static HashMap<String, Account> accounts = new HashMap<>();
     private ArrayList<Account> blockedUsers = new ArrayList<>();
     private ArrayList<Account> views = new ArrayList<>();
-    private  ArrayList<Date> dateviewed = new ArrayList<>();
+    private ArrayList<Date> dateviewed = new ArrayList<>();
     private Date dateview;
 
     protected Account(String username, String password) {
@@ -58,13 +55,13 @@ public class Account {
     }
 
     public void createPost(String content, File file) {
-        Post post = new Post(content, this,file);
+        Post post = new Post(content, this, file);
 
         posts.add(post);
     }
 
-    public void createGroup(Account account, String name){
-        new GroupChat(account,name);
+    public void createGroup(Account account, String name) {
+        new GroupChat(account, name);
     }
 
     public boolean isBusinessAccount() {
@@ -83,7 +80,7 @@ public class Account {
         return followings.size();
     }
 
-    public Integer getNumbersOfGroups(){
+    public Integer getNumbersOfGroups() {
         return GroupChat.getUserGroups(this).size();
     }
 
@@ -121,18 +118,27 @@ public class Account {
     }
 
 
-
     public void addview(Account account) {
-        if(!views.contains(account)) {
+        if (!views.contains(account)) {
             dateview = new Date();
             dateviewed.add(dateview);
             views.add(account);
         }
     }
+
     public void showviewSize() {
         System.out.println("number of views : " + views.size());
         for (int i = 0; i < views.size(); i++) {
             System.out.println(dateviewed.get(i) + " = viewed by username (" + views.get(i).getUsername() + ")");
         }
+    }
+
+    public ArrayList<PrivateChat> getPrivateChats() {
+        ArrayList<PrivateChat> res = new ArrayList<>();
+        for (PrivateChat privateChat : PrivateChat.getPrivateChats()) {
+            if (privateChat.getAccount1() == this || privateChat.getAccount2() == this)
+                res.add(privateChat);
+        }
+        return res;
     }
 }
