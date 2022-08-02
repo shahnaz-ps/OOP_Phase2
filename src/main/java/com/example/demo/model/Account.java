@@ -47,7 +47,7 @@ public class Account {
     }
 
     public static Account createAccount(String username, String password) {
-        Account account = new Account(username, password,null);
+        Account account = new Account(username, password, new File("/Users/kimia/Desktop/java/profiles/pro1.png"));
         accounts.put(username, account);
         return account;
     }

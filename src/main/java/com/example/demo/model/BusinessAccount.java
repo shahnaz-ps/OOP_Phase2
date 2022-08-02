@@ -12,7 +12,7 @@ public class BusinessAccount extends Account{
 
 
     public static BusinessAccount createAccount(String username, String password) {
-        BusinessAccount account = new BusinessAccount(username, password,null);
+        BusinessAccount account = new BusinessAccount(username, password,new File("/Users/kimia/Desktop/java/profiles/pro1.png"));
         accounts.put(username, account);
         return account;
     }

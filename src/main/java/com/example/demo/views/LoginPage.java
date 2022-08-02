@@ -114,12 +114,6 @@ public class LoginPage {
         }
 
         LoggedInAccount.getInstance().setLoggedIn(account);
-//        if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
-//            System.out.println("is bus");
-//        }
-//        else{
-//            System.out.println(LoggedInAccount.getInstance().getLoggedIn());
-//        }
         MenuChanger.changeMenu("MainPaneforLoginAccount");
     }
 

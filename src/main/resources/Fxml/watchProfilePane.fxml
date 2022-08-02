@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="1474.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.WatchProfileController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="1474.0" styleClass="secondPane" stylesheets="@../CSS/Menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.WatchProfileController">
    <children>
       <Label layoutX="47.0" layoutY="109.0" text="username :" />
       <TextField fx:id="idTextbox" editable="false" layoutX="119.0" layoutY="105.0" prefHeight="26.0" prefWidth="114.0" />
