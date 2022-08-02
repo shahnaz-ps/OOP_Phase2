@@ -789,4 +789,18 @@ public class ChatPage {
 
         }
     }
+
+    public void showALlChats(MouseEvent mouseEvent) {
+        listOfChats.getItems().clear();
+        for (PrivateChat privateChat : LoggedInAccount.getInstance().getLoggedIn().getPrivateChats()) {
+            if (privateChat.getAccount1() == LoggedInAccount.getInstance().getLoggedIn()) {
+                listOfChats.getItems().add(privateChat.getAccount2().getUsername());
+            } else {
+                listOfChats.getItems().add(privateChat.getAccount1().getUsername());
+            }
+        }
+        for (GroupChat groupChat : GroupChat.getUserGroups(LoggedInAccount.getInstance().getLoggedIn())) {
+            listOfChats.getItems().add(groupChat.getName());
+        }
+    }
 }

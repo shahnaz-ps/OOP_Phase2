@@ -193,7 +193,7 @@
         <children>
             <Pane prefHeight="770.0" prefWidth="76.0">
                 <children>
-                    <Button fx:id="changeToPrivateChatButton" layoutX="-76.0" layoutY="385.0" mnemonicParsing="false" onMouseClicked="#changeToPrivate" prefHeight="33.0" prefWidth="228.0" rotate="90.0" text="private chat">
+                    <Button fx:id="changeToPrivateChatButton" layoutX="-59.0" layoutY="297.0" mnemonicParsing="false" onMouseClicked="#changeToPrivate" prefHeight="35.0" prefWidth="199.0" rotate="90.0" text="private chat">
                         <font>
                             <Font name="System Bold" size="18.0" />
                         </font>
@@ -201,7 +201,7 @@
                             <Cursor fx:constant="HAND" />
                         </cursor>
                     </Button>
-                    <Button fx:id="changeToRoomChatButton" layoutX="-63.0" layoutY="626.0" mnemonicParsing="false" onMouseClicked="#changeToRoom" prefHeight="25.0" prefWidth="203.0" rotate="90.0" text="group chat">
+                    <Button fx:id="changeToRoomChatButton" layoutX="-55.0" layoutY="505.0" mnemonicParsing="false" onMouseClicked="#changeToRoom" prefHeight="35.0" prefWidth="195.0" rotate="90.0" text="group chat">
                         <font>
                             <Font name="System Bold" size="18.0" />
                         </font>
@@ -209,7 +209,15 @@
                             <Cursor fx:constant="HAND" />
                         </cursor>
                     </Button>
-               <Button fx:id="createGroupButton" layoutX="-63.0" layoutY="137.0" mnemonicParsing="false" onMouseClicked="#createGroup" prefHeight="37.0" prefWidth="209.0" rotate="90.0" text="create group">
+               <Button fx:id="createGroupButton" layoutX="-50.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#createGroup" prefHeight="37.0" prefWidth="181.0" rotate="90.0" text="create group">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </Button>
+               <Button fx:id="allChatsButton" layoutX="-19.0" layoutY="677.0" mnemonicParsing="false" onMouseClicked="#showALlChats" prefHeight="26.0" prefWidth="123.0" rotate="90.0" text="all chats">
                   <font>
                      <Font name="System Bold" size="18.0" />
                   </font>
@@ -223,7 +231,7 @@
     </VBox>
    <VBox layoutX="956.0" layoutY="34.0" prefHeight="771.0" prefWidth="258.0">
       <children>
-         <ListView fx:id="listOfChats" prefHeight="769.0" prefWidth="258.0" onMousePressed="#gotoChat" />
+         <ListView fx:id="listOfChats" onMousePressed="#gotoChat" prefHeight="769.0" prefWidth="258.0" />
       </children>
    </VBox>
 </Pane>

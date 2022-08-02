@@ -1,29 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <Pane prefHeight="400.0" prefWidth="600.0" styleClass="secondPane" stylesheets="@../CSS/Menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.CreateGroupController">
    <children>
-      <VBox prefHeight="555.0" prefWidth="476.0">
+      <HBox prefHeight="401.0" prefWidth="600.0">
          <children>
-            <ImageView fitHeight="50.0" fitWidth="45.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
-               <Image url="@../Image/Menu/back.png" />
-      <!--         <cursor>-->
-      <!--            <Cursor fx:constant="HAND" />-->
-      <!--         </cursor>-->
-            </ImageView>
-            <TextField fx:id="groupName" promptText="name of group" />
-            <ListView fx:id="listOfFollowers" onMousePressed="#addThisAccountToMembers" prefHeight="364.0" prefWidth="476.0" />
-            <VBox prefHeight="24.0" prefWidth="476.0" />
-            <ListView fx:id="listOfMembers" prefHeight="142.0" prefWidth="476.0" />
-            <Button mnemonicParsing="false" onAction="#createGroup" text="create" />
+            <VBox alignment="TOP_CENTER" prefHeight="401.0" prefWidth="197.0">
+               <children>
+                  <HBox prefHeight="52.0" prefWidth="197.0">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="45.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+                           <Image url="@../Image/Menu/back.png" />
+                  <!--         <cursor>-->
+                  <!--            <Cursor fx:constant="HAND" />-->
+                  <!--         </cursor>-->
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <Label contentDisplay="CENTER" text="create group " textAlignment="CENTER" textFill="WHITE" />
+                  <TextField fx:id="groupName" promptText="name of group" />
+                  <ListView fx:id="listOfFollowers" onMousePressed="#addThisAccountToMembers" prefHeight="247.0" prefWidth="197.0" />
+                  <VBox prefHeight="11.0" prefWidth="197.0">
+                     <children>
+                        <Label prefHeight="6.0" prefWidth="19.0" />
+                     </children>
+                  </VBox>
+                  <ListView fx:id="listOfMembers" prefHeight="57.0" prefWidth="197.0" />
+                  <Button mnemonicParsing="false" onAction="#createGroup" text="create" textFill="#2f4aba" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="213.0" prefWidth="195.0">
+               <children>
+                  <Label text="add user " textFill="WHITE" />
+                  <TextField promptText="name of group" />
+                  <ChoiceBox prefHeight="29.0" prefWidth="197.0" />
+                  <Button mnemonicParsing="false" text="add user" textFill="#2f4aba" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="401.0" prefWidth="200.0">
+               <children>
+                  <Label text="rename group" textFill="WHITE" />
+                  <TextField promptText="name of group" />
+                  <TextField promptText="new name" />
+                  <Button mnemonicParsing="false" text="rename" textFill="#2f4aba" />
+               </children>
+            </VBox>
          </children>
-      </VBox>
+      </HBox>
    </children>
 </Pane>
