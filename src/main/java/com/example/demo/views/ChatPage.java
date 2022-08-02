@@ -200,13 +200,13 @@ public class ChatPage {
         HBox hBox = (HBox) pane.getChildren().get(0);
         if (account == LoggedInAccount.getInstance().getLoggedIn()) {
             hBox.getChildren().remove(2);
-            hBox.getChildren().remove(1);
+            hBox.getChildren().remove(3);
             return;
         } else if (LoggedInAccount.getInstance().getLoggedIn() != this.groupChat.getOwner()) {
             hBox.getChildren().remove(2);
-            hBox.getChildren().remove(1);
-            hBox.getChildren().get(0).setCursor(Cursor.HAND);
-            hBox.getChildren().get(0).setOnMouseClicked(mouseEvent -> {
+            hBox.getChildren().remove(3);
+            hBox.getChildren().get(1).setCursor(Cursor.HAND);
+            hBox.getChildren().get(1).setOnMouseClicked(mouseEvent -> {
                 try {
                     this.privateChat = ChatController.getInstance().getAccountPrivateChat(account);
                     chatMode = 1;
@@ -219,8 +219,8 @@ public class ChatPage {
             });
             return;
         } else {
-            hBox.getChildren().get(0).setCursor(Cursor.HAND);
-            hBox.getChildren().get(0).setOnMouseClicked(mouseEvent -> {
+            hBox.getChildren().get(1).setCursor(Cursor.HAND);
+            hBox.getChildren().get(1).setOnMouseClicked(mouseEvent -> {
                 try {
                     this.privateChat = ChatController.getInstance().getAccountPrivateChat(account);
                     chatMode = 1;
@@ -232,14 +232,14 @@ public class ChatPage {
                 }
             });
 
-            hBox.getChildren().get(1).setCursor(Cursor.HAND);
-            hBox.getChildren().get(1).setOnMouseClicked(mouseEvent -> {
+            hBox.getChildren().get(2).setCursor(Cursor.HAND);
+            hBox.getChildren().get(2).setOnMouseClicked(mouseEvent -> {
                 this.groupChat.banUser(account);
             });
 
 
-            hBox.getChildren().get(2).setCursor(Cursor.HAND);
-            hBox.getChildren().get(2).setOnMouseClicked(mouseEvent -> {
+            hBox.getChildren().get(3).setCursor(Cursor.HAND);
+            hBox.getChildren().get(3).setOnMouseClicked(mouseEvent -> {
                 this.groupChat.removeUser(account);
             });
         }
@@ -538,7 +538,6 @@ public class ChatPage {
         pane.getChildren().add(imageView);
     }
 
-
     private void editMessageClicked(Pane pane, AtomicBoolean isSelectedForEdit, Message message) {
         editTextField.setOnKeyPressed(k -> {
             if (k.getCode().equals(KeyCode.ENTER)) {
@@ -620,7 +619,6 @@ public class ChatPage {
                 "-fx-background-color: #927819;");
     }
 
-
     public void changeToPrivate(MouseEvent mouseEvent) throws MalformedURLException {
         if (chatMode != 1) {
             chatMode = 1;
@@ -641,7 +639,6 @@ public class ChatPage {
         }
     }
 
-
     private void addLabelPrivateOrRoomChat(Pane pane, String string) {
         Label label = new Label(string);
         label.setPrefHeight(20);
@@ -660,7 +657,6 @@ public class ChatPage {
         }
     }
 
-
     private void showSuggestionGroupChats() throws MalformedURLException {
         suggestionVBox.getChildren().clear();
         if (searchTextField.getText().equals("")) {
@@ -671,7 +667,6 @@ public class ChatPage {
             addSuggestionPane(suggestionGroup);
         }
     }
-
 
     private void showSuggestionPrivateChats() throws MalformedURLException {
         suggestionVBox.getChildren().clear();
@@ -691,9 +686,9 @@ public class ChatPage {
                 "-fx-background-radius: 30 30 30 30;");
         addLabelToSuggestionPane(pane, suggestionGroup.getName(), false);
         HBox hBox = (HBox) pane.getChildren().get(0);
-        hBox.getChildren().get(0).setCursor(Cursor.HAND);
+        hBox.getChildren().get(1).setCursor(Cursor.HAND);
         suggestionVBox.getChildren().add(pane);
-        hBox.getChildren().get(0).setOnMouseClicked(mouseEvent -> {
+        hBox.getChildren().get(1).setOnMouseClicked(mouseEvent -> {
             try {
                 this.groupChat = suggestionGroup;
                 goToARoomChat();
@@ -702,8 +697,8 @@ public class ChatPage {
             }
         });
 
-        hBox.getChildren().get(1).setCursor(Cursor.HAND);
-        hBox.getChildren().get(1).setOnMouseClicked(mouseEvent -> {
+        hBox.getChildren().get(2).setCursor(Cursor.HAND);
+        hBox.getChildren().get(2).setOnMouseClicked(mouseEvent -> {
             suggestionGroup.removeUser(LoggedInAccount.getInstance().getLoggedIn());
         });
     }
@@ -716,9 +711,9 @@ public class ChatPage {
                 "-fx-background-radius: 30 30 30 30;");
         addLabelToSuggestionPane(pane, account.getUsername(), false);
         HBox hBox = (HBox) pane.getChildren().get(0);
-        hBox.getChildren().get(0).setCursor(Cursor.HAND);
+        hBox.getChildren().get(1).setCursor(Cursor.HAND);
         suggestionVBox.getChildren().add(pane);
-        hBox.getChildren().get(0).setOnMouseClicked(mouseEvent -> {
+        hBox.getChildren().get(1).setOnMouseClicked(mouseEvent -> {
             try {
                 this.privateChat = ChatController.getInstance().getAccountPrivateChat(account);
                 goToAPrivateChat();
@@ -727,8 +722,8 @@ public class ChatPage {
             }
         });
 
-        hBox.getChildren().get(1).setCursor(Cursor.HAND);
-        hBox.getChildren().get(1).setOnMouseClicked(mouseEvent -> {
+        hBox.getChildren().get(2).setCursor(Cursor.HAND);
+        hBox.getChildren().get(2).setOnMouseClicked(mouseEvent -> {
             LoggedInAccount.getInstance().getLoggedIn().blockUser(account);
         });
     }
@@ -740,11 +735,15 @@ public class ChatPage {
             hBox.setLayoutX(70);
             hBox.setLayoutY(10);
             hBox.setSpacing(10);
+            Account account = Account.getAccount(username);
+            if (account.getFile() != null) {
+                ImageView imageView = new ImageView(new Image(account.getFile().toURI().toString(),25,25,true,true));
+                hBox.getChildren().add(imageView);
+            }
             Label label = new Label(username);
             label.setPrefHeight(20);
             label.setStyle("-fx-font-family: \"High Tower Text\";" +
                     "       -fx-font-size: 25");
-
             Image image = null;
             try {
                 image = new Image(String.valueOf(
@@ -755,7 +754,6 @@ public class ChatPage {
             ImageView ban = new ImageView(image);
             ban.setFitHeight(25);
             ban.setFitWidth(25);
-
             ImageView remove = null;
             try {
                 remove = new ImageView(new Image(String.valueOf(
@@ -765,7 +763,6 @@ public class ChatPage {
             }
             remove.setFitHeight(25);
             remove.setFitWidth(25);
-
             hBox.getChildren().addAll(label, ban, remove);
             pane.getChildren().add(hBox);
         } else {
@@ -774,11 +771,25 @@ public class ChatPage {
             hBox.setLayoutX(70);
             hBox.setLayoutY(10);
             hBox.setSpacing(10);
+            Account account = Account.getAccount(username);
+            GroupChat groupChat = GroupChat.getGroupChatByName(username);
+            if (account != null && account.getFile() != null) {
+                ImageView imageView = new ImageView(new Image(account.getFile().toURI().toString(),25,25,true,true));
+                hBox.getChildren().add(imageView);
+            }
+           else if (groupChat != null && groupChat.getFile() != null) {
+                ImageView imageView = new ImageView(new Image(groupChat.getFile().toURI().toString(),25,25,true,true));
+                hBox.getChildren().add(imageView);
+            }else{
+                ImageView imageView = new ImageView();
+                imageView.setStyle("-fx-background-color: BLACK");
+                hBox.getChildren().add(imageView);
+
+            }
             Label label = new Label(username);
             label.setPrefHeight(20);
             label.setStyle("-fx-font-family: \"High Tower Text\";" +
                     "       -fx-font-size: 18");
-
             ImageView block = null;
             try {
                 block = new ImageView(new Image(String.valueOf(
@@ -788,7 +799,6 @@ public class ChatPage {
             }
             block.setFitHeight(25);
             block.setFitWidth(25);
-
             hBox.getChildren().addAll(label, block);
             pane.getChildren().add(hBox);
         }
