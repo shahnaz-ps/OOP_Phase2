@@ -1,5 +1,6 @@
 package com.example.demo.views;
 
+import com.example.demo.ConsoleApplication;
 import com.example.demo.model.Account;
 import com.example.demo.model.GroupChat;
 import com.example.demo.model.LoggedInAccount;
@@ -8,7 +9,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+
+import java.io.File;
+import java.net.URL;
 
 public class CreateGroupController {
 
@@ -19,6 +25,7 @@ public class CreateGroupController {
     public ChoiceBox notJoinedList;
     public TextField groupName_rename;
     public TextField newGroupName_rename;
+    public TextField groupName_profile;
 
     public void initialize() {
 //        for (Account follower : LoggedInAccount.getInstance().getLoggedIn().getFollowers()) {
@@ -118,5 +125,21 @@ public class CreateGroupController {
         }
         groupName_rename.clear();
         newGroupName_rename.clear();
+    }
+
+    public void setProfile(ActionEvent actionEvent) {
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG, PNG, JEPG Files", "*.jpg", "*.png", "*.jepg"));
+        File selectedFile = fc.showOpenDialog(MenuChanger.getStage());
+        if (selectedFile != null && GroupChat.isExist(groupName_profile.getText())) {
+            GroupChat groupChat = GroupChat.getGroupChatByName(groupName_profile.getText());
+            groupChat.setFile(selectedFile);
+//            this.picMessage = selectedFile;
+//            sendMessageMode.setImage(new Image(String.valueOf(
+//                    new URL(ConsoleApplication.class.getResource("/Image/Menu/camera.png").toString()))));
+        } else {
+            new PopupMessage(Alert.AlertType.ERROR, "file is not valid");
+        }
+        groupName_profile.clear();
     }
 }

@@ -217,7 +217,7 @@
                             <Cursor fx:constant="HAND" />
                         </cursor>
                     </Button>
-               <Button fx:id="createGroupButton" layoutX="-50.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#createGroup" prefHeight="37.0" prefWidth="181.0" rotate="90.0" text="create group">
+               <Button fx:id="groupSettingButton" layoutX="-50.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#createGroup" prefHeight="37.0" prefWidth="181.0" rotate="90.0" text="group settings">
                   <font>
                      <Font name="System Bold" size="18.0" />
                   </font>

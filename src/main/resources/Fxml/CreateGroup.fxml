@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane prefHeight="400.0" prefWidth="600.0" styleClass="secondPane" stylesheets="@../CSS/Menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.CreateGroupController">
+<Pane prefHeight="634.0" prefWidth="896.0" styleClass="secondPane" stylesheets="@../CSS/Menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.CreateGroupController">
    <children>
-      <HBox prefHeight="401.0" prefWidth="600.0">
+      <HBox prefHeight="487.0" prefWidth="845.0">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="401.0" prefWidth="197.0">
+            <VBox alignment="TOP_CENTER" prefHeight="487.0" prefWidth="197.0">
                <children>
                   <HBox prefHeight="52.0" prefWidth="197.0">
                      <children>
@@ -35,7 +35,7 @@
                         <Label prefHeight="6.0" prefWidth="19.0" />
                      </children>
                   </VBox>
-                  <ListView fx:id="listOfMembers" prefHeight="57.0" prefWidth="197.0" />
+                  <ListView fx:id="listOfMembers" prefHeight="83.0" prefWidth="184.0" />
                   <Button mnemonicParsing="false" onAction="#createGroup" text="create" textFill="#2f4aba" />
                </children>
             </VBox>
@@ -53,7 +53,14 @@
                   <Label text="rename group" textFill="WHITE" />
                   <TextField fx:id="groupName_rename" promptText="name of group" />
                   <TextField fx:id="newGroupName_rename" promptText="new name" />
-                  <Button mnemonicParsing="false" text="rename" textFill="#2f4aba" onAction="#rename" />
+                  <Button mnemonicParsing="false" onAction="#rename" text="rename" textFill="#2f4aba" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="487.0" prefWidth="198.0">
+               <children>
+                  <Label contentDisplay="CENTER" text="profile" textAlignment="CENTER" textFill="WHITE" />
+                  <TextField fx:id="groupName_profile" promptText="name of group" />
+                  <Button mnemonicParsing="false" onAction="#setProfile" text="choose photo" textFill="#2f4aba" />
                </children>
             </VBox>
          </children>

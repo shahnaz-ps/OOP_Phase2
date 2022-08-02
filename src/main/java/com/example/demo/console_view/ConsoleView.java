@@ -83,11 +83,11 @@ public class ConsoleView {
             editMessage();
         } else if (command.equals("DELETE MESSAGE")) { // ok
             deleteMessage();
-        } else if (command.equals("REMOVE USER")) { // ...
+        } else if (command.equals("REMOVE USER")) { // ok
             removeUser();
-        } else if (command.equals("BAN USER")) { // ...
+        } else if (command.equals("BAN USER")) { // ok
             banUser();
-        } else if (command.equals("BLOCK USER")) { // ...
+        } else if (command.equals("BLOCK USER")) { // ok
             blockUser();
         } else if (command.equals("CHANGE GROUP NAME")) { // ok
             renameGroup();

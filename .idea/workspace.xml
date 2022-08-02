@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="997f2ada-640f-4052-8f7e-c6f50548dc84" name="Changes" comment="rename group">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Image/Menu/camera.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Image/Menu/file.png" afterDir="false" />
+    <list default="true" id="997f2ada-640f-4052-8f7e-c6f50548dc84" name="Changes" comment="send image">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/console_view/ConsoleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/console_view/ConsoleView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/model/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/model/GroupChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/model/GroupChat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/model/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/model/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/views/ChatPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/views/ChatPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/views/CreateGroupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/views/CreateGroupController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Fxml/ChatMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Fxml/ChatMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Fxml/CreateGroup.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Fxml/CreateGroup.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +89,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1659332943073</updated>
-      <workItem from="1659332944338" duration="31712000" />
+      <workItem from="1659332944338" duration="33138000" />
     </task>
     <task id="LOCAL-00001" summary="chat started">
       <created>1659333828035</created>
@@ -165,7 +161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659422606801</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="send image">
+      <created>1659424967309</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1659424967309</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,6 +196,7 @@
     <MESSAGE value="show all chats" />
     <MESSAGE value="add user" />
     <MESSAGE value="rename group" />
-    <option name="LAST_COMMIT_MESSAGE" value="rename group" />
+    <MESSAGE value="send image" />
+    <option name="LAST_COMMIT_MESSAGE" value="send image" />
   </component>
 </project>
