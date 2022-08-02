@@ -42,9 +42,10 @@
             <VBox alignment="TOP_CENTER" prefHeight="213.0" prefWidth="195.0">
                <children>
                   <Label text="add user " textFill="WHITE" />
-                  <TextField promptText="name of group" />
-                  <ChoiceBox prefHeight="29.0" prefWidth="197.0" />
-                  <Button mnemonicParsing="false" text="add user" textFill="#2f4aba" />
+                  <TextField fx:id="groupName_addUser" promptText="name of group" />
+                  <Button mnemonicParsing="false" onAction="#searchGroup" text="search group" textFill="#2f4aba" />
+                  <ChoiceBox fx:id="notJoinedList" prefHeight="29.0" prefWidth="197.0" />
+                  <Button mnemonicParsing="false" onAction="#addUser" text="add user" textFill="#2f4aba" />
                </children>
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="401.0" prefWidth="200.0">
