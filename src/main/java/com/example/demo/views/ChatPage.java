@@ -199,12 +199,12 @@ public class ChatPage {
         allMessages.getChildren().add(pane);
         HBox hBox = (HBox) pane.getChildren().get(0);
         if (account == LoggedInAccount.getInstance().getLoggedIn()) {
-            hBox.getChildren().remove(2);
             hBox.getChildren().remove(3);
+            hBox.getChildren().remove(2);
             return;
         } else if (LoggedInAccount.getInstance().getLoggedIn() != this.groupChat.getOwner()) {
-            hBox.getChildren().remove(2);
             hBox.getChildren().remove(3);
+            hBox.getChildren().remove(2);
             hBox.getChildren().get(1).setCursor(Cursor.HAND);
             hBox.getChildren().get(1).setOnMouseClicked(mouseEvent -> {
                 try {
@@ -374,7 +374,7 @@ public class ChatPage {
             new PopupMessage(Alert.AlertType.ERROR, "empty text!");
         } else if (!ChatController.getInstance().isValidLongMessage(textToSend.getText()))
             new PopupMessage(Alert.AlertType.ERROR, "long message");
-        else if (chatMode == 1 && false)
+        else if (chatMode == 1 && privateChat.getOtherUser(LoggedInAccount.getInstance().getLoggedIn()).getBlockedUsers().contains(LoggedInAccount.getInstance().getLoggedIn()))
             new PopupMessage(Alert.AlertType.ERROR, "you are blocked by the other person!");
         else if (chatMode == 2 && this.groupChat.getBannedUsers().contains(LoggedInAccount.getInstance().getLoggedIn()))
             new PopupMessage(Alert.AlertType.ERROR, "you are banned from this group!");
@@ -538,6 +538,7 @@ public class ChatPage {
         pane.getChildren().add(imageView);
     }
 
+
     private void editMessageClicked(Pane pane, AtomicBoolean isSelectedForEdit, Message message) {
         editTextField.setOnKeyPressed(k -> {
             if (k.getCode().equals(KeyCode.ENTER)) {
@@ -619,6 +620,7 @@ public class ChatPage {
                 "-fx-background-color: #927819;");
     }
 
+
     public void changeToPrivate(MouseEvent mouseEvent) throws MalformedURLException {
         if (chatMode != 1) {
             chatMode = 1;
@@ -639,6 +641,7 @@ public class ChatPage {
         }
     }
 
+
     private void addLabelPrivateOrRoomChat(Pane pane, String string) {
         Label label = new Label(string);
         label.setPrefHeight(20);
@@ -657,6 +660,7 @@ public class ChatPage {
         }
     }
 
+
     private void showSuggestionGroupChats() throws MalformedURLException {
         suggestionVBox.getChildren().clear();
         if (searchTextField.getText().equals("")) {
@@ -667,6 +671,7 @@ public class ChatPage {
             addSuggestionPane(suggestionGroup);
         }
     }
+
 
     private void showSuggestionPrivateChats() throws MalformedURLException {
         suggestionVBox.getChildren().clear();
@@ -737,9 +742,20 @@ public class ChatPage {
             hBox.setSpacing(10);
             Account account = Account.getAccount(username);
             if (account.getFile() != null) {
-                ImageView imageView = new ImageView(new Image(account.getFile().toURI().toString(),25,25,true,true));
+                ImageView imageView = new ImageView(new Image(account.getFile().toURI().toString()));
+                hBox.getChildren().add(imageView);
+            } else {
+                ImageView imageView = null;
+                try {
+                    imageView = new ImageView(new Image(String.valueOf(new URL(ConsoleApplication.class.getResource("/Image/Menu/user.png").toString()))));
+                    imageView.setFitHeight(35);
+                    imageView.setFitWidth(35);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
                 hBox.getChildren().add(imageView);
             }
+
             Label label = new Label(username);
             label.setPrefHeight(20);
             label.setStyle("-fx-font-family: \"High Tower Text\";" +
@@ -774,17 +790,21 @@ public class ChatPage {
             Account account = Account.getAccount(username);
             GroupChat groupChat = GroupChat.getGroupChatByName(username);
             if (account != null && account.getFile() != null) {
-                ImageView imageView = new ImageView(new Image(account.getFile().toURI().toString(),25,25,true,true));
+                ImageView imageView = new ImageView(new Image(account.getFile().toURI().toString()));
                 hBox.getChildren().add(imageView);
-            }
-           else if (groupChat != null && groupChat.getFile() != null) {
-                ImageView imageView = new ImageView(new Image(groupChat.getFile().toURI().toString(),25,25,true,true));
+            } else if (groupChat != null && groupChat.getFile() != null) {
+                ImageView imageView = new ImageView(new Image(groupChat.getFile().toURI().toString()));
                 hBox.getChildren().add(imageView);
-            }else{
-                ImageView imageView = new ImageView();
-                imageView.setStyle("-fx-background-color: BLACK");
+            } else {
+                ImageView imageView = null;
+                try {
+                    imageView = new ImageView(new Image(String.valueOf(new URL(ConsoleApplication.class.getResource("/Image/Menu/user.png").toString()))));
+                    imageView.setFitHeight(35);
+                    imageView.setFitWidth(35);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
                 hBox.getChildren().add(imageView);
-
             }
             Label label = new Label(username);
             label.setPrefHeight(20);

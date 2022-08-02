@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="997f2ada-640f-4052-8f7e-c6f50548dc84" name="Changes" comment="group profile">
+    <list default="true" id="997f2ada-640f-4052-8f7e-c6f50548dc84" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Image/Menu/user.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/views/ChatPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/views/ChatPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,6 +69,7 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/Image/Menu" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/example/demo/views" />
     </key>
   </component>
   <component name="RunManager">
