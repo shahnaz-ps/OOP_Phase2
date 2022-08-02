@@ -7,7 +7,6 @@ public class PrivateChat extends Chat {
     private Account account2;
     private ArrayList<Message> messages = new ArrayList<>();
     private static ArrayList<PrivateChat> privateChats = new ArrayList<>();
-
     public PrivateChat(Account account1, Account account2) {
         this.account1 = account1;
         this.account2 = account2;

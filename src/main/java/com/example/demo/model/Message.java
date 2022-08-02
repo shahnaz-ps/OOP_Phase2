@@ -1,8 +1,7 @@
 package com.example.demo.model;
 
 import java.io.File;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 public class Message {
     private Account account;
@@ -15,6 +14,7 @@ public class Message {
     private Message forwardedMessage;
     private boolean edited = false;
     private File file;
+    private HashSet<Account> seenBy = new HashSet<>();
 
     public Message(Account account, String content) {
         this.account = account;
@@ -76,20 +76,20 @@ public class Message {
         this.edited = edited;
     }
 
-    public static Message getMessageById(String id){
+    public static Message getMessageById(String id) {
         for (Message message : Chat.getWholeMessages()) {
-            if (message.getUuid().toString().equals(id)){
+            if (message.getUuid().toString().equals(id)) {
                 return message;
             }
         }
         return null;
     }
 
-    public void deleteMessage(){
+    public void deleteMessage() {
         Chat.getWholeMessages().remove(this);
         for (GroupChat groupChat : GroupChat.getGroupChats()) {
             for (Message message : groupChat.getMessages()) {
-                if (message==this){
+                if (message == this) {
                     groupChat.getMessages().remove(this);
                     return;
                 }
@@ -97,7 +97,7 @@ public class Message {
         }
         for (PrivateChat privateChat : PrivateChat.getPrivateChats()) {
             for (Message message : privateChat.getMessages()) {
-                if (message==this){
+                if (message == this) {
                     privateChat.getMessages().remove(this);
                     return;
                 }
@@ -135,5 +135,13 @@ public class Message {
 
     public void setFile(File file) {
         this.file = file;
+    }
+
+    public HashSet<Account> getSeenBy() {
+        return seenBy;
+    }
+
+    public void setSeenBy(HashSet<Account> seenBy) {
+        this.seenBy = seenBy;
     }
 }

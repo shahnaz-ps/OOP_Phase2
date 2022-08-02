@@ -19,6 +19,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ChatPage {
@@ -102,15 +103,100 @@ public class ChatPage {
         rightBarVBox.setVisible(false);
         scrollPane.vvalueProperty().bind(allMessages.heightProperty());
         allMessages.setSpacing(5);
-        for (PrivateChat privateChat : LoggedInAccount.getInstance().getLoggedIn().getPrivateChats()) {
-            if (privateChat.getAccount1() == LoggedInAccount.getInstance().getLoggedIn()) {
-                listOfChats.getItems().add(privateChat.getAccount2().getUsername());
-            } else {
-                listOfChats.getItems().add(privateChat.getAccount1().getUsername());
+
+        ArrayList<PrivateChat> privateChats = LoggedInAccount.getInstance().getLoggedIn().getPrivateChats();
+        ArrayList<GroupChat> groupChats = GroupChat.getUserGroups(LoggedInAccount.getInstance().getLoggedIn());
+        ArrayList<Chat> allChats = new ArrayList<>();
+        PCustomSort(privateChats);
+        GCustomSort(groupChats);
+        fillAllChats(allChats, privateChats, groupChats);
+
+        for (Chat chat : allChats) {
+            if (chat instanceof PrivateChat){
+                PrivateChat temp = (PrivateChat) chat;
+                if (temp.getAccount1() == LoggedInAccount.getInstance().getLoggedIn()) {
+                    listOfChats.getItems().add(temp.getAccount2().getUsername());
+                } else {
+                    listOfChats.getItems().add(temp.getAccount1().getUsername());
+                }
+            }else if (chat instanceof GroupChat){
+                GroupChat temp = (GroupChat) chat;
+                listOfChats.getItems().add(temp.getName());
             }
         }
-        for (GroupChat groupChat : GroupChat.getUserGroups(LoggedInAccount.getInstance().getLoggedIn())) {
-            listOfChats.getItems().add(groupChat.getName());
+
+//        for (PrivateChat privateChat : privateChats) {
+//            if (privateChat.getAccount1() == LoggedInAccount.getInstance().getLoggedIn()) {
+//                listOfChats.getItems().add(privateChat.getAccount2().getUsername());
+//            } else {
+//                listOfChats.getItems().add(privateChat.getAccount1().getUsername());
+//            }
+//        }
+//        for (GroupChat groupChat : groupChats) {
+//            listOfChats.getItems().add(groupChat.getName());
+//        }
+    }
+
+    private void GCustomSort(ArrayList<GroupChat> groupChats) {
+        Message message1, message2;
+        for (int i = 0; i < groupChats.size(); i++) {
+            if (groupChats.get(i).getMessages().size() == 0) continue;
+            for (int j = i + 1; j < groupChats.size(); j++) {
+                if (groupChats.get(j).getMessages().size() == 0) continue;
+                message1 = groupChats.get(i).getMessages().get(groupChats.get(i).getMessages().size() - 1);
+                message2 = groupChats.get(j).getMessages().get(groupChats.get(j).getMessages().size() - 1);
+                if (message1.getDate().compareTo(message2.getDate()) < 0)
+                    Collections.swap(groupChats, i, j);
+            }
+        }
+    }
+
+    private void PCustomSort(ArrayList<PrivateChat> privateChats) {
+        Message message1, message2;
+        for (int i = 0; i < privateChats.size(); i++) {
+            if (privateChats.get(i).getMessages().size() == 0) continue;
+            for (int j = i + 1; j < privateChats.size(); j++) {
+                if (privateChats.get(j).getMessages().size() == 0) continue;
+                message1 = privateChats.get(i).getMessages().get(privateChats.get(i).getMessages().size() - 1);
+                message2 = privateChats.get(j).getMessages().get(privateChats.get(j).getMessages().size() - 1);
+                if (message1.getDate().compareTo(message2.getDate()) < 0)
+                    Collections.swap(privateChats, i, j);
+            }
+        }
+    }
+
+    private void fillAllChats(ArrayList<Chat> allChats, ArrayList<PrivateChat> privateChats, ArrayList<GroupChat> groupChats) {
+        allChats.clear();
+        int p = 0, g = 0;
+        Message pMessage, gMessage;
+        while (p < privateChats.size() && g < groupChats.size()) {
+            if (privateChats.get(p).getMessages().size()==0){
+                allChats.add(groupChats.get(g));
+                g++;
+                continue;
+            }
+            if (groupChats.get(g).getMessages().size()==0){
+                allChats.add(privateChats.get(p));
+                p++;
+                continue;
+            }
+            pMessage = privateChats.get(p).getMessages().get(privateChats.get(p).getMessages().size() - 1);
+            gMessage = groupChats.get(g).getMessages().get(groupChats.get(g).getMessages().size() - 1);
+            if (pMessage.getDate().compareTo(gMessage.getDate()) > 0) {
+                allChats.add(privateChats.get(p));
+                p++;
+            } else {
+                allChats.add(groupChats.get(g));
+                g++;
+            }
+        }
+        while (p < privateChats.size()) {
+            allChats.add(privateChats.get(p));
+            p++;
+        }
+        while (g < groupChats.size()) {
+            allChats.add(groupChats.get(g));
+            g++;
         }
     }
 
@@ -162,8 +248,12 @@ public class ChatPage {
 
     private void setDataOfChatHBoxRoomChat() throws MalformedURLException {
         labelOfDataChat.setText(groupChat.getName());
-        photoOfChat.setImage(new Image(String.valueOf(
-                new URL(ConsoleApplication.class.getResource("/Image/Menu/groupChat.png").toString()))));
+        if (groupChat.getFile() == null) {
+            photoOfChat.setImage(new Image(String.valueOf(
+                    new URL(ConsoleApplication.class.getResource("/Image/Menu/groupChat.png").toString()))));
+        } else {
+            photoOfChat.setImage(new Image(groupChat.getFile().toURI().toString(), 30, 30, true, true));
+        }
         photoOfChat.setCursor(Cursor.HAND);
         AtomicBoolean isUsersShowed = new AtomicBoolean(false);
         photoOfChat.setOnMouseClicked(mouseEvent -> {
@@ -246,10 +336,15 @@ public class ChatPage {
     }
 
     private void setDataOfChatHBoxPrivateChat(Account account) throws MalformedURLException {
-        labelOfDataChat.setText(privateChat.getOtherUser(LoggedInAccount.getInstance().getLoggedIn()).getUsername());
+        Account other = privateChat.getOtherUser(LoggedInAccount.getInstance().getLoggedIn());
+        labelOfDataChat.setText(other.getUsername());
         photoOfChat.setVisible(true);
-        photoOfChat.setImage(new Image(String.valueOf(
-                new URL(ConsoleApplication.class.getResource("/Image/Menu/groupChat.png").toString()))));
+        if (other.getFile() == null) {
+            photoOfChat.setImage(new Image(String.valueOf(
+                    new URL(ConsoleApplication.class.getResource("/Image/Menu/user.png").toString()))));
+        } else {
+            photoOfChat.setImage(new Image(other.getFile().toURI().toString(), 30, 30, true, true));
+        }
         photoOfChat.setCursor(Cursor.DEFAULT);
         photoOfChat.setOnMouseClicked(null);
     }
@@ -275,7 +370,11 @@ public class ChatPage {
             startForSearchingPrivateChat();
         });
         listOfChats.getItems().clear();
-        for (PrivateChat privateChat : LoggedInAccount.getInstance().getLoggedIn().getPrivateChats()) {
+        ArrayList<PrivateChat> privateChats = LoggedInAccount.getInstance().getLoggedIn().getPrivateChats();
+        //ArrayList<GroupChat> groupChats = GroupChat.getUserGroups(LoggedInAccount.getInstance().getLoggedIn());
+        PCustomSort(privateChats);
+        //GCustomSort(groupChats);
+        for (PrivateChat privateChat : privateChats) {
             if (privateChat.getAccount1() == LoggedInAccount.getInstance().getLoggedIn()) {
                 listOfChats.getItems().add(privateChat.getAccount2().getUsername());
             } else {
@@ -299,7 +398,11 @@ public class ChatPage {
             startForSearchingGroupChat();
         });
         listOfChats.getItems().clear();
-        for (GroupChat groupChat : GroupChat.getUserGroups(LoggedInAccount.getInstance().getLoggedIn())) {
+//        ArrayList<PrivateChat> privateChats = LoggedInAccount.getInstance().getLoggedIn().getPrivateChats();
+        ArrayList<GroupChat> groupChats = GroupChat.getUserGroups(LoggedInAccount.getInstance().getLoggedIn());
+//        PCustomSort(privateChats);
+        GCustomSort(groupChats);
+        for (GroupChat groupChat : groupChats) {
             listOfChats.getItems().add(groupChat.getName());
         }
     }
@@ -402,6 +505,7 @@ public class ChatPage {
     }
 
     private void sendNewMessage(Message message) throws MalformedURLException {
+        message.getSeenBy().add(LoggedInAccount.getInstance().getLoggedIn());
         Pane pane = getMessageBox(message);
         allMessages.getChildren().add(pane);
     }
@@ -689,6 +793,11 @@ public class ChatPage {
         pane.setStyle("-fx-background-color: #dfc10c;" +
                 "-fx-border-radius: 30 30 30 30;" +
                 "-fx-background-radius: 30 30 30 30;");
+        if (hasNotification(suggestionGroup)) {
+            pane.setStyle("-fx-background-color: #0cdfc6;" +
+                    "-fx-border-radius: 30 30 30 30;" +
+                    "-fx-background-radius: 30 30 30 30;");
+        }
         addLabelToSuggestionPane(pane, suggestionGroup.getName(), false);
         HBox hBox = (HBox) pane.getChildren().get(0);
         hBox.getChildren().get(1).setCursor(Cursor.HAND);
@@ -708,12 +817,30 @@ public class ChatPage {
         });
     }
 
+    private boolean hasNotification(GroupChat groupChat) {
+        if (groupChat == null) return false;
+        if (groupChat.getMessages().size() == 0) return false;
+        return !groupChat.getMessages().get(groupChat.getMessages().size() - 1).getSeenBy().contains(LoggedInAccount.getInstance().getLoggedIn());
+    }
+
+    private boolean hasNotification(Account account) {
+        PrivateChat chat = PrivateChat.getPrivateChat(account, LoggedInAccount.getInstance().getLoggedIn());
+        if (chat == null) return false;
+        if (chat.getMessages().size() == 0) return false;
+        return !chat.getMessages().get(chat.getMessages().size() - 1).getSeenBy().contains(LoggedInAccount.getInstance().getLoggedIn());
+    }
+
     private void addSuggestionPane(Account account) throws MalformedURLException {
         Pane pane = new Pane();
         pane.setPrefHeight(50);
         pane.setStyle("-fx-background-color: #dfc10c;" +
                 "-fx-border-radius: 30 30 30 30;" +
                 "-fx-background-radius: 30 30 30 30;");
+        if (hasNotification(account)) {
+            pane.setStyle("-fx-background-color: #0cdfc6;" +
+                    "-fx-border-radius: 30 30 30 30;" +
+                    "-fx-background-radius: 30 30 30 30;");
+        }
         addLabelToSuggestionPane(pane, account.getUsername(), false);
         HBox hBox = (HBox) pane.getChildren().get(0);
         hBox.getChildren().get(1).setCursor(Cursor.HAND);
@@ -842,6 +969,7 @@ public class ChatPage {
         String name = listOfChats.getSelectionModel().getSelectedItem().toString();
         if (GroupChat.isExist(name)) {
             this.groupChat = GroupChat.getGroupChatByName(name);
+            chatMode=2;
             try {
                 goToARoomChat();
             } catch (MalformedURLException e) {
@@ -867,15 +995,25 @@ public class ChatPage {
             setNotSelectedRightBoxButtonStyle(changeToRoomChatButton);
         }
         listOfChats.getItems().clear();
-        for (PrivateChat privateChat : LoggedInAccount.getInstance().getLoggedIn().getPrivateChats()) {
-            if (privateChat.getAccount1() == LoggedInAccount.getInstance().getLoggedIn()) {
-                listOfChats.getItems().add(privateChat.getAccount2().getUsername());
-            } else {
-                listOfChats.getItems().add(privateChat.getAccount1().getUsername());
+        ArrayList<PrivateChat> privateChats = LoggedInAccount.getInstance().getLoggedIn().getPrivateChats();
+        ArrayList<GroupChat> groupChats = GroupChat.getUserGroups(LoggedInAccount.getInstance().getLoggedIn());
+        ArrayList<Chat> allChats = new ArrayList<>();
+        PCustomSort(privateChats);
+        GCustomSort(groupChats);
+        fillAllChats(allChats, privateChats, groupChats);
+
+        for (Chat chat : allChats) {
+            if (chat instanceof PrivateChat){
+                PrivateChat temp = (PrivateChat) chat;
+                if (temp.getAccount1() == LoggedInAccount.getInstance().getLoggedIn()) {
+                    listOfChats.getItems().add(temp.getAccount2().getUsername());
+                } else {
+                    listOfChats.getItems().add(temp.getAccount1().getUsername());
+                }
+            }else if (chat instanceof GroupChat){
+                GroupChat temp = (GroupChat) chat;
+                listOfChats.getItems().add(temp.getName());
             }
-        }
-        for (GroupChat groupChat : GroupChat.getUserGroups(LoggedInAccount.getInstance().getLoggedIn())) {
-            listOfChats.getItems().add(groupChat.getName());
         }
     }
 
@@ -891,4 +1029,5 @@ public class ChatPage {
             new PopupMessage(Alert.AlertType.ERROR, "file is not valid");
         }
     }
+
 }
