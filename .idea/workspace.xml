@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="997f2ada-640f-4052-8f7e-c6f50548dc84" name="Changes" comment="block debugged">
+    <list default="true" id="997f2ada-640f-4052-8f7e-c6f50548dc84" name="Changes" comment="list of chats debugged">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/model/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/model/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/model/PrivateChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/model/PrivateChat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/views/ChatPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/views/ChatPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -184,7 +181,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659434293690</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="list of chats debugged">
+      <created>1659440615069</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1659440615069</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,6 +219,7 @@
     <MESSAGE value="send image" />
     <MESSAGE value="group profile" />
     <MESSAGE value="block debugged" />
-    <option name="LAST_COMMIT_MESSAGE" value="block debugged" />
+    <MESSAGE value="list of chats debugged" />
+    <option name="LAST_COMMIT_MESSAGE" value="list of chats debugged" />
   </component>
 </project>

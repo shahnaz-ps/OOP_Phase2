@@ -38,6 +38,8 @@ public class ChatPage {
     private int chatMode = 0; // 1: private chat, 2: groupChat
     private PrivateChat privateChat;
     private GroupChat groupChat;
+    private boolean forward = false;
+
 
     @FXML
     private HBox beforeScrollPaneHBox;
@@ -112,14 +114,14 @@ public class ChatPage {
         fillAllChats(allChats, privateChats, groupChats);
 
         for (Chat chat : allChats) {
-            if (chat instanceof PrivateChat){
+            if (chat instanceof PrivateChat) {
                 PrivateChat temp = (PrivateChat) chat;
                 if (temp.getAccount1() == LoggedInAccount.getInstance().getLoggedIn()) {
                     listOfChats.getItems().add(temp.getAccount2().getUsername());
                 } else {
                     listOfChats.getItems().add(temp.getAccount1().getUsername());
                 }
-            }else if (chat instanceof GroupChat){
+            } else if (chat instanceof GroupChat) {
                 GroupChat temp = (GroupChat) chat;
                 listOfChats.getItems().add(temp.getName());
             }
@@ -170,12 +172,12 @@ public class ChatPage {
         int p = 0, g = 0;
         Message pMessage, gMessage;
         while (p < privateChats.size() && g < groupChats.size()) {
-            if (privateChats.get(p).getMessages().size()==0){
+            if (privateChats.get(p).getMessages().size() == 0) {
                 allChats.add(groupChats.get(g));
                 g++;
                 continue;
             }
-            if (groupChats.get(g).getMessages().size()==0){
+            if (groupChats.get(g).getMessages().size() == 0) {
                 allChats.add(privateChats.get(p));
                 p++;
                 continue;
@@ -500,7 +502,7 @@ public class ChatPage {
         }
         picMessage = null;
         repliedMessage = null;
-        forwardedMessage = null;
+        forwardedMessage=null;
         textToSend.clear();
     }
 
@@ -519,6 +521,8 @@ public class ChatPage {
         addClock(pane, String.valueOf(message.getDate().getTime()));
         if (message.getFile() != null)
             addImage(pane, message.getFile());
+        if (message.getForwardedMessage() != null && message.getForwardedUsername() != null)
+            addForwarded(pane, message);
         if (message.getRepliedMessage() != null)
             addReplied(pane, message);
         if (message.getAccount() == LoggedInAccount.getInstance().getLoggedIn()) {
@@ -530,24 +534,36 @@ public class ChatPage {
         return pane;
     }
 
+    private void addReplied(Pane pane, Message message) {
+        Label label = new Label("replied to : " + message.getRepliedMessage().getContent());
+        label.setPrefHeight(30);
+        label.setPrefWidth(180);
+        label.setLayoutX(40);
+        label.setLayoutY(18);
+        label.setFont(Font.font(15));
+        label.setTextFill(Color.DARKGREEN);
+        label.setStyle("-fx-font-family: \"High Tower Text\"");
+        pane.getChildren().add(label);
+    }
+
+    private void addForwarded(Pane pane, Message message) {
+        Label label = new Label("forwarded from " + message.getForwardedUsername() + " : " + message.getForwardedMessage().getContent());
+        label.setPrefHeight(30);
+        label.setPrefWidth(180);
+        label.setLayoutX(40);
+        label.setLayoutY(18);
+        label.setFont(Font.font(15));
+        label.setTextFill(Color.DARKGREEN);
+        label.setStyle("-fx-font-family: \"High Tower Text\"");
+        pane.getChildren().add(label);
+    }
+
     private void addImage(Pane pane, File file) {
         ImageView imageView = new ImageView(new Image(file.toURI().toString(), 80, 80, true, true));
         imageView.setLayoutX(140);
-        imageView.setLayoutY(0);  // todo fix place
+        imageView.setLayoutY(0);
         pane.getChildren().add(imageView);
     }
-
-    //    private void addForwarded(Pane pane, Message message) {
-//        Label label = new Label("forwarded from : " + message.getForwardedUsername());
-//        label.setPrefHeight(30);
-//        label.setPrefWidth(180);
-//        label.setLayoutX(40);
-//        label.setLayoutY(18);
-//        label.setFont(Font.font(15));
-//        label.setTextFill(Color.PURPLE);
-//        label.setStyle("-fx-font-family: \"High Tower Text\"");
-//        pane.getChildren().add(label);
-//    }
 
     private void addButtonToForward(Pane pane, Message message) throws MalformedURLException {
         ImageView imageView = new ImageView(new Image(String.valueOf(
@@ -558,20 +574,99 @@ public class ChatPage {
         imageView.setLayoutY(15);
         imageView.setCursor(Cursor.HAND);
         imageView.setOnMouseClicked(mouseEvent -> {
-            forwardMessage(message);
+            forwardedMessage = message;
+            showForwardOptions();
         });
         pane.getChildren().add(imageView);
     }
 
-    private void forwardMessage(Message message) {
-//        forwardedMessage = message;
-//        repliedMessage = null;
-//        try {
-//            sendMessageMode.setImage(new Image(String.valueOf(
-//                    new URL(ConsoleApplication.class.getResource("/Image/Menu/close.png").toString()))));
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
+    public void showForwardOptions() {
+        listOfChats.getItems().clear();
+        for (Account account : Account.getAccounts().values()) {
+            if (account != LoggedInAccount.getInstance().getLoggedIn()){
+                listOfChats.getItems().add(account.getUsername());
+            }
+        }
+        for (GroupChat userGroup : GroupChat.getUserGroups(LoggedInAccount.getInstance().getLoggedIn())) {
+            listOfChats.getItems().add(userGroup.getName());
+        }
+        forward = true;
+    }
+
+    public void gotoChat(MouseEvent mouseEvent) {
+        String name = listOfChats.getSelectionModel().getSelectedItem().toString();
+        if (GroupChat.isExist(name)) {
+            if (forward) {
+                GroupChat groupChat = GroupChat.getGroupChatByName(name);
+                forwardMessage(groupChat,forwardedMessage);
+                forward = false;
+            } else {
+                this.groupChat = GroupChat.getGroupChatByName(name);
+                chatMode = 2;
+                try {
+                    goToARoomChat();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            if (forward) {
+                PrivateChat privateChat = PrivateChat.getPrivateChat(LoggedInAccount.getInstance().getLoggedIn(), Account.getAccount(name));
+                forwardMessage(privateChat,forwardedMessage);
+                forward = false;
+            } else {
+                this.privateChat = PrivateChat.getPrivateChat(LoggedInAccount.getInstance().getLoggedIn(), Account.getAccount(name));
+                chatMode = 1;
+                try {
+                    goToAPrivateChat();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void forwardMessage(PrivateChat chat, Message message) {
+        if (message==null) {
+            new PopupMessage(Alert.AlertType.ERROR,"no message to forward");
+            return;
+        }
+        Message temp = new Message(LoggedInAccount.getInstance().getLoggedIn(),"");
+        temp.setForwardedMessage(message);
+        temp.setForwardedUsername(message.getAccount().getUsername());
+        chat.getMessages().add(temp);
+        forwardedMessage=null;
+        if (chatMode==1 && privateChat==chat){
+            try {
+                sendNewMessage(message);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        new PopupMessage(Alert.AlertType.INFORMATION,"success");
+        listOfChats.getItems().clear();
+    }
+
+
+    public void forwardMessage(GroupChat chat, Message message) {
+        if (message==null) {
+            new PopupMessage(Alert.AlertType.ERROR,"no message to forward");
+            return;
+        }
+        Message temp = new Message(LoggedInAccount.getInstance().getLoggedIn(),"");
+        temp.setForwardedMessage(message);
+        temp.setForwardedUsername(message.getAccount().getUsername());
+        chat.getMessages().add(temp);
+        forwardedMessage=null;
+        if (chatMode==2 && groupChat==chat){
+            try {
+                sendNewMessage(message);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        new PopupMessage(Alert.AlertType.INFORMATION,"success");
+        listOfChats.getItems().clear();
     }
 
     private void addButtonToReply(Pane pane, Message message) throws MalformedURLException {
@@ -589,7 +684,6 @@ public class ChatPage {
     }
 
     private void replyMessage(Message message) {
-        forwardedMessage = null;
         repliedMessage = message;
         try {
             sendMessageMode.setImage(new Image(String.valueOf(
@@ -694,17 +788,6 @@ public class ChatPage {
         pane.getChildren().add(text);
     }
 
-    private void addReplied(Pane pane, Message message) {
-        Label label = new Label("replied to : " + message.getRepliedMessage().getContent());
-        label.setPrefHeight(30);
-        label.setPrefWidth(180);
-        label.setLayoutX(40);
-        label.setLayoutY(18);
-        label.setFont(Font.font(15));
-        label.setTextFill(Color.PURPLE);
-        label.setStyle("-fx-font-family: \"High Tower Text\"");
-        pane.getChildren().add(label);
-    }
 
     private void addUserUsername(Pane pane, Account account) {
         Label label = new Label("from : " + account.getUsername());
@@ -965,27 +1048,6 @@ public class ChatPage {
         MenuChanger.changeMenu("CreateGroup");
     }
 
-    public void gotoChat(MouseEvent mouseEvent) {
-        String name = listOfChats.getSelectionModel().getSelectedItem().toString();
-        if (GroupChat.isExist(name)) {
-            this.groupChat = GroupChat.getGroupChatByName(name);
-            chatMode=2;
-            try {
-                goToARoomChat();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-        } else {
-            this.privateChat = PrivateChat.getPrivateChat(LoggedInAccount.getInstance().getLoggedIn(), Account.getAccount(name));
-            chatMode = 1;
-            try {
-                goToAPrivateChat();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
 
     public void showALlChats(MouseEvent mouseEvent) {
         if (chatMode != 0) {
@@ -1003,14 +1065,14 @@ public class ChatPage {
         fillAllChats(allChats, privateChats, groupChats);
 
         for (Chat chat : allChats) {
-            if (chat instanceof PrivateChat){
+            if (chat instanceof PrivateChat) {
                 PrivateChat temp = (PrivateChat) chat;
                 if (temp.getAccount1() == LoggedInAccount.getInstance().getLoggedIn()) {
                     listOfChats.getItems().add(temp.getAccount2().getUsername());
                 } else {
                     listOfChats.getItems().add(temp.getAccount1().getUsername());
                 }
-            }else if (chat instanceof GroupChat){
+            } else if (chat instanceof GroupChat) {
                 GroupChat temp = (GroupChat) chat;
                 listOfChats.getItems().add(temp.getName());
             }
@@ -1029,5 +1091,6 @@ public class ChatPage {
             new PopupMessage(Alert.AlertType.ERROR, "file is not valid");
         }
     }
+
 
 }
