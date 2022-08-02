@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
@@ -49,46 +50,50 @@
             </Button>
          </children>
       </VBox>
-      <VBox layoutX="266.0" layoutY="65.0" prefHeight="474.0" prefWidth="163.0">
+      <HBox layoutX="282.0" layoutY="38.0" prefHeight="506.0" prefWidth="1041.0">
          <children>
-            <Label text="Accounts : " textFill="#dad30f">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Label>
-            <ListView fx:id="ShowAccounts" onMouseClicked="#watchProfile" prefHeight="451.0" prefWidth="137.0" />
+            <VBox prefHeight="474.0" prefWidth="163.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="22.0" prefWidth="182.0" text="Accounts : " textFill="#dad30f">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="ShowAccounts" onMouseClicked="#watchProfile" prefHeight="451.0" prefWidth="137.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="509.0" prefWidth="313.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="22.0" prefWidth="341.0" text=" recent posts: " textFill="#dad30f">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="PostsList" onMousePressed="#PostListPressed" prefHeight="452.0" prefWidth="350.0" />
+                  <Button mnemonicParsing="false" onAction="#showAllPosts" prefHeight="35.0" prefWidth="356.0" text="show all posts" textFill="#dad30f" />
+               </children>
+            </VBox>
+            <VBox prefHeight="476.0" prefWidth="231.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="22.0" prefWidth="249.0" text="accounts who liked this posts: " textFill="#dad30f">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="AccountLikePost" prefHeight="454.0" prefWidth="164.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="485.0" prefWidth="332.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="22.0" prefWidth="353.0" text="comments: " textFill="#dad30f">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="AccountComentList" prefHeight="454.0" prefWidth="332.0" />
+               </children>
+            </VBox>
          </children>
-      </VBox>
-      <VBox layoutX="446.0" layoutY="64.0" prefHeight="509.0" prefWidth="313.0">
-         <children>
-            <Label text=" recent posts: " textFill="#dad30f">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Label>
-            <ListView fx:id="PostsList" onMousePressed="#PostListPressed" prefHeight="452.0" prefWidth="350.0" />
-            <Button mnemonicParsing="false" onAction="#showAllPosts" prefHeight="35.0" prefWidth="356.0" text="show all posts" textFill="#dad30f" />
-         </children>
-      </VBox>
-      <VBox layoutX="791.0" layoutY="65.0" prefHeight="476.0" prefWidth="231.0">
-         <children>
-            <Label text="accounts who liked this posts: " textFill="#dad30f">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Label>
-            <ListView fx:id="AccountLikePost" prefHeight="454.0" prefWidth="164.0" />
-         </children>
-      </VBox>
-      <VBox layoutX="1047.0" layoutY="60.0" prefHeight="485.0" prefWidth="332.0">
-         <children>
-            <Label text="comments: " textFill="#dad30f">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Label>
-            <ListView fx:id="AccountComentList" prefHeight="462.0" prefWidth="344.0" />
-         </children>
-      </VBox>
+      </HBox>
    </children>
 </Pane>

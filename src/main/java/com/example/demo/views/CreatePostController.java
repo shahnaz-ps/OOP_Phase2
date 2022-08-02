@@ -45,10 +45,10 @@ public class CreatePostController {
         LoginAccountPageController.setFinalFile(file);
         if(file != null){
             FilePath.setText(file.getAbsolutePath());
-            image = new Image(file.toURI().toString(),100,150,true,true);
+            image = new Image(file.toURI().toString(),352,200,true,true);
             imageView.setImage(image);
-            imageView.setFitWidth(100);
-            imageView.setFitHeight(150);
+//            imageView.setFitWidth(100);
+//            imageView.setFitHeight(150);
             imageView.setPreserveRatio(true);
             imageView.setSmooth(true);
             imageView.setCache(true);
