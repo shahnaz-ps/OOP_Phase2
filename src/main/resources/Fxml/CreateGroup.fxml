@@ -51,9 +51,9 @@
             <VBox alignment="TOP_CENTER" prefHeight="401.0" prefWidth="200.0">
                <children>
                   <Label text="rename group" textFill="WHITE" />
-                  <TextField promptText="name of group" />
-                  <TextField promptText="new name" />
-                  <Button mnemonicParsing="false" text="rename" textFill="#2f4aba" />
+                  <TextField fx:id="groupName_rename" promptText="name of group" />
+                  <TextField fx:id="newGroupName_rename" promptText="new name" />
+                  <Button mnemonicParsing="false" text="rename" textFill="#2f4aba" onAction="#rename" />
                </children>
             </VBox>
          </children>

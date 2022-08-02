@@ -87,6 +87,9 @@ public class ChatPage {
     private ListView listOfChats;
     @FXML
     private ImageView sendMessageMode;
+    @FXML
+    private Button allChatsButton;
+
 
 
     private Message repliedMessage = null;
@@ -610,6 +613,7 @@ public class ChatPage {
             chatMode = 1;
             setSelectedRightBoxButtonStyle(changeToPrivateChatButton);
             setNotSelectedRightBoxButtonStyle(changeToRoomChatButton);
+            setNotSelectedRightBoxButtonStyle(allChatsButton);
             showPrivateChats();
         }
     }
@@ -619,6 +623,7 @@ public class ChatPage {
             chatMode = 2;
             setNotSelectedRightBoxButtonStyle(changeToPrivateChatButton);
             setSelectedRightBoxButtonStyle(changeToRoomChatButton);
+            setNotSelectedRightBoxButtonStyle(allChatsButton);
             showRoomChats();
         }
     }
@@ -791,6 +796,12 @@ public class ChatPage {
     }
 
     public void showALlChats(MouseEvent mouseEvent) {
+        if (chatMode != 0) {
+            chatMode = 0;
+            setNotSelectedRightBoxButtonStyle(changeToPrivateChatButton);
+            setSelectedRightBoxButtonStyle(allChatsButton);
+            setNotSelectedRightBoxButtonStyle(changeToRoomChatButton);
+        }
         listOfChats.getItems().clear();
         for (PrivateChat privateChat : LoggedInAccount.getInstance().getLoggedIn().getPrivateChats()) {
             if (privateChat.getAccount1() == LoggedInAccount.getInstance().getLoggedIn()) {

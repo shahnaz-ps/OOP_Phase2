@@ -17,6 +17,8 @@ public class CreateGroupController {
     public ListView listOfMembers;
     public TextField groupName_addUser;
     public ChoiceBox notJoinedList;
+    public TextField groupName_rename;
+    public TextField newGroupName_rename;
 
     public void initialize() {
 //        for (Account follower : LoggedInAccount.getInstance().getLoggedIn().getFollowers()) {
@@ -92,5 +94,29 @@ public class CreateGroupController {
                 }
             }
         }
+    }
+
+    public void rename(ActionEvent actionEvent) {
+        if (!groupName_rename.getText().equals("") && !newGroupName_rename.getText().equals("")) {
+            if (GroupChat.getGroupChatByName(groupName_rename.getText()) == null) {
+                new PopupMessage(Alert.AlertType.ERROR, "Group Not Exist!");
+            } else {
+                GroupChat groupChat = GroupChat.getGroupChatByName(groupName_rename.getText());
+                if (groupChat.getOwner() != LoggedInAccount.getInstance().getLoggedIn()) {
+                    new PopupMessage(Alert.AlertType.ERROR, "You can't rename this group!");
+                } else {
+                    if (GroupChat.isExist(newGroupName_rename.getText())){
+                        new PopupMessage(Alert.AlertType.ERROR, "This name is not available!");
+                    } else {
+                        groupChat.setName(newGroupName_rename.getText());
+                        new PopupMessage(Alert.AlertType.INFORMATION, "Renamed!");
+                    }
+                }
+            }
+        } else {
+            new PopupMessage(Alert.AlertType.ERROR, "Error!");
+        }
+        groupName_rename.clear();
+        newGroupName_rename.clear();
     }
 }
