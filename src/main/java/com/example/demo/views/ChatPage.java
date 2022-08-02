@@ -13,7 +13,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -91,7 +93,7 @@ public class ChatPage {
     private Button allChatsButton;
 
 
-
+    private File picMessage;
     private Message repliedMessage = null;
     private Message forwardedMessage = null;
 
@@ -368,16 +370,19 @@ public class ChatPage {
     }
 
     public void send(MouseEvent mouseEvent) throws MalformedURLException {
-        if (!ChatController.getInstance().isValidShortMessage(textToSend.getText())) {
+        if (!ChatController.getInstance().isValidShortMessage(textToSend.getText()) && picMessage == null) {
             new PopupMessage(Alert.AlertType.ERROR, "empty text!");
         } else if (!ChatController.getInstance().isValidLongMessage(textToSend.getText()))
             new PopupMessage(Alert.AlertType.ERROR, "long message");
+        else if (chatMode == 1 && false)
+            new PopupMessage(Alert.AlertType.ERROR, "you are blocked by the other person!");
+        else if (chatMode == 2 && this.groupChat.getBannedUsers().contains(LoggedInAccount.getInstance().getLoggedIn()))
+            new PopupMessage(Alert.AlertType.ERROR, "you are banned from this group!");
         else {
             Message message = new Message(LoggedInAccount.getInstance().getLoggedIn(), textToSend.getText());
-            //            if (forwardedMessage != null) {
-//                message.setForwardedUsername(forwardedMessage.getAccount().getUsername());
-//                message.setForwardedMessage(forwardedMessage);
-//            }
+            if (picMessage != null) {
+                message.setFile(picMessage);
+            }
             if (repliedMessage != null) {
                 message.setRepliedUUID(repliedMessage.getUuid()); // does nothing
                 message.setRepliedMessage(repliedMessage);
@@ -386,13 +391,14 @@ public class ChatPage {
                 this.privateChat.getMessages().add(message);
             else if (chatMode == 2)
                 this.groupChat.getMessages().add(message);
-            repliedMessage = null;
-            forwardedMessage = null;
             sendMessageMode.setImage(new Image(String.valueOf(
                     new URL(ConsoleApplication.class.getResource("/Image/Menu/seen.png").toString()))));
             sendNewMessage(message);
-            textToSend.clear();
         }
+        picMessage = null;
+        repliedMessage = null;
+        forwardedMessage = null;
+        textToSend.clear();
     }
 
     private void sendNewMessage(Message message) throws MalformedURLException {
@@ -407,9 +413,8 @@ public class ChatPage {
         addText(pane, message.getContent());
         addUserUsername(pane, message.getAccount());
         addClock(pane, String.valueOf(message.getDate().getTime()));
-        //        if (message.getForwardedUsername() != null) {
-//            addForwarded(pane, message);
-//        } else
+        if (message.getFile() != null)
+            addImage(pane, message.getFile());
         if (message.getRepliedMessage() != null)
             addReplied(pane, message);
         if (message.getAccount() == LoggedInAccount.getInstance().getLoggedIn()) {
@@ -420,6 +425,14 @@ public class ChatPage {
         }
         return pane;
     }
+
+    private void addImage(Pane pane, File file) {
+        ImageView imageView = new ImageView(new Image(file.toURI().toString(), 80, 80, true, true));
+        imageView.setLayoutX(140);
+        imageView.setLayoutY(0);  // todo fix place
+        pane.getChildren().add(imageView);
+    }
+
     //    private void addForwarded(Pane pane, Message message) {
 //        Label label = new Label("forwarded from : " + message.getForwardedUsername());
 //        label.setPrefHeight(30);
@@ -688,6 +701,11 @@ public class ChatPage {
                 e.printStackTrace();
             }
         });
+
+        hBox.getChildren().get(1).setCursor(Cursor.HAND);
+        hBox.getChildren().get(1).setOnMouseClicked(mouseEvent -> {
+            suggestionGroup.removeUser(LoggedInAccount.getInstance().getLoggedIn());
+        });
     }
 
     private void addSuggestionPane(Account account) throws MalformedURLException {
@@ -708,6 +726,11 @@ public class ChatPage {
                 e.printStackTrace();
             }
         });
+
+        hBox.getChildren().get(1).setCursor(Cursor.HAND);
+        hBox.getChildren().get(1).setOnMouseClicked(mouseEvent -> {
+            LoggedInAccount.getInstance().getLoggedIn().blockUser(account);
+        });
     }
 
     private void addLabelToSuggestionPane(Pane pane, String username, boolean isGroupMember) {
@@ -720,7 +743,7 @@ public class ChatPage {
             Label label = new Label(username);
             label.setPrefHeight(20);
             label.setStyle("-fx-font-family: \"High Tower Text\";" +
-                    "       -fx-font-size: 18");
+                    "       -fx-font-size: 25");
 
             Image image = null;
             try {
@@ -730,8 +753,8 @@ public class ChatPage {
                 e.printStackTrace();
             }
             ImageView ban = new ImageView(image);
-            ban.setFitHeight(16);
-            ban.setFitWidth(16);
+            ban.setFitHeight(25);
+            ban.setFitWidth(25);
 
             ImageView remove = null;
             try {
@@ -740,8 +763,8 @@ public class ChatPage {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            remove.setFitHeight(16);
-            remove.setFitWidth(16);
+            remove.setFitHeight(25);
+            remove.setFitWidth(25);
 
             hBox.getChildren().addAll(label, ban, remove);
             pane.getChildren().add(hBox);
@@ -755,7 +778,18 @@ public class ChatPage {
             label.setPrefHeight(20);
             label.setStyle("-fx-font-family: \"High Tower Text\";" +
                     "       -fx-font-size: 18");
-            hBox.getChildren().addAll(label);
+
+            ImageView block = null;
+            try {
+                block = new ImageView(new Image(String.valueOf(
+                        new URL(ConsoleApplication.class.getResource("/Image/Menu/blackCross.png").toString()))));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            block.setFitHeight(25);
+            block.setFitWidth(25);
+
+            hBox.getChildren().addAll(label, block);
             pane.getChildren().add(hBox);
         }
     }
@@ -812,6 +846,19 @@ public class ChatPage {
         }
         for (GroupChat groupChat : GroupChat.getUserGroups(LoggedInAccount.getInstance().getLoggedIn())) {
             listOfChats.getItems().add(groupChat.getName());
+        }
+    }
+
+    public void chooseFile(MouseEvent mouseEvent) throws MalformedURLException {
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG, PNG, JEPG Files", "*.jpg", "*.png", "*.jepg"));
+        File selectedFile = fc.showOpenDialog(MenuChanger.getStage());
+        if (selectedFile != null) {
+            this.picMessage = selectedFile;
+            sendMessageMode.setImage(new Image(String.valueOf(
+                    new URL(ConsoleApplication.class.getResource("/Image/Menu/camera.png").toString()))));
+        } else {
+            new PopupMessage(Alert.AlertType.ERROR, "file is not valid");
         }
     }
 }

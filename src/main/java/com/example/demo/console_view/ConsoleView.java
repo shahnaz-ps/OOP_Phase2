@@ -71,7 +71,7 @@ public class ConsoleView {
             createGroup();
         } else if (command.equals("GET GROUPS ID")) { // ...
             getGroupsId();
-        } else if (command.equals("ADD USER")) { // ...
+        } else if (command.equals("ADD USER")) { // ok
             addUser();
         } else if (command.equals("SHOW GROUP CHAT")) { // ok
             showGroupChat();
@@ -89,7 +89,7 @@ public class ConsoleView {
             banUser();
         } else if (command.equals("BLOCK USER")) { // ...
             blockUser();
-        } else if (command.equals("CHANGE GROUP NAME")) { // ...
+        } else if (command.equals("CHANGE GROUP NAME")) { // ok
             renameGroup();
         } else if (command.equals("CHANGE GROUP ID")) { // ...
             changeGroupId();

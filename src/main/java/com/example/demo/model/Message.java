@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.io.File;
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ public class Message {
     private Message repliedMessage;
     private Message forwardedMessage;
     private boolean edited = false;
+    private File file;
 
     public Message(Account account, String content) {
         this.account = account;
@@ -125,5 +127,13 @@ public class Message {
 
     public void setForwardedUsername(String forwardedUsername) {
         this.forwardedUsername = forwardedUsername;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
     }
 }

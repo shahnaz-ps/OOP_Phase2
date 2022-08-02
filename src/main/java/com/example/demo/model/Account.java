@@ -13,10 +13,13 @@ public class Account {
     private HashSet<Account> followings;
     private ArrayList<Post> posts;
     protected static HashMap<String, Account> accounts = new HashMap<>();
+    private static HashMap<Account, File> accountsFile = new HashMap<>();
     private ArrayList<Account> blockedUsers = new ArrayList<>();
     private ArrayList<Account> views = new ArrayList<>();
     private ArrayList<Date> dateviewed = new ArrayList<>();
     private Date dateview;
+    private File file;
+
 
     protected Account(String username, String password) {
         this.username = username.toLowerCase();
@@ -52,6 +55,14 @@ public class Account {
     public static boolean usernameExists(String username) {
         username = username.toLowerCase();
         return accounts.containsKey(username);
+    }
+
+    public static HashMap<Account, File> getAccountsFile() {
+        return accountsFile;
+    }
+
+    public static void setAccountsFile(HashMap<Account, File> accountsFile) {
+        Account.accountsFile = accountsFile;
     }
 
     public void createPost(String content, File file) {
@@ -133,6 +144,7 @@ public class Account {
         }
     }
 
+
     public ArrayList<PrivateChat> getPrivateChats() {
         ArrayList<PrivateChat> res = new ArrayList<>();
         for (PrivateChat privateChat : PrivateChat.getPrivateChats()) {
@@ -140,5 +152,13 @@ public class Account {
                 res.add(privateChat);
         }
         return res;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
     }
 }
