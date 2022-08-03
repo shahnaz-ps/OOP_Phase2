@@ -120,7 +120,7 @@
         </VBox>
         <HBox prefHeight="61.0" prefWidth="650.0">
             <children>
-                <ImageView fitHeight="32.0" fitWidth="38.0" onMouseClicked="#chooseFile" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="picAPic" fitHeight="32.0" fitWidth="38.0" onMouseClicked="#chooseFile" pickOnBounds="true" preserveRatio="true">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>

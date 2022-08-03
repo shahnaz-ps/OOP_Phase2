@@ -98,6 +98,8 @@ public class ChatPage {
     private ImageView sendMessageMode;
     @FXML
     private Button allChatsButton;
+    @FXML
+    private ImageView picAPic;
 
 
     private File picMessage;
@@ -255,6 +257,8 @@ public class ChatPage {
         allMessages.getChildren().clear();
         setDataOfChatHBoxPrivateChat(privateChat.getOtherUser(LoggedInAccount.getInstance().getLoggedIn()));
         textToSend.setVisible(true);
+        picAPic.setVisible(true);
+        sendMessageMode.setVisible(true);
         sendMessageIcon.setVisible(true);
         showMessagesOfPrivateChat();
     }
@@ -269,6 +273,8 @@ public class ChatPage {
         allMessages.getChildren().clear();
         setDataOfChatHBoxRoomChat();
         textToSend.setVisible(true);
+        picAPic.setVisible(true);
+        sendMessageMode.setVisible(true);
         sendMessageIcon.setVisible(true);
         showMessagesOfRoomChat();
     }
@@ -307,6 +313,8 @@ public class ChatPage {
 
     private void showUsersInRoom() throws MalformedURLException {
         textToSend.setVisible(false);
+        picAPic.setVisible(false);
+        sendMessageMode.setVisible(false);
         sendMessageIcon.setVisible(false);
         allMessages.getChildren().clear();
         for (Account account : groupChat.getAccounts())
@@ -399,6 +407,8 @@ public class ChatPage {
         mainVBox.getChildren().add(scrollPane);
         allMessages.getChildren().clear();
         textToSend.setVisible(false);
+        picAPic.setVisible(false);
+        sendMessageMode.setVisible(false);
         sendMessageIcon.setVisible(false);
         searchButton.setOnMouseClicked(mouseEvent1 -> {
             searchTextField.setVisible(true);
@@ -433,6 +443,8 @@ public class ChatPage {
         mainVBox.getChildren().add(scrollPane);
         allMessages.getChildren().clear();
         textToSend.setVisible(false);
+        picAPic.setVisible(false);
+        sendMessageMode.setVisible(false);
         sendMessageIcon.setVisible(false);
         searchButton.setOnMouseClicked(mouseEvent1 -> {
             searchTextField.setVisible(true);
@@ -651,9 +663,9 @@ public class ChatPage {
 
     public void gotoChat(MouseEvent mouseEvent) {
         String name = listOfChats.getSelectionModel().getSelectedItem().toString();
-        int lastIndex = name.length()-1;
-        if (name.charAt(lastIndex)=='*'){
-            name = name.substring(0,lastIndex);
+        int lastIndex = name.length() - 1;
+        if (name.charAt(lastIndex) == '*') {
+            name = name.substring(0, lastIndex);
         }
         if (GroupChat.isExist(name)) {
             if (forward) {
