@@ -162,8 +162,8 @@ public class ChatPage {
         groupChats.sort(new Comparator<GroupChat>() {
             @Override
             public int compare(GroupChat o1, GroupChat o2) {
-                if (o1.getMessages().size() > o2.getMessages().size()) return 1;
-                if (o1.getMessages().size() < o2.getMessages().size()) return -1;
+                if (o1.getMessages().size() > o2.getMessages().size()) return -1;
+                if (o1.getMessages().size() < o2.getMessages().size()) return 1;
                 return 0;
             }
         });
@@ -184,8 +184,8 @@ public class ChatPage {
         privateChats.sort(new Comparator<PrivateChat>() {
             @Override
             public int compare(PrivateChat o1, PrivateChat o2) {
-                if (o1.getMessages().size() > o2.getMessages().size()) return 1;
-                if (o1.getMessages().size() < o2.getMessages().size()) return -1;
+                if (o1.getMessages().size() > o2.getMessages().size()) return -1;
+                if (o1.getMessages().size() < o2.getMessages().size()) return 1;
                 return 0;
             }
         });
