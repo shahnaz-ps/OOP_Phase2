@@ -614,15 +614,28 @@ public class ChatPage {
     }
 
     private void addReplied(Pane pane, Message message) {
-        Label label = new Label("replied to : " + message.getRepliedMessage().getContent());
-        label.setPrefHeight(30);
-        label.setPrefWidth(180);
-        label.setLayoutX(40);
-        label.setLayoutY(18);
-        label.setFont(Font.font(13));
-        label.setTextFill(Color.DARKGREEN);
-        label.setStyle("-fx-font-family: \"High Tower Text\"");
-        pane.getChildren().add(label);
+        if (message.getRepliedMessage().getContent().equals("")) {
+            Label label = new Label("replied to a message from " + message.getRepliedMessage().getAccount().getUsername());
+            label.setPrefHeight(30);
+            label.setPrefWidth(180);
+            label.setLayoutX(40);
+            label.setLayoutY(18);
+            label.setFont(Font.font(13));
+            label.setTextFill(Color.DARKGREEN);
+            label.setStyle("-fx-font-family: \"High Tower Text\"");
+            pane.getChildren().add(label);
+        } else {
+            Label label = new Label("replied to : " + message.getRepliedMessage().getContent());
+            label.setPrefHeight(30);
+            label.setPrefWidth(180);
+            label.setLayoutX(40);
+            label.setLayoutY(18);
+            label.setFont(Font.font(13));
+            label.setTextFill(Color.DARKGREEN);
+            label.setStyle("-fx-font-family: \"High Tower Text\"");
+            pane.getChildren().add(label);
+        }
+
     }
 
 
@@ -1125,9 +1138,13 @@ public class ChatPage {
             GroupChat groupChat = GroupChat.getGroupChatByName(username);
             if (account != null && account.getFile() != null) {
                 ImageView imageView = new ImageView(new Image(account.getFile().toURI().toString()));
+                imageView.setFitHeight(35);
+                imageView.setFitWidth(35);
                 hBox.getChildren().add(imageView);
             } else if (groupChat != null && groupChat.getFile() != null) {
                 ImageView imageView = new ImageView(new Image(groupChat.getFile().toURI().toString()));
+                imageView.setFitHeight(35);
+                imageView.setFitWidth(35);
                 hBox.getChildren().add(imageView);
             } else {
                 ImageView imageView = null;
