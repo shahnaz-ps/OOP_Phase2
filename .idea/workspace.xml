@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="997f2ada-640f-4052-8f7e-c6f50548dc84" name="Changes" comment="list of chats debugged">
+    <list default="true" id="997f2ada-640f-4052-8f7e-c6f50548dc84" name="Changes" comment="forward">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/views/ChatPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/views/ChatPage.java" afterDir="false" />
     </list>
@@ -188,7 +188,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659440615069</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="forward">
+      <created>1659443235505</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1659443235505</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,6 +227,7 @@
     <MESSAGE value="group profile" />
     <MESSAGE value="block debugged" />
     <MESSAGE value="list of chats debugged" />
-    <option name="LAST_COMMIT_MESSAGE" value="list of chats debugged" />
+    <MESSAGE value="forward" />
+    <option name="LAST_COMMIT_MESSAGE" value="forward" />
   </component>
 </project>

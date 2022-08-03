@@ -327,12 +327,14 @@ public class ChatPage {
             hBox.getChildren().get(2).setCursor(Cursor.HAND);
             hBox.getChildren().get(2).setOnMouseClicked(mouseEvent -> {
                 this.groupChat.banUser(account);
+                new PopupMessage(Alert.AlertType.INFORMATION, "banned successfully!");
             });
 
 
             hBox.getChildren().get(3).setCursor(Cursor.HAND);
             hBox.getChildren().get(3).setOnMouseClicked(mouseEvent -> {
                 this.groupChat.removeUser(account);
+                new PopupMessage(Alert.AlertType.INFORMATION, "removed successfully!");
             });
         }
     }
@@ -897,6 +899,7 @@ public class ChatPage {
         hBox.getChildren().get(2).setCursor(Cursor.HAND);
         hBox.getChildren().get(2).setOnMouseClicked(mouseEvent -> {
             suggestionGroup.removeUser(LoggedInAccount.getInstance().getLoggedIn());
+            new PopupMessage(Alert.AlertType.INFORMATION, "you left the group!");
         });
     }
 
@@ -940,6 +943,7 @@ public class ChatPage {
         hBox.getChildren().get(2).setCursor(Cursor.HAND);
         hBox.getChildren().get(2).setOnMouseClicked(mouseEvent -> {
             LoggedInAccount.getInstance().getLoggedIn().blockUser(account);
+            new PopupMessage(Alert.AlertType.INFORMATION, "you blocked this account!");
         });
     }
 
