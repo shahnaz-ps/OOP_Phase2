@@ -142,4 +142,9 @@ public class CreateGroupController {
         }
         groupName_profile.clear();
     }
+
+    public void removeFromList(MouseEvent mouseEvent) {
+        int selectedIndex = listOfMembers.getSelectionModel().getSelectedIndex();
+        listOfMembers.getItems().remove(selectedIndex);
+    }
 }
