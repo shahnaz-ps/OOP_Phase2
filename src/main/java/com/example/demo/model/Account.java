@@ -20,19 +20,29 @@ public class Account {
     private static HashMap<Account, File> accountsFile = new HashMap<>();
     private ArrayList<Account> blockedUsers = new ArrayList<>();
     private ArrayList<Account> views = new ArrayList<>();
-    private  ArrayList<Date> dateviewed = new ArrayList<>();
+    private ArrayList<Date> dateviewed = new ArrayList<>();
     private Date dateview;
     private File file;
 
-    protected Account(String username, String password,File file) {
+    protected Account(String username, String password) {
         this.username = username.toLowerCase();
         this.password = password;
-        this.file=file;
         followers = new HashSet<>();
         followings = new HashSet<>();
         posts = new ArrayList<>();
-        accountsFile.put(this,file);
+        accountsFile.put(this, file);
     }
+
+    protected Account(String username, String password, File file) {
+        this.username = username.toLowerCase();
+        this.password = password;
+        this.file = file;
+        followers = new HashSet<>();
+        followings = new HashSet<>();
+        posts = new ArrayList<>();
+        accountsFile.put(this, file);
+    }
+
 
     public File getFile() {
         return file;
@@ -40,10 +50,6 @@ public class Account {
 
     public void setFile(File file) {
         this.file = file;
-    }
-
-    public static HashMap<Account, File> getAccountsFile() {
-        return accountsFile;
     }
 
     public static Account createAccount(String username, String password) {
@@ -74,16 +80,24 @@ public class Account {
         return accounts.containsKey(username);
     }
 
+    public static HashMap<Account, File> getAccountsFile() {
+        return accountsFile;
+    }
+
+    public static void setAccountsFile(HashMap<Account, File> accountsFile) {
+        Account.accountsFile = accountsFile;
+    }
+
     public void createPost(String content, File file) {
-        Post post = new Post(content, this,file);
-        if(file==null){
+        Post post = new Post(content, this, file);
+        if (file == null) {
             post.setOnlyContent(true);
         }
         posts.add(post);
     }
 
-    public void createGroup(Account account, String name){
-        new GroupChat(account,name);
+    public void createGroup(Account account, String name) {
+        new GroupChat(account, name);
     }
 
     public boolean isBusinessAccount() {
@@ -102,7 +116,7 @@ public class Account {
         return followings.size();
     }
 
-    public Integer getNumbersOfGroups(){
+    public Integer getNumbersOfGroups() {
         return GroupChat.getUserGroups(this).size();
     }
 
@@ -140,18 +154,28 @@ public class Account {
     }
 
 
-
     public void addview(Account account) {
-        if(!views.contains(account)) {
+        if (!views.contains(account)) {
             dateview = new Date();
             dateviewed.add(dateview);
             views.add(account);
         }
     }
+
     public void showviewSize() {
         System.out.println("number of views : " + views.size());
         for (int i = 0; i < views.size(); i++) {
             System.out.println(dateviewed.get(i) + " = viewed by username (" + views.get(i).getUsername() + ")");
         }
+    }
+
+
+    public ArrayList<PrivateChat> getPrivateChats() {
+        ArrayList<PrivateChat> res = new ArrayList<>();
+        for (PrivateChat privateChat : PrivateChat.getPrivateChats()) {
+            if (privateChat.getAccount1() == this || privateChat.getAccount2() == this)
+                res.add(privateChat);
+        }
+        return res;
     }
 }

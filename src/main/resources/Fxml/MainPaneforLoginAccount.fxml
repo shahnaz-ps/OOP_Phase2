@@ -12,7 +12,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="834.0" prefWidth="1356.0" styleClass="secondPane" stylesheets="@../CSS/Menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.MainPageforAccountController">
    <children>
-      <VBox layoutX="28.0" layoutY="103.0" prefHeight="414.0" prefWidth="253.0">
+      <VBox layoutX="28.0" layoutY="103.0" prefHeight="452.0" prefWidth="253.0">
          <children>
             <Label text="Menu" textFill="#dad30f">
                <font>
@@ -39,6 +39,11 @@
                <font>
                   <Font size="18.0" />
                </font></Button>
+            <Button mnemonicParsing="false" onAction="#GotoChatRoom" prefHeight="44.0" prefWidth="253.0" text="Go To Chat Room" textFill="#dad30f">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
             <Button mnemonicParsing="false" onAction="#gotoLoginPage" prefHeight="37.0" prefWidth="258.0" text="Back To Your Account Page" textFill="#dad30f">
                <font>
                   <Font size="19.0" />

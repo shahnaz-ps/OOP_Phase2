@@ -7,7 +7,6 @@ public class PrivateChat extends Chat {
     private Account account2;
     private ArrayList<Message> messages = new ArrayList<>();
     private static ArrayList<PrivateChat> privateChats = new ArrayList<>();
-
     public PrivateChat(Account account1, Account account2) {
         this.account1 = account1;
         this.account2 = account2;
@@ -47,7 +46,7 @@ public class PrivateChat extends Chat {
             }
         }
 
-        PrivateChat privateChat = new PrivateChat(account1,account2);
+        PrivateChat privateChat = new PrivateChat(account1, account2);
         privateChats.add(privateChat);
         return privateChat;
     }
@@ -59,4 +58,19 @@ public class PrivateChat extends Chat {
     public static void setPrivateChats(ArrayList<PrivateChat> privateChats) {
         PrivateChat.privateChats = privateChats;
     }
+
+    public Account getOtherUser(Account acc) {
+        if (acc == account1) return account2;
+        if (acc == account2) return account1;
+        return null;
+    }
+
+    public Account getAccount1() {
+        return account1;
+    }
+
+    public Account getAccount2() {
+        return account2;
+    }
 }
+

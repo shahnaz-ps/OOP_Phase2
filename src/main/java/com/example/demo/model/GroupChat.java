@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.UUID;
@@ -11,6 +12,7 @@ public class GroupChat extends Chat {
     private HashSet<Account> accounts = new HashSet<>();
     private ArrayList<Message> messages = new ArrayList<>();
     private ArrayList<Account> bannedUsers = new ArrayList<>();
+    private File file;
     private static ArrayList<GroupChat> groupChats = new ArrayList<>();
 
     public GroupChat(Account owner, String name) {
@@ -142,5 +144,13 @@ public class GroupChat extends Chat {
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
     }
 }

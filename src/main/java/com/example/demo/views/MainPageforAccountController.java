@@ -512,4 +512,7 @@ public class MainPageforAccountController {
         }
     }
 
+    public void GotoChatRoom(ActionEvent actionEvent) {
+        MenuChanger.changeMenu("ChatMenu");
+    }
 }
