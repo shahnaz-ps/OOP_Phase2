@@ -47,7 +47,7 @@
                <font>
                   <Font size="19.0" />
                </font></Button>
-            <Button mnemonicParsing="false" onAction="#gotoChatRoom" prefHeight="26.0" prefWidth="203.0" text="Chat Room" >
+            <Button mnemonicParsing="false" onAction="#gotoChatRoom" prefHeight="39.0" prefWidth="253.0" text="Chat Room" textFill="#dad30f">
                <font>
                   <Font size="19.0" />
                </font></Button>

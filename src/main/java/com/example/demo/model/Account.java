@@ -30,16 +30,17 @@ public class Account {
         followers = new HashSet<>();
         followings = new HashSet<>();
         posts = new ArrayList<>();
-        accountsFile.put(this,file);
+        accountsFile.put(this, file);
     }
-    protected Account(String username, String password,File file) {
+
+    protected Account(String username, String password, File file) {
         this.username = username.toLowerCase();
         this.password = password;
-        this.file=file;
+        this.file = file;
         followers = new HashSet<>();
         followings = new HashSet<>();
         posts = new ArrayList<>();
-        accountsFile.put(this,file);
+        accountsFile.put(this, file);
     }
 
 
@@ -88,15 +89,15 @@ public class Account {
     }
 
     public void createPost(String content, File file) {
-        Post post = new Post(content, this,file);
-        if(file==null){
+        Post post = new Post(content, this, file);
+        if (file == null) {
             post.setOnlyContent(true);
         }
         posts.add(post);
     }
 
-    public void createGroup(Account account, String name){
-        new GroupChat(account,name);
+    public void createGroup(Account account, String name) {
+        new GroupChat(account, name);
     }
 
     public boolean isBusinessAccount() {
@@ -177,3 +178,4 @@ public class Account {
         }
         return res;
     }
+}

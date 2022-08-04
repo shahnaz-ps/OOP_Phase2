@@ -459,9 +459,7 @@ public class MainPageforAccountController {
                             data.getData().add(new XYChart.Data<>(dayWeekText1,ViewNum));
                         }
                         barChart.getData().add(data);
-    public void gotoChatRoom(ActionEvent actionEvent) {
-        MenuChanger.changeMenu("ChatMenu");
-    }
+
 
 //    public void YourPostPressed(MouseEvent mouseEvent) {
 //        System.out.println("selected");
@@ -527,6 +525,10 @@ public class MainPageforAccountController {
                 FollowingsRecentPost.getItems().add("_____________________________");
             }
         }
+    }
+
+    public void gotoChatRoom(ActionEvent actionEvent) {
+        MenuChanger.changeMenu("ChatMenu");
     }
 
 }
