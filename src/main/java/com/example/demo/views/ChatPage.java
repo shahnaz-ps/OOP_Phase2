@@ -527,7 +527,7 @@ public class ChatPage {
     }
 
     public void back(MouseEvent mouseEvent) {
-        MenuChanger.changeMenu("LoginMenu");
+        MenuChanger.changeMenu("MainPaneforLoginAccount");
     }
 
     public void send(MouseEvent mouseEvent) throws MalformedURLException {
