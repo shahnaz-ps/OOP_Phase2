@@ -1092,6 +1092,8 @@ public class ChatPage {
             Account account = Account.getAccount(username);
             if (account.getFile() != null) {
                 ImageView imageView = new ImageView(new Image(account.getFile().toURI().toString()));
+                imageView.setFitHeight(35);
+                imageView.setFitWidth(35);
                 hBox.getChildren().add(imageView);
             } else {
                 ImageView imageView = null;
