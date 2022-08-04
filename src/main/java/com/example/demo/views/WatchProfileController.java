@@ -1,19 +1,30 @@
 package com.example.demo.views;
 
-import com.example.demo.model.Account;
-import com.example.demo.model.Comment;
-import com.example.demo.model.LoggedInAccount;
-import com.example.demo.model.Post;
+import com.example.demo.model.*;
 import javafx.event.ActionEvent;
+import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class WatchProfileController {
 
@@ -27,12 +38,17 @@ public class WatchProfileController {
     public Image image;
     public ListView AccountLikePost;
     public ListView AccountComentList;
+    public Circle ProCircle;
 
 
     public void initialize() {
         idTextbox.setText(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getUsername());
         followersNum.setText(String.valueOf(LoginAccountPageController.getAccount2().getNumberOfFollowers()));
         followingsNum.setText(String.valueOf(LoginAccountPageController.getAccount2().getNumberOfFollowings()));
+        if(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getAccountsFile().get(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()))!=null){
+            image = new Image(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getAccountsFile().get(Account.getAccount(LoginAccountPageController.getAccount2().getUsername())).toURI().toString(), 100, 150, true, true);
+            ProCircle.setFill(new ImagePattern(image));
+        }
 
         int size=Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().size();
         if(size<=2){
@@ -40,6 +56,10 @@ public class WatchProfileController {
                 Button btnNumber = new Button();
                 Button Showlikebtn = new Button();
                 Button Showcommentbtn = new Button();
+                Button ShowviewChart = new Button();
+                ShowviewChart.setText("show view state chart");
+                Button ShowlikeChart = new Button();
+                ShowlikeChart.setText("show like state chart");
                 Showcommentbtn.setText("show comment(write a comment)");
                 Showlikebtn.setText("Show Likes");
                 btnNumber.setText("Like");
@@ -109,18 +129,24 @@ public class WatchProfileController {
                                     }
                                 });
                                 replyCommentbtn.setOnAction((ActionEvent3) -> {
-                                    TextField replytextfield = new TextField();
-                                    replytextfield.setPromptText("reply on this comment");
-                                    AccountComentList.getItems().add(replytextfield);
+
+                                    //TextField replytextfield = new TextField();
+                                    //replytextfield.setPromptText("reply on this comment");
+                                    textField.setPromptText("reply on this comment");
+                                    //AccountComentList.getItems().add(replytextfield);
                                     Button submitbtn = new Button();
                                     submitbtn.setText("submit");
+                                    AccountComentList.getItems().remove(commentbtn);//////
                                     AccountComentList.getItems().add(submitbtn);
                                     submitbtn.setOnAction((ActionEvent4) -> {
                                         Comment comment = Comment.getCommentById(post.getComments().get(finalJ).getId());
-                                        comment.writeReplyComment(replytextfield.getText(), LoggedInAccount.getInstance().getLoggedIn());
+                                        //comment.writeReplyComment(replytextfield.getText(), LoggedInAccount.getInstance().getLoggedIn());
+                                        comment.writeReplyComment(textField.getText(), LoggedInAccount.getInstance().getLoggedIn());
                                         System.out.println("Replied comment wrote!");
                                         new PopupMessage(Alert.AlertType.ERROR, "you replied to this comment!");
-                                        replytextfield.setText("");
+                                        // replytextfield.setText("");
+                                        textField.setText("");
+                                        clearTextandImg();
 
                                     });
                                 });
@@ -141,21 +167,190 @@ public class WatchProfileController {
                 clearTextandImg();
 
                 vboxForButtons.getChildren().add(btnNumber);
-                image = new Image(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(finalI1).getFile().toURI().toString(), 100, 150, true, true);
-                imageView2 = new ImageView();
-                imageView2.setImage(image);
-                imageView2.setFitWidth(100);
-                imageView2.setFitHeight(150);
-                imageView2.setPreserveRatio(true);
-                imageView2.setSmooth(true);
-                imageView2.setCache(true);
+                if(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i).getFile()!=null) {
+                    image = new Image(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(finalI1).getFile().toURI().toString(), 100, 150, true, true);
+                    imageView2 = new ImageView();
+                    imageView2.setImage(image);
+                    imageView2.setFitWidth(100);
+                    imageView2.setFitHeight(150);
+                    imageView2.setPreserveRatio(true);
+                    imageView2.setSmooth(true);
+                    imageView2.setCache(true);
+                }
                 Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
                 PostsList.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getUsername());
-                PostsList.getItems().add(imageView2);
-                PostsList.getItems().add(btnNumber);
-                PostsList.getItems().add(Showlikebtn);
-                PostsList.getItems().add(Showcommentbtn);
-                PostsList.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i));
+                Post post=Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i);
+                if(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i).getFile()!=null) {
+                    PostsList.getItems().add(imageView2);
+                    PostsList.getItems().add(btnNumber);
+                    PostsList.getItems().add(Showlikebtn);
+                    PostsList.getItems().add(Showcommentbtn);
+                    PostsList.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i));
+                    if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                        PostsList.getItems().add("views: "+post.getViews().size());
+                        for(int k=0;k<post.getViews().size();k++){
+                            PostsList.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                        }
+                        PostsList.getItems().add("likes : "+post.getLike().size());
+                        for (int k=0;k<post.getLike().size();k++){
+                            PostsList.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                        }
+
+                    }
+
+                    PostsList.getItems().add(ShowviewChart);
+                    ShowviewChart.setOnAction(ActionEvent -> {
+                        CategoryAxis xAxis = new CategoryAxis();
+                        xAxis.setLabel("day");
+                        NumberAxis yAxis = new NumberAxis();
+                        yAxis.setLabel("number of accounts");
+                        BarChart barChart = new BarChart<>(xAxis, yAxis);
+                        XYChart.Series<String, Integer> data = new XYChart.Series<>();
+                        Calendar calendar = Calendar.getInstance();
+                        for (int k = 0; k < post.getViews().size(); k++) {
+                            String dayWeekText1 = new SimpleDateFormat("EEEE").format(post.getDateviewed().get(k));
+                            Integer ViewNum=1;
+                            for(int l=1;l<post.getViews().size();l++){
+                                String dayWeekText2 = new SimpleDateFormat("EEEE").format(post.getDateviewed().get(k));
+                                if(dayWeekText1.equals(dayWeekText2)){
+                                    ViewNum++;
+                                }
+                            }
+                            data.getData().add(new XYChart.Data<>(dayWeekText1,ViewNum));
+                        }
+                        barChart.getData().add(data);
+
+                        StackPane secondaryLayout = new StackPane();
+                        secondaryLayout.getChildren().add(barChart);
+                        Scene secondScene = new Scene(secondaryLayout, 230, 100);
+                        // New window (Stage)
+                        Stage newWindow = new Stage();
+                        newWindow.setTitle("State Chart");
+                        newWindow.setScene(secondScene);
+                        // Set position of second window, related to primary window.
+                        newWindow.setX(MenuChanger.getStage().getX() - 200);
+                        newWindow.setY(MenuChanger.getStage().getY() - 200);
+                        newWindow.show();
+                    });
+                    PostsList.getItems().add(ShowlikeChart);
+                    ShowlikeChart.setOnAction(ActionEvent -> {
+                        CategoryAxis xAxis = new CategoryAxis();
+                        xAxis.setLabel("day");
+                        NumberAxis yAxis = new NumberAxis();
+                        yAxis.setLabel("number of accounts");
+                        BarChart barChart = new BarChart<>(xAxis, yAxis);
+                        XYChart.Series<String, Integer> data = new XYChart.Series<>();
+                        Calendar calendar = Calendar.getInstance();
+                        for (int k = 0; k < post.getLike().size(); k++) {
+                            String dayWeekText1 = new SimpleDateFormat("EEEE").format(post.getDateliked().get(k));
+                            Integer ViewNum=1;
+                            for(int l=1;l<post.getLike().size();l++){
+                                String dayWeekText2 = new SimpleDateFormat("EEEE").format(post.getDateliked().get(k));
+                                if(dayWeekText1.equals(dayWeekText2)){
+                                    ViewNum++;
+                                }
+                            }
+                            data.getData().add(new XYChart.Data<>(dayWeekText1,ViewNum));
+                        }
+                        barChart.getData().add(data);
+                        StackPane secondaryLayout = new StackPane();
+                        secondaryLayout.getChildren().add(barChart);
+                        Scene secondScene = new Scene(secondaryLayout, 230, 100);
+                        // New window (Stage)
+                        Stage newWindow = new Stage();
+                        newWindow.setTitle("State Chart");
+                        newWindow.setScene(secondScene);
+                        // Set position of second window, related to primary window.
+                        newWindow.setX(MenuChanger.getStage().getX() - 200);
+                        newWindow.setY(MenuChanger.getStage().getY() - 200);
+                        newWindow.show();
+                    });
+                }
+                else {
+                    PostsList.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i));
+                    PostsList.getItems().add(btnNumber);
+                    PostsList.getItems().add(Showlikebtn);
+                    PostsList.getItems().add(Showcommentbtn);
+                    if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                        PostsList.getItems().add("views: "+post.getViews().size());
+                        for(int k=0;k<post.getViews().size();k++){
+                            PostsList.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                        }
+                        PostsList.getItems().add("likes : "+post.getLike().size());
+                        for (int k=0;k<post.getLike().size();k++){
+                            PostsList.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                        }
+
+                        PostsList.getItems().add(ShowviewChart);
+                        ShowviewChart.setOnAction(ActionEvent -> {
+                            CategoryAxis xAxis = new CategoryAxis();
+                            xAxis.setLabel("day");
+                            NumberAxis yAxis = new NumberAxis();
+                            yAxis.setLabel("number of accounts");
+                            BarChart barChart = new BarChart<>(xAxis, yAxis);
+                            XYChart.Series<String, Integer> data = new XYChart.Series<>();
+                            Calendar calendar = Calendar.getInstance();
+                            for (int k = 0; k < post.getViews().size(); k++) {
+                                String dayWeekText1 = new SimpleDateFormat("EEEE").format(post.getDateviewed().get(k));
+                                Integer ViewNum=1;
+                                for(int l=1;l<post.getViews().size();l++){
+                                    String dayWeekText2 = new SimpleDateFormat("EEEE").format(post.getDateviewed().get(k));
+                                    if(dayWeekText1.equals(dayWeekText2)){
+                                        ViewNum++;
+                                    }
+                                }
+                                data.getData().add(new XYChart.Data<>(dayWeekText1,ViewNum));
+                            }
+                            barChart.getData().add(data);
+
+                            StackPane secondaryLayout = new StackPane();
+                            secondaryLayout.getChildren().add(barChart);
+                            Scene secondScene = new Scene(secondaryLayout, 230, 100);
+                            // New window (Stage)
+                            Stage newWindow = new Stage();
+                            newWindow.setTitle("State Chart");
+                            newWindow.setScene(secondScene);
+                            // Set position of second window, related to primary window.
+                            newWindow.setX(MenuChanger.getStage().getX() - 200);
+                            newWindow.setY(MenuChanger.getStage().getY() - 200);
+                            newWindow.show();
+                        });
+                        PostsList.getItems().add(ShowlikeChart);
+                        ShowlikeChart.setOnAction(ActionEvent -> {
+                            CategoryAxis xAxis = new CategoryAxis();
+                            xAxis.setLabel("day");
+                            NumberAxis yAxis = new NumberAxis();
+                            yAxis.setLabel("number of accounts");
+                            BarChart barChart = new BarChart<>(xAxis, yAxis);
+                            XYChart.Series<String, Integer> data = new XYChart.Series<>();
+                            Calendar calendar = Calendar.getInstance();
+                            for (int k = 0; k < post.getLike().size(); k++) {
+                                String dayWeekText1 = new SimpleDateFormat("EEEE").format(post.getDateliked().get(k));
+                                Integer ViewNum=1;
+                                for(int l=1;l<post.getLike().size();l++){
+                                    String dayWeekText2 = new SimpleDateFormat("EEEE").format(post.getDateliked().get(k));
+                                    if(dayWeekText1.equals(dayWeekText2)){
+                                        ViewNum++;
+                                    }
+                                }
+                                data.getData().add(new XYChart.Data<>(dayWeekText1,ViewNum));
+                            }
+                            barChart.getData().add(data);
+                            StackPane secondaryLayout = new StackPane();
+                            secondaryLayout.getChildren().add(barChart);
+                            Scene secondScene = new Scene(secondaryLayout, 230, 100);
+                            // New window (Stage)
+                            Stage newWindow = new Stage();
+                            newWindow.setTitle("State Chart");
+                            newWindow.setScene(secondScene);
+                            // Set position of second window, related to primary window.
+                            newWindow.setX(MenuChanger.getStage().getX() - 200);
+                            newWindow.setY(MenuChanger.getStage().getY() - 200);
+                            newWindow.show();
+                        });
+
+                    }
+                }
                 PostsList.getItems().add("_____________________________");
             }
         }
@@ -164,6 +359,10 @@ public class WatchProfileController {
                 Button btnNumber = new Button();
                 Button Showlikebtn = new Button();
                 Button Showcommentbtn = new Button();
+                Button ShowviewChart = new Button();
+                ShowviewChart.setText("show view state chart");
+                Button ShowlikeChart = new Button();
+                ShowlikeChart.setText("show like state chart");
                 Showcommentbtn.setText("show comment(write a comment)");
                 Showlikebtn.setText("Show Likes");
                 btnNumber.setText("Like");
@@ -265,21 +464,189 @@ public class WatchProfileController {
                 clearTextandImg();
 
                 vboxForButtons.getChildren().add(btnNumber);
-                image = new Image(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(finalI1).getFile().toURI().toString(), 100, 150, true, true);
-                imageView2 = new ImageView();
-                imageView2.setImage(image);
-                imageView2.setFitWidth(100);
-                imageView2.setFitHeight(150);
-                imageView2.setPreserveRatio(true);
-                imageView2.setSmooth(true);
-                imageView2.setCache(true);
+                if(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i).getFile()!=null) {
+                    image = new Image(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(finalI1).getFile().toURI().toString(), 100, 150, true, true);
+                    imageView2 = new ImageView();
+                    imageView2.setImage(image);
+                    imageView2.setFitWidth(100);
+                    imageView2.setFitHeight(150);
+                    imageView2.setPreserveRatio(true);
+                    imageView2.setSmooth(true);
+                    imageView2.setCache(true);
+                }
                 Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+                Post post=Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i);
                 PostsList.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getUsername());
-                PostsList.getItems().add(imageView2);
-                PostsList.getItems().add(btnNumber);
-                PostsList.getItems().add(Showlikebtn);
-                PostsList.getItems().add(Showcommentbtn);
-                PostsList.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i));
+                if(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i).getFile()!=null) {
+                    PostsList.getItems().add(imageView2);
+                    PostsList.getItems().add(btnNumber);
+                    PostsList.getItems().add(Showlikebtn);
+                    PostsList.getItems().add(Showcommentbtn);
+                    PostsList.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i));
+                    if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                        PostsList.getItems().add("views: "+post.getViews().size());
+                        for(int k=0;k<post.getViews().size();k++){
+                            PostsList.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                        }
+                        PostsList.getItems().add("likes : "+post.getLike().size());
+                        for (int k=0;k<post.getLike().size();k++){
+                            PostsList.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                        }
+
+                        PostsList.getItems().add(ShowviewChart);
+                        ShowviewChart.setOnAction(ActionEvent -> {
+                            CategoryAxis xAxis = new CategoryAxis();
+                            xAxis.setLabel("day");
+                            NumberAxis yAxis = new NumberAxis();
+                            yAxis.setLabel("number of accounts");
+                            BarChart barChart = new BarChart<>(xAxis, yAxis);
+                            XYChart.Series<String, Integer> data = new XYChart.Series<>();
+                            Calendar calendar = Calendar.getInstance();
+                            for (int k = 0; k < post.getViews().size(); k++) {
+                                String dayWeekText1 = new SimpleDateFormat("EEEE").format(post.getDateviewed().get(k));
+                                Integer ViewNum=1;
+                                for(int l=1;l<post.getViews().size();l++){
+                                    String dayWeekText2 = new SimpleDateFormat("EEEE").format(post.getDateviewed().get(k));
+                                    if(dayWeekText1.equals(dayWeekText2)){
+                                        ViewNum++;
+                                    }
+                                }
+                                data.getData().add(new XYChart.Data<>(dayWeekText1,ViewNum));
+                            }
+                            barChart.getData().add(data);
+
+                            StackPane secondaryLayout = new StackPane();
+                            secondaryLayout.getChildren().add(barChart);
+                            Scene secondScene = new Scene(secondaryLayout, 230, 100);
+                            // New window (Stage)
+                            Stage newWindow = new Stage();
+                            newWindow.setTitle("State Chart");
+                            newWindow.setScene(secondScene);
+                            // Set position of second window, related to primary window.
+                            newWindow.setX(MenuChanger.getStage().getX() - 200);
+                            newWindow.setY(MenuChanger.getStage().getY() - 200);
+                            newWindow.show();
+                        });
+                        PostsList.getItems().add(ShowlikeChart);
+                        ShowlikeChart.setOnAction(ActionEvent -> {
+                            CategoryAxis xAxis = new CategoryAxis();
+                            xAxis.setLabel("day");
+                            NumberAxis yAxis = new NumberAxis();
+                            yAxis.setLabel("number of accounts");
+                            BarChart barChart = new BarChart<>(xAxis, yAxis);
+                            XYChart.Series<String, Integer> data = new XYChart.Series<>();
+                            Calendar calendar = Calendar.getInstance();
+                            for (int k = 0; k < post.getLike().size(); k++) {
+                                String dayWeekText1 = new SimpleDateFormat("EEEE").format(post.getDateliked().get(k));
+                                Integer ViewNum=1;
+                                for(int l=1;l<post.getLike().size();l++){
+                                    String dayWeekText2 = new SimpleDateFormat("EEEE").format(post.getDateliked().get(k));
+                                    if(dayWeekText1.equals(dayWeekText2)){
+                                        ViewNum++;
+                                    }
+                                }
+                                data.getData().add(new XYChart.Data<>(dayWeekText1,ViewNum));
+                            }
+                            barChart.getData().add(data);
+                            StackPane secondaryLayout = new StackPane();
+                            secondaryLayout.getChildren().add(barChart);
+                            Scene secondScene = new Scene(secondaryLayout, 230, 100);
+                            // New window (Stage)
+                            Stage newWindow = new Stage();
+                            newWindow.setTitle("State Chart");
+                            newWindow.setScene(secondScene);
+                            // Set position of second window, related to primary window.
+                            newWindow.setX(MenuChanger.getStage().getX() - 200);
+                            newWindow.setY(MenuChanger.getStage().getY() - 200);
+                            newWindow.show();
+                        });
+
+                    }
+                }
+                else {
+                    PostsList.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i));
+                    PostsList.getItems().add(btnNumber);
+                    PostsList.getItems().add(Showlikebtn);
+                    PostsList.getItems().add(Showcommentbtn);
+                    if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                        PostsList.getItems().add("views: "+post.getViews().size());
+                        for(int k=0;k<post.getViews().size();k++){
+                            PostsList.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                        }
+                        PostsList.getItems().add("likes : "+post.getLike().size());
+                        for (int k=0;k<post.getLike().size();k++){
+                            PostsList.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                        }
+                        PostsList.getItems().add(ShowviewChart);
+                        ShowviewChart.setOnAction(ActionEvent -> {
+                            CategoryAxis xAxis = new CategoryAxis();
+                            xAxis.setLabel("day");
+                            NumberAxis yAxis = new NumberAxis();
+                            yAxis.setLabel("number of accounts");
+                            BarChart barChart = new BarChart<>(xAxis, yAxis);
+                            XYChart.Series<String, Integer> data = new XYChart.Series<>();
+                            Calendar calendar = Calendar.getInstance();
+                            for (int k = 0; k < post.getViews().size(); k++) {
+                                String dayWeekText1 = new SimpleDateFormat("EEEE").format(post.getDateviewed().get(k));
+                                Integer ViewNum=1;
+                                for(int l=1;l<post.getViews().size();l++){
+                                    String dayWeekText2 = new SimpleDateFormat("EEEE").format(post.getDateviewed().get(k));
+                                    if(dayWeekText1.equals(dayWeekText2)){
+                                        ViewNum++;
+                                    }
+                                }
+                                data.getData().add(new XYChart.Data<>(dayWeekText1,ViewNum));
+                            }
+                            barChart.getData().add(data);
+
+                            StackPane secondaryLayout = new StackPane();
+                            secondaryLayout.getChildren().add(barChart);
+                            Scene secondScene = new Scene(secondaryLayout, 230, 100);
+                            // New window (Stage)
+                            Stage newWindow = new Stage();
+                            newWindow.setTitle("State Chart");
+                            newWindow.setScene(secondScene);
+                            // Set position of second window, related to primary window.
+                            newWindow.setX(MenuChanger.getStage().getX() - 200);
+                            newWindow.setY(MenuChanger.getStage().getY() - 200);
+                            newWindow.show();
+                        });
+                        PostsList.getItems().add(ShowlikeChart);
+                        ShowlikeChart.setOnAction(ActionEvent -> {
+                            CategoryAxis xAxis = new CategoryAxis();
+                            xAxis.setLabel("day");
+                            NumberAxis yAxis = new NumberAxis();
+                            yAxis.setLabel("number of accounts");
+                            BarChart barChart = new BarChart<>(xAxis, yAxis);
+                            XYChart.Series<String, Integer> data = new XYChart.Series<>();
+                            Calendar calendar = Calendar.getInstance();
+                            for (int k = 0; k < post.getLike().size(); k++) {
+                                String dayWeekText1 = new SimpleDateFormat("EEEE").format(post.getDateliked().get(k));
+                                Integer ViewNum=1;
+                                for(int l=1;l<post.getLike().size();l++){
+                                    String dayWeekText2 = new SimpleDateFormat("EEEE").format(post.getDateliked().get(k));
+                                    if(dayWeekText1.equals(dayWeekText2)){
+                                        ViewNum++;
+                                    }
+                                }
+                                data.getData().add(new XYChart.Data<>(dayWeekText1,ViewNum));
+                            }
+                            barChart.getData().add(data);
+                            StackPane secondaryLayout = new StackPane();
+                            secondaryLayout.getChildren().add(barChart);
+                            Scene secondScene = new Scene(secondaryLayout, 230, 100);
+                            // New window (Stage)
+                            Stage newWindow = new Stage();
+                            newWindow.setTitle("State Chart");
+                            newWindow.setScene(secondScene);
+                            // Set position of second window, related to primary window.
+                            newWindow.setX(MenuChanger.getStage().getX() - 200);
+                            newWindow.setY(MenuChanger.getStage().getY() - 200);
+                            newWindow.show();
+                        });
+
+                    }
+                }
                 PostsList.getItems().add("_____________________________");
             }
         }
@@ -300,10 +667,13 @@ public class WatchProfileController {
         boolean success=true;
         success = post.like(LoggedInAccount.getInstance().getLoggedIn());
         if(post.getLike().contains(LoggedInAccount.getInstance().getLoggedIn())){
-            new PopupMessage(Alert.AlertType.WARNING, "you have already liked this post!");
+            System.out.println("you have liked");
+            new PopupMessage(Alert.AlertType.ERROR, "you have already liked this post!");
         }
-        post.addlikestate(LoggedInAccount.getInstance().getLoggedIn());
-        new PopupMessage(Alert.AlertType.ERROR, "you liked this post!");
+        else {
+            post.addlikestate(LoggedInAccount.getInstance().getLoggedIn());
+            new PopupMessage(Alert.AlertType.ERROR, "you liked this post!");
+        }
         //System.out.println(post);
     }
 
@@ -339,6 +709,10 @@ public class WatchProfileController {
             Button btnNumber = new Button();
             Button Showlikebtn = new Button();
             Button Showcommentbtn = new Button();
+            Button ShowviewChart = new Button();
+            ShowviewChart.setText("show view state chart");
+            Button ShowlikeChart = new Button();
+            ShowlikeChart.setText("show like state chart");
             Showcommentbtn.setText("show comment(write a comment)");
             Showlikebtn.setText("Show Likes");
             btnNumber.setText("Like");
@@ -440,21 +814,190 @@ public class WatchProfileController {
             clearTextandImg();
 
             vboxForButtons.getChildren().add(btnNumber);
-            image = new Image(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(finalI1).getFile().toURI().toString(), 100, 150, true, true);
-            imageView2 = new ImageView();
-            imageView2.setImage(image);
-            imageView2.setFitWidth(100);
-            imageView2.setFitHeight(150);
-            imageView2.setPreserveRatio(true);
-            imageView2.setSmooth(true);
-            imageView2.setCache(true);
+            if(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i).getFile()!=null) {
+                image = new Image(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(finalI1).getFile().toURI().toString(), 100, 150, true, true);
+                imageView2 = new ImageView();
+                imageView2.setImage(image);
+                imageView2.setFitWidth(100);
+                imageView2.setFitHeight(150);
+                imageView2.setPreserveRatio(true);
+                imageView2.setSmooth(true);
+                imageView2.setCache(true);
+            }
             Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i).addview(LoggedInAccount.getInstance().getLoggedIn());
+            Post post=Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i);
             PostsList.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getUsername());
-            PostsList.getItems().add(imageView2);
-            PostsList.getItems().add(btnNumber);
-            PostsList.getItems().add(Showlikebtn);
-            PostsList.getItems().add(Showcommentbtn);
-            PostsList.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i));
+            if(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i).getFile()!=null) {
+                PostsList.getItems().add(imageView2);
+                PostsList.getItems().add(btnNumber);
+                PostsList.getItems().add(Showlikebtn);
+                PostsList.getItems().add(Showcommentbtn);
+                PostsList.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i));
+                if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                    PostsList.getItems().add("views: "+post.getViews().size());
+                    for(int k=0;k<post.getViews().size();k++){
+                        PostsList.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                    }
+                    PostsList.getItems().add("likes : "+post.getLike().size());
+                    for (int k=0;k<post.getLike().size();k++){
+                        PostsList.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                    }
+                    PostsList.getItems().add(ShowviewChart);
+                    ShowviewChart.setOnAction(ActionEvent -> {
+                        CategoryAxis xAxis = new CategoryAxis();
+                        xAxis.setLabel("day");
+                        NumberAxis yAxis = new NumberAxis();
+                        yAxis.setLabel("number of accounts");
+                        BarChart barChart = new BarChart<>(xAxis, yAxis);
+                        XYChart.Series<String, Integer> data = new XYChart.Series<>();
+                        Calendar calendar = Calendar.getInstance();
+                        for (int k = 0; k < post.getViews().size(); k++) {
+                            String dayWeekText1 = new SimpleDateFormat("EEEE").format(post.getDateviewed().get(k));
+                            Integer ViewNum=1;
+                            for(int l=1;l<post.getViews().size();l++){
+                                String dayWeekText2 = new SimpleDateFormat("EEEE").format(post.getDateviewed().get(k));
+                                if(dayWeekText1.equals(dayWeekText2)){
+                                    ViewNum++;
+                                }
+                            }
+                            data.getData().add(new XYChart.Data<>(dayWeekText1,ViewNum));
+                        }
+                        barChart.getData().add(data);
+
+                        StackPane secondaryLayout = new StackPane();
+                        secondaryLayout.getChildren().add(barChart);
+                        Scene secondScene = new Scene(secondaryLayout, 230, 100);
+                        // New window (Stage)
+                        Stage newWindow = new Stage();
+                        newWindow.setTitle("State Chart");
+                        newWindow.setScene(secondScene);
+                        // Set position of second window, related to primary window.
+                        newWindow.setX(MenuChanger.getStage().getX() - 200);
+                        newWindow.setY(MenuChanger.getStage().getY() - 200);
+                        newWindow.show();
+                    });
+                    PostsList.getItems().add(ShowlikeChart);
+                    ShowlikeChart.setOnAction(ActionEvent -> {
+                        CategoryAxis xAxis = new CategoryAxis();
+                        xAxis.setLabel("day");
+                        NumberAxis yAxis = new NumberAxis();
+                        yAxis.setLabel("number of accounts");
+                        BarChart barChart = new BarChart<>(xAxis, yAxis);
+                        XYChart.Series<String, Integer> data = new XYChart.Series<>();
+                        Calendar calendar = Calendar.getInstance();
+                        for (int k = 0; k < post.getLike().size(); k++) {
+                            String dayWeekText1 = new SimpleDateFormat("EEEE").format(post.getDateliked().get(k));
+                            Integer ViewNum=1;
+                            for(int l=1;l<post.getLike().size();l++){
+                                String dayWeekText2 = new SimpleDateFormat("EEEE").format(post.getDateliked().get(k));
+                                if(dayWeekText1.equals(dayWeekText2)){
+                                    ViewNum++;
+                                }
+                            }
+                            data.getData().add(new XYChart.Data<>(dayWeekText1,ViewNum));
+                        }
+                        barChart.getData().add(data);
+                        StackPane secondaryLayout = new StackPane();
+                        secondaryLayout.getChildren().add(barChart);
+                        Scene secondScene = new Scene(secondaryLayout, 230, 100);
+                        // New window (Stage)
+                        Stage newWindow = new Stage();
+                        newWindow.setTitle("State Chart");
+                        newWindow.setScene(secondScene);
+                        // Set position of second window, related to primary window.
+                        newWindow.setX(MenuChanger.getStage().getX() - 200);
+                        newWindow.setY(MenuChanger.getStage().getY() - 200);
+                        newWindow.show();
+                    });
+
+                }
+
+            }
+            else {
+                PostsList.getItems().add(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getPosts().get(i));
+                PostsList.getItems().add(btnNumber);
+                PostsList.getItems().add(Showlikebtn);
+                PostsList.getItems().add(Showcommentbtn);
+                if(LoggedInAccount.getInstance().getLoggedIn().isBusinessAccount()){
+                    PostsList.getItems().add("views: "+post.getViews().size());
+                    for(int k=0;k<post.getViews().size();k++){
+                        PostsList.getItems().add(post.getDateviewed().get(k) + " = username (" + post.getViews().get(k).getUsername()+")");
+                    }
+                    PostsList.getItems().add("likes : "+post.getLike().size());
+                    for (int k=0;k<post.getLike().size();k++){
+                        PostsList.getItems().add(post.getDateliked().get(k)+" = username (" + post.getLike().get(k).getUsername()+")");
+                    }
+
+                    PostsList.getItems().add(ShowviewChart);
+                    ShowviewChart.setOnAction(ActionEvent -> {
+                        CategoryAxis xAxis = new CategoryAxis();
+                        xAxis.setLabel("day");
+                        NumberAxis yAxis = new NumberAxis();
+                        yAxis.setLabel("number of accounts");
+                        BarChart barChart = new BarChart<>(xAxis, yAxis);
+                        XYChart.Series<String, Integer> data = new XYChart.Series<>();
+                        Calendar calendar = Calendar.getInstance();
+                        for (int k = 0; k < post.getViews().size(); k++) {
+                            String dayWeekText1 = new SimpleDateFormat("EEEE").format(post.getDateviewed().get(k));
+                            Integer ViewNum=1;
+                            for(int l=1;l<post.getViews().size();l++){
+                                String dayWeekText2 = new SimpleDateFormat("EEEE").format(post.getDateviewed().get(k));
+                                if(dayWeekText1.equals(dayWeekText2)){
+                                    ViewNum++;
+                                }
+                            }
+                            data.getData().add(new XYChart.Data<>(dayWeekText1,ViewNum));
+                        }
+                        barChart.getData().add(data);
+
+                        StackPane secondaryLayout = new StackPane();
+                        secondaryLayout.getChildren().add(barChart);
+                        Scene secondScene = new Scene(secondaryLayout, 230, 100);
+                        // New window (Stage)
+                        Stage newWindow = new Stage();
+                        newWindow.setTitle("State Chart");
+                        newWindow.setScene(secondScene);
+                        // Set position of second window, related to primary window.
+                        newWindow.setX(MenuChanger.getStage().getX() - 200);
+                        newWindow.setY(MenuChanger.getStage().getY() - 200);
+                        newWindow.show();
+                    });
+                    PostsList.getItems().add(ShowlikeChart);
+                    ShowlikeChart.setOnAction(ActionEvent -> {
+                        CategoryAxis xAxis = new CategoryAxis();
+                        xAxis.setLabel("day");
+                        NumberAxis yAxis = new NumberAxis();
+                        yAxis.setLabel("number of accounts");
+                        BarChart barChart = new BarChart<>(xAxis, yAxis);
+                        XYChart.Series<String, Integer> data = new XYChart.Series<>();
+                        Calendar calendar = Calendar.getInstance();
+                        for (int k = 0; k < post.getLike().size(); k++) {
+                            String dayWeekText1 = new SimpleDateFormat("EEEE").format(post.getDateliked().get(k));
+                            Integer ViewNum=1;
+                            for(int l=1;l<post.getLike().size();l++){
+                                String dayWeekText2 = new SimpleDateFormat("EEEE").format(post.getDateliked().get(k));
+                                if(dayWeekText1.equals(dayWeekText2)){
+                                    ViewNum++;
+                                }
+                            }
+                            data.getData().add(new XYChart.Data<>(dayWeekText1,ViewNum));
+                        }
+                        barChart.getData().add(data);
+                        StackPane secondaryLayout = new StackPane();
+                        secondaryLayout.getChildren().add(barChart);
+                        Scene secondScene = new Scene(secondaryLayout, 230, 100);
+                        // New window (Stage)
+                        Stage newWindow = new Stage();
+                        newWindow.setTitle("State Chart");
+                        newWindow.setScene(secondScene);
+                        // Set position of second window, related to primary window.
+                        newWindow.setX(MenuChanger.getStage().getX() - 200);
+                        newWindow.setY(MenuChanger.getStage().getY() - 200);
+                        newWindow.show();
+                    });
+
+                }
+            }
             PostsList.getItems().add("_____________________________");
         }
     }
@@ -462,4 +1005,26 @@ public class WatchProfileController {
     public void gotoMainPage(ActionEvent actionEvent) {
         MenuChanger.changeMenu("MainPaneforLoginAccount");
     }
+
+    public void PostListPressed(MouseEvent mouseEvent) throws MalformedURLException {
+        if(PostsList.getSelectionModel().getSelectedItem().getClass().equals(ImageView.class)){
+            ImageView imageView3= (ImageView) PostsList.getSelectionModel().getSelectedItem();
+            URL url = new URL(imageView3.getImage().getUrl());
+            File f = new File(url.getFile());
+            System.out.println(f);
+            Post post = Post.getPostByFile(f);
+            gotoPostinfoPage(post);
+        }
+        if(PostsList.getSelectionModel().getSelectedItem().getClass().equals(Post.class)){
+            Post post = (Post) PostsList.getSelectionModel().getSelectedItem();
+            gotoPostinfoPage(post);
+            System.out.println(post);
+        }
+    }
+
+    private void gotoPostinfoPage(Post post) {
+        LoggedInPost.getInstance().setLoggedIn(post);
+        MenuChanger.changeMenu("PostInfo");
+    }
+
 }

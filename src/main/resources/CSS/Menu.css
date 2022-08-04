@@ -32,12 +32,23 @@ Button {
     -fx-background-color: #efeaea;
     -fx-border-radius: 30 30 30 30;
     -fx-background-radius: 30 30 30 30;
+    -fx-border-color: #260fb9;
 }
+
+ListView{
+    -fx-background-color: #efeaea;
+    -fx-border-radius: 30 30 30 30;
+    -fx-border-color: #260fb9;
+    -fx-background-radius: 30 30 30 30;
+
+}
+
 
 .changeTextField {
     -fx-background-color: #d4d7dc;
     -fx-border-radius: 30 30 30 30;
     -fx-background-radius: 30 30 30 30;
+
 }
 
 

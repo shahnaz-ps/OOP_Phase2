@@ -5,26 +5,87 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="1474.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.WatchProfileController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="1474.0" styleClass="secondPane" stylesheets="@../CSS/Menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.WatchProfileController">
    <children>
-      <Label layoutX="54.0" layoutY="41.0" text="username :" />
-      <TextField fx:id="idTextbox" editable="false" layoutX="126.0" layoutY="37.0" prefHeight="26.0" prefWidth="114.0" />
-      <Label layoutX="56.0" layoutY="71.0" text="followers :" />
-      <TextField fx:id="followersNum" editable="false" layoutX="126.0" layoutY="66.0" prefHeight="26.0" prefWidth="45.0" />
-      <TextField fx:id="followingsNum" editable="false" layoutX="126.0" layoutY="98.0" prefHeight="26.0" prefWidth="45.0" />
-      <Label layoutX="53.0" layoutY="102.0" text="followings :" />
-      <ListView fx:id="PostsList" layoutX="512.0" layoutY="53.0" prefHeight="423.0" prefWidth="320.0" />
-      <Label layoutX="650.0" layoutY="29.0" text="recent posts:" />
       <ImageView fx:id="imageView2" fitHeight="88.0" fitWidth="132.0" layoutX="686.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="68.0" layoutY="148.0" mnemonicParsing="false" onAction="#Follow" prefHeight="50.0" prefWidth="84.0" text="Follow" />
-      <Button layoutX="63.0" layoutY="529.0" mnemonicParsing="false" onAction="#BacktoYourAccount" text="back to your account" />
-      <ListView fx:id="AccountLikePost" layoutX="893.0" layoutY="43.0" prefHeight="434.0" prefWidth="200.0" />
-      <Label layoutX="901.0" layoutY="19.0" text="accounts who liked this posts: " />
-      <ListView fx:id="AccountComentList" layoutX="1140.0" layoutY="44.0" prefHeight="434.0" prefWidth="223.0" />
-      <Label layoutX="1194.0" layoutY="22.0" text="comments: " />
-      <Button layoutX="623.0" layoutY="497.0" mnemonicParsing="false" onAction="#showAllPosts" text="show all posts" />
-      <Button layoutX="66.0" layoutY="484.0" mnemonicParsing="false" onAction="#gotoMainPage" text="Go to main page of your account" />
+      <VBox layoutX="31.0" layoutY="64.0" prefHeight="319.0" prefWidth="243.0">
+         <children>
+            <Circle fx:id="ProCircle" fill="#1f93ff00" radius="35.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label text="username :" textFill="#dad30f">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="idTextbox" editable="false" prefHeight="26.0" prefWidth="114.0" />
+            <Label text="followers :" textFill="#dad30f">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="followersNum" editable="false" prefHeight="26.0" prefWidth="45.0" />
+            <Label text="followings :" textFill="#dad30f">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="followingsNum" editable="false" prefHeight="26.0" prefWidth="45.0" />
+            <Button mnemonicParsing="false" onAction="#Follow" prefHeight="35.0" prefWidth="265.0" text="Follow" textFill="#dad30f">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#BacktoYourAccount" prefHeight="26.0" prefWidth="297.0" text="Back To Your Account Page" textFill="#dad30f">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#gotoMainPage" prefHeight="26.0" prefWidth="273.0" text="Home Page" textFill="#dad30f">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <HBox layoutX="367.0" layoutY="35.0" prefHeight="522.0" prefWidth="894.0">
+         <children>
+            <VBox prefHeight="429.0" prefWidth="324.0">
+               <children>
+                  <Label prefHeight="19.0" prefWidth="324.0" text="recent posts:" textFill="#dad30f">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="PostsList" onMousePressed="#PostListPressed" prefHeight="453.0" prefWidth="324.0" />
+                  <Button mnemonicParsing="false" onAction="#showAllPosts" prefHeight="42.0" prefWidth="324.0" text="show all posts" textFill="#dad30f" />
+               </children>
+            </VBox>
+            <VBox prefHeight="500.0" prefWidth="289.0">
+               <children>
+                  <Label prefHeight="24.0" prefWidth="354.0" text="accounts who liked this posts: " textFill="#dad30f">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="AccountLikePost" prefHeight="456.0" prefWidth="283.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="413.0" prefWidth="295.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="289.0" text="comments: " textFill="#dad30f">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="AccountComentList" prefHeight="457.0" prefWidth="289.0" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </Pane>

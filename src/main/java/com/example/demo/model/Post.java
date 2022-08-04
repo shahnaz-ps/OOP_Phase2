@@ -29,6 +29,7 @@ public class Post {
     private Image image;
     private FileInputStream fis;
     private File file;
+    boolean onlyContent=false;
 
     public Post(String content, Account owner,File file) {
         this.content = content;
@@ -43,6 +44,18 @@ public class Post {
         posts.put(id, this);
         postsFile.put(file,this);
         date = new Date();
+    }
+
+    public void setOnlyContent(boolean onlyContent) {
+        this.onlyContent = onlyContent;
+    }
+
+    public boolean isOnlyContent() {
+        return onlyContent;
+    }
+
+    public Account getOwner() {
+        return owner;
     }
 
     public static Post getPostByFile(File file) {
@@ -77,6 +90,18 @@ public class Post {
         for (int i=0;i<like.size();i++){
             System.out.println(dateliked.get(i)+" = username (" + like.get(i).getUsername()+")");
         }
+    }
+
+    public ArrayList<Account> getViews() {
+        return views;
+    }
+
+    public ArrayList<Date> getDateliked() {
+        return dateliked;
+    }
+
+    public ArrayList<Date> getDateviewed() {
+        return dateviewed;
     }
 
     public int getId() {

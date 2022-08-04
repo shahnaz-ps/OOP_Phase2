@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="965.0" styleClass="secondPane" stylesheets="@../CSS/Menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.ProfilePaneController">
+   <children>
+      <ImageView fx:id="imageView3" fitHeight="113.0" fitWidth="176.0" layoutX="74.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox layoutX="58.0" layoutY="32.0" prefHeight="272.0" prefWidth="239.0">
+         <children>
+            <Circle fx:id="ProCircle" fill="#1f93ff00" radius="53.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label text="username :" textFill="#dad30f">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="idTextbox" editable="false" prefHeight="26.0" prefWidth="114.0" />
+            <Label text="followers :" textFill="#dad30f">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="followersNum" editable="false" prefHeight="26.0" prefWidth="45.0" />
+            <Label text="followings :" textFill="#dad30f">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="followingsNum" editable="false" prefHeight="26.0" prefWidth="45.0" />
+            <Button mnemonicParsing="false" onAction="#gotoMainPage" prefHeight="38.0" prefWidth="239.0" text="Go to main page of your account" textFill="#dad30f">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox layoutX="464.0" layoutY="53.0" prefHeight="209.0" prefWidth="351.0">
+         <children>
+            <Label text="Choose your profile picture" textFill="#dad30f">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+            <Button mnemonicParsing="false" onAction="#ChooseFile" prefHeight="26.0" prefWidth="412.0" text="Browse" textFill="#dad30f" />
+            <TextField fx:id="FilePath" prefHeight="33.0" prefWidth="135.0" promptText="path of selected file" />
+            <ImageView fx:id="imageView" fitHeight="140.0" fitWidth="351.0" pickOnBounds="true" preserveRatio="true" />
+            <Button mnemonicParsing="false" onAction="#SubmitProPic" prefHeight="37.0" prefWidth="358.0" text="submit" textFill="#dad30f" />
+         </children>
+      </VBox>
+   </children>
+</Pane>

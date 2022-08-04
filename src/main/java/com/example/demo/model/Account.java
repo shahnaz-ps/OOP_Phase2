@@ -1,10 +1,14 @@
 package com.example.demo.model;
 
+import com.thoughtworks.xstream.converters.reflection.FieldKey;
 import javafx.scene.image.Image;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class Account {
     private String username;
@@ -20,17 +24,35 @@ public class Account {
     private Date dateview;
     private File file;
 
-
     protected Account(String username, String password) {
         this.username = username.toLowerCase();
         this.password = password;
         followers = new HashSet<>();
         followings = new HashSet<>();
         posts = new ArrayList<>();
+        accountsFile.put(this,file);
+    }
+    protected Account(String username, String password,File file) {
+        this.username = username.toLowerCase();
+        this.password = password;
+        this.file=file;
+        followers = new HashSet<>();
+        followings = new HashSet<>();
+        posts = new ArrayList<>();
+        accountsFile.put(this,file);
+    }
+
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
     }
 
     public static Account createAccount(String username, String password) {
-        Account account = new Account(username, password);
+        Account account = new Account(username, password, new File("/Users/kimia/Desktop/java/profiles/pro1.png"));
         accounts.put(username, account);
         return account;
     }
@@ -66,13 +88,15 @@ public class Account {
     }
 
     public void createPost(String content, File file) {
-        Post post = new Post(content, this, file);
-
+        Post post = new Post(content, this,file);
+        if(file==null){
+            post.setOnlyContent(true);
+        }
         posts.add(post);
     }
 
-    public void createGroup(Account account, String name) {
-        new GroupChat(account, name);
+    public void createGroup(Account account, String name){
+        new GroupChat(account,name);
     }
 
     public boolean isBusinessAccount() {
@@ -153,12 +177,3 @@ public class Account {
         }
         return res;
     }
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-}

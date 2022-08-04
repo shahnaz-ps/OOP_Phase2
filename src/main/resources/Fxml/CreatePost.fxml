@@ -5,18 +5,34 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="661.0" prefWidth="954.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.CreatePostController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="661.0" prefWidth="954.0" styleClass="secondPane" stylesheets="@../CSS/Menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.views.CreatePostController">
    <children>
-      <Label layoutX="389.0" layoutY="42.0" text="Post : " />
-      <Button layoutX="376.0" layoutY="66.0" mnemonicParsing="false" onAction="#ChooseFile" text="Browse" />
-      <TextField fx:id="FilePath" layoutX="310.0" layoutY="98.0" prefHeight="33.0" prefWidth="235.0" promptText="path of selected file" />
-      <Button layoutX="368.0" layoutY="361.0" mnemonicParsing="false" onAction="#post" prefHeight="26.0" prefWidth="54.0" text="Post" />
-      <ImageView fx:id="imageView" fitHeight="140.0" fitWidth="206.0" layoutX="313.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" />
-      <TextField fx:id="postContent" layoutX="309.0" layoutY="306.0" prefHeight="33.0" prefWidth="235.0" promptText="add content" />
-      <Label layoutX="54.0" layoutY="41.0" text="username :" />
-      <TextField fx:id="idTextbox" editable="false" layoutX="126.0" layoutY="37.0" prefHeight="26.0" prefWidth="114.0" />
-      <Button layoutX="67.0" layoutY="320.0" mnemonicParsing="false" onAction="#BacktoYourAccount" text="back to your account" />
-      <Button layoutX="76.0" layoutY="494.0" mnemonicParsing="false" onAction="#gotoMainPage" text="Go to main page of your account" />
+      <VBox layoutX="358.0" layoutY="54.0" prefHeight="341.0" prefWidth="352.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="368.0" text="Post : " textFill="#dad30f">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <Button mnemonicParsing="false" onAction="#ChooseFile" prefHeight="26.0" prefWidth="355.0" text="Browse" textFill="#dad30f" />
+            <TextField fx:id="FilePath" prefHeight="33.0" prefWidth="235.0" promptText="path of selected file" />
+            <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="352.0" pickOnBounds="true" preserveRatio="true" />
+            <TextField fx:id="postContent" prefHeight="33.0" prefWidth="235.0" promptText="add content" />
+            <Button mnemonicParsing="false" onAction="#post" prefHeight="26.0" prefWidth="382.0" text="Post" textFill="#dad30f" />
+         </children>
+      </VBox>
+      <VBox layoutX="64.0" layoutY="73.0" prefHeight="168.0" prefWidth="202.0">
+         <children>
+            <Circle fx:id="ProCircle" fill="#1f93ff00" radius="35.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label text="username :" textFill="#dad30f" />
+            <TextField fx:id="idTextbox" editable="false" prefHeight="26.0" prefWidth="114.0" />
+            <Button mnemonicParsing="false" onAction="#BacktoYourAccount" prefHeight="26.0" prefWidth="224.0" text="Back To Your Account Page" textFill="#dad30f" />
+            <Button mnemonicParsing="false" onAction="#gotoMainPage" prefHeight="26.0" prefWidth="249.0" text="Home Page" textFill="#dad30f" />
+         </children>
+      </VBox>
    </children>
 </Pane>

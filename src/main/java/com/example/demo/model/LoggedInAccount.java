@@ -23,4 +23,7 @@ public class LoggedInAccount {
     public void setLoggedIn(Account loggedIn) {
         this.loggedIn = loggedIn;
     }
+    public void setLoggedInBusiness(BusinessAccount loggedIn) {
+        this.loggedIn = loggedIn;
+    }
 }

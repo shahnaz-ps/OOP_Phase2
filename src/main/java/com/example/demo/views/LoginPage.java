@@ -24,6 +24,7 @@ public class LoginPage {
     private PasswordField passwordFieldLogin;
     @FXML
     private CheckBox isBusiness;
+    private Account account;
 
 
     @FXML
@@ -73,8 +74,12 @@ public class LoginPage {
                 break;
         }
         if (business) {
+            account = BusinessAccount.createAccount(username, password);
+            System.out.println(account);
             BusinessAccount.createAccount(username, password);
+            System.out.println("b");
         } else {
+            account = Account.createAccount(username, password);
             Account.createAccount(username, password);
         }
         new PopupMessage(Alert.AlertType.INFORMATION, "registered user!");
@@ -99,6 +104,15 @@ public class LoginPage {
             passwordFieldLogin.clear();
             return;
         }
+        this.account = account;
+        if(account.isBusinessAccount()){
+            System.out.println(account);
+        }
+        else
+        {
+            System.out.println("not bus");
+        }
+
         LoggedInAccount.getInstance().setLoggedIn(account);
 
         // todo ?!
