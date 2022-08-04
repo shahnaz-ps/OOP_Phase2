@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 
+import java.net.MalformedURLException;
+
 public class LoginPage {
 
     @FXML
@@ -33,7 +35,13 @@ public class LoginPage {
             if (k.getCode().equals(KeyCode.ENTER)) passwordFieldSignUp.requestFocus();
         });
         passwordFieldSignUp.setOnKeyPressed(k -> {
-            if (k.getCode().equals(KeyCode.ENTER)) registerUser();
+            if (k.getCode().equals(KeyCode.ENTER)) {
+                try {
+                    registerUser();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
         });
         usernameFieldLogin.setOnKeyPressed(k -> {
             if (k.getCode().equals(KeyCode.ENTER)) {
@@ -51,7 +59,7 @@ public class LoginPage {
         });
     }
 
-    public void registerUser() {
+    public void registerUser() throws MalformedURLException {
         String username = usernameFieldSignUp.getText();
         String password = passwordFieldSignUp.getText();
         boolean business = isBusiness.isSelected();

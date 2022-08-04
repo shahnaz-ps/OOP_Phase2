@@ -20,7 +20,7 @@ public class ConsoleView {
 
     private void parseCommand(String command) {
         if (command.equals("REGISTER")) {
-            register();
+          //  register();
         } else if (command.equals("LOGIN")) {
             login();
         } else if (command.equals("FORGET PASSWORD")) {
@@ -963,44 +963,44 @@ public class ConsoleView {
         System.out.println("And you have " + account.getPosts().size() + " posts!");
     }
 
-    private void register() {
-        String username;
-        String password;
-        boolean business;
-        while (true) {
-            System.out.print("Enter username: ");
-            username = sc.nextLine();
-            if (Account.usernameExists(username))
-                System.out.println("Username is not available, Please try again!");
-            else
-                break;
-        }
-        while (true) {
-            System.out.print("Enter password: ");
-            password = sc.nextLine();
-            if (!passwordIsStrong(password))
-                System.out.println("Password is weak, Please try again!");
-            else
-                break;
-        }
-        while (true) {
-            System.out.println("1- Normal 2- Business");
-            String inp = sc.nextLine();
-            if (inp.equals("1") || inp.equals("2")) {
-                business = inp.equals("2");
-                break;
-            } else {
-                System.out.println("Enter option 1 or 2. try again...");
-            }
-
-        }
-        if (business) {
-            account = BusinessAccount.createAccount(username, password);
-        } else {
-            account = Account.createAccount(username, password);
-        }
-        printHelloAccount();
-    }
+//    private void register() {
+//        String username;
+//        String password;
+//        boolean business;
+//        while (true) {
+//            System.out.print("Enter username: ");
+//            username = sc.nextLine();
+//            if (Account.usernameExists(username))
+//                System.out.println("Username is not available, Please try again!");
+//            else
+//                break;
+//        }
+//        while (true) {
+//            System.out.print("Enter password: ");
+//            password = sc.nextLine();
+//            if (!passwordIsStrong(password))
+//                System.out.println("Password is weak, Please try again!");
+//            else
+//                break;
+//        }
+//        while (true) {
+//            System.out.println("1- Normal 2- Business");
+//            String inp = sc.nextLine();
+//            if (inp.equals("1") || inp.equals("2")) {
+//                business = inp.equals("2");
+//                break;
+//            } else {
+//                System.out.println("Enter option 1 or 2. try again...");
+//            }
+//
+//        }
+//        if (business) {
+//            account = BusinessAccount.createAccount(username, password);
+//        } else {
+//            account = Account.createAccount(username, password);
+//        }
+//        printHelloAccount();
+//    }
 
     private boolean passwordIsStrong(String password) {
         return true || password.length() >= 8 &&

@@ -12,7 +12,8 @@ public class BusinessAccount extends Account{
 
 
     public static BusinessAccount createAccount(String username, String password) {
-        BusinessAccount account = new BusinessAccount(username, password,new File("/Users/kimia/Desktop/java/profiles/pro1.png"));
+        File f = new File("src/main/resources/Image/Menu/pro1.png");
+        BusinessAccount account = new BusinessAccount(username, password,f);
         accounts.put(username, account);
         return account;
     }

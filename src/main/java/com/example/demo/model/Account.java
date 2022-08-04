@@ -1,10 +1,13 @@
 package com.example.demo.model;
 
+import com.example.demo.ConsoleApplication;
 import com.thoughtworks.xstream.converters.reflection.FieldKey;
 import javafx.scene.image.Image;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,8 +55,10 @@ public class Account {
         this.file = file;
     }
 
-    public static Account createAccount(String username, String password) {
-        Account account = new Account(username, password, new File("/Users/kimia/Desktop/java/profiles/pro1.png"));
+    public static Account createAccount(String username, String password) throws MalformedURLException {
+       // URL url =  new URL( "Image/Menu/pro1.png");
+        File f = new File("src/main/resources/Image/Menu/pro1.png");
+        Account account = new Account(username, password, f);
         accounts.put(username, account);
         return account;
     }
