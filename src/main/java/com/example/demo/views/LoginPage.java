@@ -85,6 +85,7 @@ public class LoginPage {
         new PopupMessage(Alert.AlertType.INFORMATION, "registered user!");
         usernameFieldSignUp.clear();
         passwordFieldSignUp.clear();
+        isBusiness.setSelected(false);
     }
 
     private boolean passwordIsStrong(String password) {

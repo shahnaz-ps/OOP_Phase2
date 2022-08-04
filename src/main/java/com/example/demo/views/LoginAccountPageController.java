@@ -103,8 +103,9 @@ public class LoginAccountPageController {
                     btnNumber.setText("Like");
                     Showcommentbtn.setText("show comment(write a comment)");
                     int finalI = i;
-
-//                    image2 = new Image("/Users/kimia/Desktop/java/like and comment icon/like.png",100,150,true,true);
+//                    File file2 = new File("/Users/kimia/Desktop/java/like and comment icon/like.png");
+//                    image2 = new Image(file2.toURI().toString(),100,150,true,true);
+//                    imageView4=new ImageView();
 //                    imageView4.setImage(image2);
 //                    imageView4.setFitWidth(100);
 //                    imageView4.setFitHeight(150);
@@ -234,6 +235,7 @@ public class LoginAccountPageController {
                     if(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i).getFile()!=null) {
                         PostsList.getItems().add(imageView2);
                         PostsList.getItems().add(btnNumber);
+                       // PostsList.getItems().add(imageView4);
                         PostsList.getItems().add(Showlikebtn);
                         PostsList.getItems().add(Showcommentbtn);
                         PostsList.getItems().add(LoggedInAccount.getInstance().getLoggedIn().getPosts().get(i));

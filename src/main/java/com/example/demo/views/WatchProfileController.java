@@ -696,6 +696,9 @@ public class WatchProfileController {
                 LoggedInAccount.getInstance().getLoggedIn().follow(Account.getAccount(LoginAccountPageController.getAccount2().getUsername()));
                 new  PopupMessage(Alert.AlertType.INFORMATION, "you followed "  + Account.getAccount(LoginAccountPageController.getAccount2().getUsername()).getUsername());
             }
+        followersNum.setText(String.valueOf(LoginAccountPageController.getAccount2().getNumberOfFollowers()));
+        followingsNum.setText(String.valueOf(LoginAccountPageController.getAccount2().getNumberOfFollowings()));
+
     }
 
     public void BacktoYourAccount(ActionEvent actionEvent) {
