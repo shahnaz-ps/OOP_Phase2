@@ -82,6 +82,7 @@ public class ProfilePaneController {
             image = new Image(LoggedInAccount.getInstance().getLoggedIn().getAccountsFile().get(LoggedInAccount.getInstance().getLoggedIn()).toURI().toString(), 100, 150, true, true);
             imageView3 = new ImageView();imageView3.setImage(image);imageView3.setFitWidth(100);imageView3.setFitHeight(150);imageView3.setPreserveRatio(true);imageView3.setSmooth(true);imageView3.setCache(true);
             ProCircle.setFill(new ImagePattern(image));
+            LoggedInAccount.getInstance().getLoggedIn().setFile(finalFile2);
         }
         clearTextandImg();
 
